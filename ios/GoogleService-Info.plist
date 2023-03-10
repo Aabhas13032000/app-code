@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>583727872448-rk61gghpfei76fr4pi3cqeslfp6vn1cs.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.583727872448-rk61gghpfei76fr4pi3cqeslfp6vn1cs</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>583727872448-975tv2h7naboqa92tk118go79llif8i3.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBYLQXycxsIIbuqS3VMdyYNoMYOdzh0ygw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>583727872448</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.healfit.healFit</string>
+	<key>PROJECT_ID</key>
+	<string>healfit-smtp</string>
+	<key>STORAGE_BUCKET</key>
+	<string>healfit-smtp.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:583727872448:ios:0c3c3b9db3471e52a87025</string>
+</dict>
+</plist>

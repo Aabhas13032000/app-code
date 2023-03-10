@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "583727872448",
+    "project_id": "healfit-smtp",
+    "storage_bucket": "healfit-smtp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583727872448:android:c989a0706c5e2b69a87025",
+        "android_client_info": {
+          "package_name": "com.healfit.heal_fit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "583727872448-975tv2h7naboqa92tk118go79llif8i3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.healfit.heal_fit",
+            "certificate_hash": "ab34fbf6cdc80df3a521b0c4f4d6c59e4ba22bb6"
+          }
+        },
+        {
+          "client_id": "583727872448-srpoednf03aktpmnvkdbhqesqqvphtok.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.healfit.heal_fit",
+            "certificate_hash": "ec71583342186496dff859b12c9f2d9725916a10"
+          }
+        },
+        {
+          "client_id": "583727872448-37roh60tjcpf24b91t8a2qn7e6se5vkn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDneoB_n-9ZCe2iXYEs13wogKanXnM_VdE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "583727872448-37roh60tjcpf24b91t8a2qn7e6se5vkn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
