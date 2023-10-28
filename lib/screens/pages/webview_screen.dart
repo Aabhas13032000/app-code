@@ -68,7 +68,7 @@ class _WebviewScreensState extends State<WebviewScreens> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.white,
       appBar: CustomAppBar(
         preferredSize: const Size.fromHeight(70.0),
         showLeadingIcon: true,
@@ -78,7 +78,7 @@ class _WebviewScreensState extends State<WebviewScreens> {
           style: const TextStyle(
             color: AppColors.richBlack,
             fontSize: 18.0,
-            fontFamily: Fonts.helixSemiBold,
+            fontFamily: Fonts.montserratSemiBold,
           ),
         ),
         actions: const [],
@@ -101,9 +101,11 @@ class _WebviewScreensState extends State<WebviewScreens> {
               radius: 45.0,
               iconSize: 20.0,
               iconColor: AppColors.richBlack,
-              top: 8.0,
-              right: 8.0,
-              borderRadius: 8.0,
+              top: 0,
+              right: 0,
+              borderRadius: 0.0,
+              isShowBorder: false,
+              bgColor: AppColors.background,
             ),
           ),
         ),
@@ -230,7 +232,7 @@ class _WebviewScreensState extends State<WebviewScreens> {
               color: selectedTab == (name)
                   ? AppColors.highlight
                   : AppColors.background,
-              borderRadius: BorderRadius.circular(8.0),
+              borderRadius: BorderRadius.circular(0.0),
               border: Border.all(
                 width: 1.0,
                 color: selectedTab == (name)
@@ -252,8 +254,8 @@ class _WebviewScreensState extends State<WebviewScreens> {
                       selectedTab == (name) ? AppColors.white : AppColors.black,
                   fontSize: 16.0,
                   fontFamily: selectedTab == (name)
-                      ? Fonts.gilroySemiBold
-                      : Fonts.gilroyMedium,
+                      ? Fonts.montserratSemiBold
+                      : Fonts.montserratMedium,
                 ),
               ),
             ),

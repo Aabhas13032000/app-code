@@ -20,17 +20,19 @@ class TextToHtmlTwo extends StatelessWidget {
       description.toString(),
       textStyle: TextStyle(
         fontSize: fontSize,
-        fontFamily: Fonts.gilroyRegular,
+        fontFamily: Fonts.montserratRegular,
         color: textColor,
         fontStyle: FontStyle.normal,
       ),
       customWidgetBuilder: (element) {
         if (element.attributes['src'] != null) {
           return ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(0.0),
             child: ImagePlaceholder(
-              url: Constants.imgFinalUrl +
-                  (element.attributes['src'] ?? '/images/local/logo.png'),
+              url: (element.attributes['src'] ?? '').contains('/images/uploads')
+                  ? Constants.imgFinalUrl +
+                      (element.attributes['src'] ?? '/images/local/logo.png')
+                  : (element.attributes['src'] ?? '/images/local/logo.png'),
               height: 200.0,
               width: double.infinity,
               openImage: true,
@@ -46,7 +48,7 @@ class TextToHtmlTwo extends StatelessWidget {
           const CircularProgressIndicator(),
       onTapUrl: (url) {
         Utility.printLog("Opening $url...");
-        launchUrl(Uri.parse(url ?? ""));
+        launchUrl(Uri.parse(url));
         return true;
       },
     );

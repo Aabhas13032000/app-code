@@ -19,7 +19,7 @@ class ProgramCardThree extends StatelessWidget {
     return Container(
       width: 200.0,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(0.0),
         color: AppColors.white,
         boxShadow: [
           BoxShadow(
@@ -47,8 +47,8 @@ class ProgramCardThree extends StatelessWidget {
                   width: double.infinity,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(12.0),
-                      topLeft: Radius.circular(12.0),
+                      topRight: Radius.circular(0.0),
+                      topLeft: Radius.circular(0.0),
                     ),
                     child: ImagePlaceholder(
                       url: photoUrl,
@@ -72,7 +72,7 @@ class ProgramCardThree extends StatelessWidget {
                     style: const TextStyle(
                       color: AppColors.richBlack,
                       fontSize: 16.0,
-                      fontFamily: Fonts.helixSemiBold,
+                      fontFamily: Fonts.montserratSemiBold,
                     ),
                   ),
                 ),
@@ -87,7 +87,7 @@ class ProgramCardThree extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                         color: AppColors.white,
-                        borderRadius: BorderRadius.circular(50.0),
+                        borderRadius: BorderRadius.circular(0.0),
                         border:
                             Border.all(color: AppColors.highlight, width: 1.0)),
                     child: Padding(
@@ -99,7 +99,7 @@ class ProgramCardThree extends StatelessWidget {
                           style: const TextStyle(
                             color: AppColors.highlight,
                             fontSize: 12.0,
-                            fontFamily: Fonts.gilroySemiBold,
+                            fontFamily: Fonts.montserratSemiBold,
                           ),
                         ),
                       ),
@@ -127,7 +127,7 @@ class ProgramCardThree extends StatelessWidget {
               iconColor: AppColors.white,
               top: 0,
               right: 0,
-              borderRadius: 50.0,
+              borderRadius: 0.0,
               isShowBorder: true,
               bgColor: AppColors.highlight,
             ),

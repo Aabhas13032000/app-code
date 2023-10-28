@@ -25,12 +25,13 @@ class _EachProductPageState extends State<EachProductPage> {
   String selectedSize = '';
   bool outOfStock = false;
   int sizeCounter = 0;
+  int whislist = 0;
   int selectedSizeQuantity = 0;
 
   void getEachProduct() async {
     Utility.showProgress(true);
     String url =
-        '${Constants.finalUrl}/products/getEachProduct?id=${widget.id}';
+        '${Constants.finalUrl}/products/getEachProduct?id=${widget.id}&user_id=${Application.user?.id ?? "0"}';
     Map<String, dynamic> programData =
         await ApiFunctions.getApiResult(url, Application.deviceToken);
     bool status = programData['status'];
@@ -46,6 +47,7 @@ class _EachProductPageState extends State<EachProductPage> {
           productName = Product.fromJson(data[ApiKeys.data][0]).name;
         }
         sizeChart = data[ApiKeys.sizeChart];
+        whislist = int.parse(data[ApiKeys.whislist].toString());
         data[ApiKeys.images].forEach((image) => {
               slider.add(Constants.imgFinalUrl + image[ApiKeys.path]),
             });
@@ -110,12 +112,13 @@ class _EachProductPageState extends State<EachProductPage> {
     );
   }
 
-  void addToCart() async {
+  void addToCart(String cartCategory) async {
     Map<String, String> params = {
       "item_category": 'product',
       "item_id": widget.id,
       "user_id": Application.user?.id ?? "0",
-      "description": selectedSize
+      "description": selectedSize,
+      "cart_category": cartCategory
     };
     String url = '${Constants.finalUrl}/cart/addProductToCart';
     Map<String, dynamic> updateSessionCount =
@@ -125,12 +128,25 @@ class _EachProductPageState extends State<EachProductPage> {
     if (status) {
       if (data[ApiKeys.message].toString() == 'success') {
         Utility.showProgress(false);
-        showSnackBar(AlertMessages.getMessage(20), AppColors.lightGreen,
-            AppColors.congrats, 50.0);
-        setState(() {
-          selectedSize = '';
-          selectedSizeQuantity = 0;
-        });
+        showSnackBar(
+            cartCategory == 'cart'
+                ? AlertMessages.getMessage(20)
+                : AlertMessages.getMessage(59),
+            AppColors.lightGreen,
+            AppColors.congrats,
+            50.0);
+        if (cartCategory == 'cart') {
+          setState(() {
+            selectedSize = '';
+            selectedSizeQuantity = 0;
+          });
+        } else {
+          getEachProduct();
+        }
+      } else if (data[ApiKeys.message].toString() == 'already_added') {
+        Utility.showProgress(false);
+        showSnackBar(AlertMessages.getMessage(23), AppColors.background,
+            AppColors.subText, 50.0);
       } else if (data[ApiKeys.message].toString() == 'Auth_token_failure' ||
           data[ApiKeys.message].toString() == 'Database_connection_error') {
         Utility.showProgress(false);
@@ -182,158 +198,7 @@ class _EachProductPageState extends State<EachProductPage> {
         return false;
       },
       child: Scaffold(
-        appBar: CustomAppBar(
-          preferredSize: const Size.fromHeight(70.0),
-          showLeadingIcon: true,
-          centerTitle: true,
-          title: const Text(
-            '',
-            style: TextStyle(
-              color: AppColors.richBlack,
-              fontSize: 20.0,
-              fontFamily: Fonts.helixSemiBold,
-            ),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 12.5,
-                horizontal: 20.0,
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  Get.to(
-                    () => const CartPage(),
-                  );
-                },
-                child: const CustomIcon(
-                  icon: MdiIcons.cartOutline,
-                  borderWidth: 2.0,
-                  borderColor: AppColors.defaultInputBorders,
-                  isShowDot: true,
-                  radius: 45.0,
-                  iconSize: 24.0,
-                  iconColor: AppColors.richBlack,
-                  top: 8.0,
-                  right: 8.0,
-                  borderRadius: 8.0,
-                ),
-              ),
-            ),
-          ],
-          leadingWidget: Padding(
-            padding: const EdgeInsets.only(
-              top: 12.5,
-              left: 20.0,
-              bottom: 12.5,
-              right: 0.0,
-            ),
-            child: GestureDetector(
-              onTap: () {
-                goBack();
-              },
-              child: const CustomIcon(
-                icon: Icons.arrow_back_ios_rounded,
-                borderWidth: 2.0,
-                borderColor: AppColors.defaultInputBorders,
-                isShowDot: false,
-                radius: 45.0,
-                iconSize: 20.0,
-                iconColor: AppColors.richBlack,
-                top: 8.0,
-                right: 8.0,
-                borderRadius: 8.0,
-              ),
-            ),
-          ),
-          leadingWidth: 65.0,
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(0.0),
-            child: Container(
-              height: 0.0,
-            ),
-          ),
-        ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.richBlack.withOpacity(0.06),
-                blurRadius: 30.0, // soften the shadow
-                spreadRadius: 0.0, //extend the shadow
-                offset: const Offset(
-                  0.0, // Move to right 10  horizontally
-                  -4.5, // Move to bottom 10 Vertically
-                ),
-              ),
-            ],
-          ),
-          height: 70.0,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 12.5,
-              horizontal: 20.0,
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: CustomButton(
-                    title: 'Purchase now',
-                    paddingVertical: 10.5,
-                    paddingHorizontal: 13.5,
-                    borderRadius: 8.0,
-                    onPressed: () {
-                      if (outOfStock) {
-                        showSnackBar(AlertMessages.getMessage(34),
-                            AppColors.lightRed, AppColors.warning, 50.0);
-                      } else {
-                        if (selectedSize.isEmpty) {
-                          showSnackBar(AlertMessages.getMessage(35),
-                              AppColors.lightRed, AppColors.warning, 50.0);
-                        } else {
-                          Get.to(
-                            () => CheckoutProductPage(
-                              id: widget.id,
-                              selectedSize: selectedSize,
-                            ),
-                          );
-                        }
-                      }
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  width: 15.0,
-                ),
-                Expanded(
-                  child: CustomButton(
-                    title: 'Add to cart',
-                    isShowBorder: true,
-                    bgColor: AppColors.white,
-                    textColor: AppColors.highlight,
-                    paddingVertical: 10.5,
-                    paddingHorizontal: 13.5,
-                    borderRadius: 8.0,
-                    onPressed: () {
-                      if (outOfStock) {
-                        showSnackBar(AlertMessages.getMessage(34),
-                            AppColors.lightRed, AppColors.warning, 50.0);
-                      } else {
-                        if (selectedSize.isEmpty) {
-                          showSnackBar(AlertMessages.getMessage(35),
-                              AppColors.lightRed, AppColors.warning, 50.0);
-                        } else {
-                          addToCart();
-                        }
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        backgroundColor: AppColors.white,
         body: !isLoading
             ? Container()
             : SingleChildScrollView(
@@ -342,7 +207,7 @@ class _EachProductPageState extends State<EachProductPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: slider.isNotEmpty ? 400.0 : 20.0,
+                      height: slider.isNotEmpty ? 600.0 : 20.0,
                       child: Stack(
                         clipBehavior: Clip.none,
                         alignment: Alignment.topCenter,
@@ -350,11 +215,11 @@ class _EachProductPageState extends State<EachProductPage> {
                           slider.isNotEmpty
                               ? AppSlider(
                                   slider: slider,
-                                  height: 400,
+                                  height: 600,
                                   viewPortFraction: 1,
                                   margin: const EdgeInsets.all(0.0),
                                   borderRadius: 0.0,
-                                  aspectRatio: 16 / 16,
+                                  aspectRatio: 16 / 25,
                                   width: double.infinity,
                                   duration: 1500,
                                   bottomIndicatorVerticalPadding: 34.0,
@@ -362,15 +227,29 @@ class _EachProductPageState extends State<EachProductPage> {
                                 )
                               : const SizedBox(),
                           Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              height: 20.0,
-                              width: double.infinity,
-                              decoration: const BoxDecoration(
-                                color: AppColors.background,
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(20.0),
-                                  topLeft: Radius.circular(20.0),
+                            alignment: Alignment.topLeft,
+                            child: GestureDetector(
+                              onTap: () {
+                                goBack();
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.only(
+                                  left: 20.0,
+                                  top: 40.0,
+                                ),
+                                child: CustomIcon(
+                                  icon: Icons.arrow_back_ios_rounded,
+                                  borderWidth: 2.0,
+                                  borderColor: AppColors.defaultInputBorders,
+                                  isShowDot: false,
+                                  radius: 45.0,
+                                  iconSize: 20.0,
+                                  iconColor: AppColors.richBlack,
+                                  top: 0,
+                                  right: 0,
+                                  borderRadius: 0.0,
+                                  isShowBorder: false,
+                                  bgColor: AppColors.white,
                                 ),
                               ),
                             ),
@@ -382,7 +261,7 @@ class _EachProductPageState extends State<EachProductPage> {
                       padding: const EdgeInsets.only(
                         left: 20.0,
                         right: 20.0,
-                        top: 10.0,
+                        top: 30.0,
                       ),
                       child: Text(
                         (product?.name ?? ''),
@@ -390,7 +269,7 @@ class _EachProductPageState extends State<EachProductPage> {
                         style: const TextStyle(
                           color: AppColors.richBlack,
                           fontSize: 20.0,
-                          fontFamily: Fonts.helixSemiBold,
+                          fontFamily: Fonts.montserratSemiBold,
                         ),
                       ),
                     ),
@@ -406,7 +285,7 @@ class _EachProductPageState extends State<EachProductPage> {
                               style: TextStyle(
                                 color: AppColors.warning,
                                 fontSize: 18.0,
-                                fontFamily: Fonts.gilroySemiBold,
+                                fontFamily: Fonts.montserratSemiBold,
                               ),
                             ),
                           )
@@ -452,7 +331,7 @@ class _EachProductPageState extends State<EachProductPage> {
                           style: TextStyle(
                             color: AppColors.richBlack,
                             fontSize: 18.0,
-                            fontFamily: Fonts.gilroySemiBold,
+                            fontFamily: Fonts.montserratSemiBold,
                           ),
                         ),
                         children: <Widget>[
@@ -460,7 +339,7 @@ class _EachProductPageState extends State<EachProductPage> {
                             description: product?.description ?? '',
                             textColor: AppColors.richBlack,
                             fontSize: 16.0,
-                            font: Fonts.gilroyRegular,
+                            font: Fonts.montserratRegular,
                           ),
                         ],
                       ),
@@ -481,11 +360,115 @@ class _EachProductPageState extends State<EachProductPage> {
                               style: const TextStyle(
                                 color: AppColors.warning,
                                 fontSize: 16.0,
-                                fontFamily: Fonts.gilroySemiBold,
+                                fontFamily: Fonts.montserratSemiBold,
                               ),
                             ),
                           )
                         : const SizedBox(),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20.0,
+                        right: 20.0,
+                        top: 30.0,
+                      ),
+                      child: CustomButton(
+                        title: 'Buy now',
+                        paddingVertical: 18,
+                        paddingHorizontal: 13.5,
+                        borderRadius: 0.0,
+                        onPressed: () {
+                          if (outOfStock) {
+                            showSnackBar(AlertMessages.getMessage(34),
+                                AppColors.lightRed, AppColors.warning, 50.0);
+                          } else {
+                            if (selectedSize.isEmpty) {
+                              showSnackBar(AlertMessages.getMessage(35),
+                                  AppColors.lightRed, AppColors.warning, 50.0);
+                            } else {
+                              Get.to(
+                                () => CheckoutProductPage(
+                                  id: widget.id,
+                                  selectedSize: selectedSize,
+                                ),
+                                transition: Transition.rightToLeft,
+                              );
+                            }
+                          }
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20.0,
+                        right: 20.0,
+                        top: 20.0,
+                      ),
+                      child: CustomButton(
+                        title: 'Add to cart',
+                        isShowBorder: true,
+                        borderWidth: 1.0,
+                        bgColor: AppColors.white,
+                        textColor: AppColors.highlight,
+                        paddingVertical: 18,
+                        paddingHorizontal: 13.5,
+                        borderRadius: 0.0,
+                        onPressed: () {
+                          if (outOfStock) {
+                            showSnackBar(AlertMessages.getMessage(34),
+                                AppColors.lightRed, AppColors.warning, 50.0);
+                          } else {
+                            if (selectedSize.isEmpty) {
+                              showSnackBar(AlertMessages.getMessage(35),
+                                  AppColors.lightRed, AppColors.warning, 50.0);
+                            } else {
+                              addToCart('cart');
+                            }
+                          }
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20.0,
+                        right: 20.0,
+                        top: 20.0,
+                      ),
+                      child: CustomButton(
+                        title: 'Favourites',
+                        isShowBorder: true,
+                        borderWidth: 1.0,
+                        showFavIcon: true,
+                        favValue: whislist,
+                        bgColor: AppColors.white,
+                        textColor: AppColors.highlight,
+                        paddingVertical: 18,
+                        paddingHorizontal: 13.5,
+                        borderRadius: 0.0,
+                        onPressed: () {
+                          if (whislist == 1) {
+                            showSnackBar(AlertMessages.getMessage(58),
+                                AppColors.background, AppColors.subText, 50.0);
+                          } else {
+                            addToCart('whislist');
+                          }
+                        },
+                      ),
+                    ),
+                    (product?.longDescription ?? '').isEmpty
+                        ? const SizedBox()
+                        : Padding(
+                            padding: const EdgeInsets.only(
+                              left: 20.0,
+                              right: 20.0,
+                              top: 30.0,
+                            ),
+                            child: TextToHtmlTwo(
+                              description: product?.longDescription ?? '',
+                              textColor: AppColors.richBlack,
+                              fontSize: 16.0,
+                              font: Fonts.montserratRegular,
+                            ),
+                          ),
                     const SizedBox(
                       height: 30.0,
                     ),
@@ -507,18 +490,18 @@ class _EachProductPageState extends State<EachProductPage> {
                 "Free",
                 maxLines: 1,
                 style: TextStyle(
-                  color: AppColors.congrats,
+                  color: AppColors.highlight,
                   fontSize: 20.0,
-                  fontFamily: Fonts.gilroySemiBold,
+                  fontFamily: Fonts.montserratSemiBold,
                 ),
               )
             : Text(
                 'Rs ${product?.price}',
                 maxLines: 1,
                 style: const TextStyle(
-                  color: AppColors.congrats,
+                  color: AppColors.highlight,
                   fontSize: 20.0,
-                  fontFamily: Fonts.gilroySemiBold,
+                  fontFamily: Fonts.montserratSemiBold,
                 ),
               )
         : Row(
@@ -529,9 +512,9 @@ class _EachProductPageState extends State<EachProductPage> {
                 'Rs. ${product?.discountPrice}',
                 maxLines: 1,
                 style: const TextStyle(
-                  color: AppColors.congrats,
+                  color: AppColors.highlight,
                   fontSize: 20.0,
-                  fontFamily: Fonts.gilroyMedium,
+                  fontFamily: Fonts.montserratMedium,
                 ),
               ),
               const SizedBox(
@@ -543,7 +526,7 @@ class _EachProductPageState extends State<EachProductPage> {
                 style: const TextStyle(
                   color: AppColors.subText,
                   fontSize: 20.0,
-                  fontFamily: Fonts.gilroyRegular,
+                  fontFamily: Fonts.montserratRegular,
                   decoration: TextDecoration.lineThrough,
                 ),
               ),
@@ -558,7 +541,7 @@ class _EachProductPageState extends State<EachProductPage> {
                   bottom: 8.0,
                 ),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: BorderRadius.circular(0.0),
                   color: AppColors.highlight,
                 ),
                 child: Text(
@@ -567,7 +550,7 @@ class _EachProductPageState extends State<EachProductPage> {
                   style: const TextStyle(
                     color: AppColors.white,
                     fontSize: 20.0,
-                    fontFamily: Fonts.helixSemiBold,
+                    fontFamily: Fonts.montserratSemiBold,
                   ),
                 ),
               ),
@@ -590,11 +573,14 @@ class _EachProductPageState extends State<EachProductPage> {
             isShowViewAll: true,
             isShowSizeChart: true,
             onViewAllPressed: () {
-              Get.to(() => OpenImage(
-                  url: Constants.imgFinalUrl +
-                      (sizeChart.isEmpty
-                          ? '/images/local/curectLogo.png'
-                          : sizeChart)));
+              Get.to(
+                () => OpenImage(
+                    url: Constants.imgFinalUrl +
+                        (sizeChart.isEmpty
+                            ? '/images/local/curectLogo.png'
+                            : sizeChart)),
+                transition: Transition.rightToLeft,
+              );
             },
           ),
         ),
@@ -639,17 +625,17 @@ class _EachProductPageState extends State<EachProductPage> {
                         height: 50.0,
                         decoration: BoxDecoration(
                           color: sizes[index].quantity == 0
-                              ? AppColors.background
+                              ? AppColors.white
                               : selectedSize == (sizes[index].size ?? '')
                                   ? AppColors.highlight
-                                  : AppColors.background,
+                                  : AppColors.white,
                           border: Border.all(
                             width: 1.0,
                             color: sizes[index].quantity == 0
-                                ? AppColors.defaultInputBorders
+                                ? AppColors.background
                                 : AppColors.highlight,
                           ),
-                          borderRadius: BorderRadius.circular(50.0),
+                          borderRadius: BorderRadius.circular(0.0),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
@@ -658,16 +644,16 @@ class _EachProductPageState extends State<EachProductPage> {
                               sizes[index].size ?? '',
                               style: TextStyle(
                                 color: sizes[index].quantity == 0
-                                    ? AppColors.subText
+                                    ? AppColors.placeholder
                                     : selectedSize == (sizes[index].size ?? '')
                                         ? AppColors.white
                                         : AppColors.richBlack,
                                 fontSize: 16.0,
                                 fontFamily: sizes[index].quantity == 0
-                                    ? Fonts.gilroyMedium
+                                    ? Fonts.montserratMedium
                                     : selectedSize == (sizes[index].size ?? '')
-                                        ? Fonts.gilroySemiBold
-                                        : Fonts.gilroyMedium,
+                                        ? Fonts.montserratSemiBold
+                                        : Fonts.montserratMedium,
                               ),
                             ),
                           ),
@@ -682,8 +668,8 @@ class _EachProductPageState extends State<EachProductPage> {
                                 bottom: 2.0,
                               ),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(3.0),
-                                color: AppColors.placeholder.withOpacity(0.5),
+                                borderRadius: BorderRadius.circular(0.0),
+                                color: AppColors.background.withOpacity(1.0),
                               ),
                               child: const Text(
                                 'Sold Out',
@@ -691,7 +677,7 @@ class _EachProductPageState extends State<EachProductPage> {
                                 style: TextStyle(
                                   color: AppColors.subText,
                                   fontSize: 10.0,
-                                  fontFamily: Fonts.gilroyMedium,
+                                  fontFamily: Fonts.montserratMedium,
                                 ),
                               ),
                             )
@@ -705,7 +691,8 @@ class _EachProductPageState extends State<EachProductPage> {
                                   ),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(3.0),
-                                    color: AppColors.placeholder,
+                                    color:
+                                        AppColors.placeholder.withOpacity(0.5),
                                   ),
                                   child: Text(
                                     '${(sizes[index].quantity ?? 0)} left',
@@ -713,7 +700,7 @@ class _EachProductPageState extends State<EachProductPage> {
                                     style: const TextStyle(
                                       color: AppColors.richBlack,
                                       fontSize: 11.0,
-                                      fontFamily: Fonts.gilroySemiBold,
+                                      fontFamily: Fonts.montserratSemiBold,
                                     ),
                                   ),
                                 )
@@ -769,6 +756,7 @@ class _EachProductPageState extends State<EachProductPage> {
                         id: similiarColorProducts[index].id,
                       ),
                       preventDuplicates: false,
+                      transition: Transition.rightToLeft,
                     );
                   },
                   child: Container(
@@ -776,12 +764,12 @@ class _EachProductPageState extends State<EachProductPage> {
                     height: 100.0,
                     decoration: BoxDecoration(
                       color: AppColors.cardBg,
-                      borderRadius: BorderRadius.circular(50.0),
+                      borderRadius: BorderRadius.circular(0.0),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(0.0),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(50.0),
+                        borderRadius: BorderRadius.circular(0.0),
                         child: ImagePlaceholder(
                           url: Constants.imgFinalUrl +
                               (similiarColorProducts[index].coverPhoto ?? ""),
@@ -837,6 +825,8 @@ class _EachProductPageState extends State<EachProductPage> {
                       () => EachProductPage(
                         id: moreProducts[index].id,
                       ),
+                      transition: Transition.rightToLeft,
+                      preventDuplicates: false,
                     );
                   },
                   child: ProductCard(

@@ -1,13 +1,14 @@
 part of screens;
 
 class CategoryWiseProducts extends StatefulWidget {
-  bool? isGender;
-  String? gender;
-  bool? isCategory;
-  String? category;
-  bool? isClothCategory;
-  String? clothCategory;
-  CategoryWiseProducts({
+  final bool? isGender;
+  final String? gender;
+  final bool? isCategory;
+  final String? category;
+  final bool? isClothCategory;
+  final String? clothCategory;
+
+  const CategoryWiseProducts({
     Key? key,
     this.isGender = false,
     this.gender = '',
@@ -189,16 +190,29 @@ class _CategoryWiseProductsState extends State<CategoryWiseProducts> {
         return false;
       },
       child: Scaffold(
+        backgroundColor: AppColors.white,
         appBar: CustomAppBar(
           preferredSize: const Size.fromHeight(138.0),
           showLeadingIcon: true,
           centerTitle: true,
-          title: const Text(
-            '',
-            style: TextStyle(
-              color: AppColors.richBlack,
-              fontSize: 18.0,
-              fontFamily: Fonts.helixSemiBold,
+          title: GestureDetector(
+            onTap: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  Images.curectLogo,
+                  width: 25.0,
+                ),
+                const SizedBox(
+                  width: 10.0,
+                ),
+                Image.asset(
+                  Images.curectLogoName,
+                  width: 100.0,
+                ),
+              ],
             ),
           ),
           actions: [
@@ -210,20 +224,25 @@ class _CategoryWiseProductsState extends State<CategoryWiseProducts> {
               child: GestureDetector(
                 onTap: () {
                   Get.to(
-                    () => const CartPage(),
+                    () => const ProfilePage(),
+                    transition: Transition.rightToLeft,
                   );
                 },
-                child: const CustomIcon(
-                  icon: MdiIcons.cartOutline,
-                  borderWidth: 2.0,
-                  borderColor: AppColors.defaultInputBorders,
-                  isShowDot: true,
+                child: CustomIcon(
+                  icon: Icons.close,
+                  borderWidth: 0.0,
+                  borderColor: AppColors.transparent,
+                  isShowDot: false,
                   radius: 45.0,
-                  iconSize: 24.0,
-                  iconColor: AppColors.richBlack,
-                  top: 8.0,
-                  right: 8.0,
-                  borderRadius: 8.0,
+                  iconSize: 30.0,
+                  iconColor: AppColors.white,
+                  top: 0,
+                  right: 0,
+                  borderRadius: 0.0,
+                  isShowBorder: false,
+                  bgColor: AppColors.background,
+                  isNameInitial: true,
+                  name: (Application.user?.name ?? '')[0],
                 ),
               ),
             ),
@@ -241,15 +260,17 @@ class _CategoryWiseProductsState extends State<CategoryWiseProducts> {
               },
               child: const CustomIcon(
                 icon: Icons.arrow_back_ios_rounded,
-                borderWidth: 2.0,
+                borderWidth: 0.0,
                 borderColor: AppColors.defaultInputBorders,
                 isShowDot: false,
                 radius: 45.0,
                 iconSize: 20.0,
                 iconColor: AppColors.richBlack,
-                top: 8.0,
-                right: 8.0,
-                borderRadius: 8.0,
+                top: 0,
+                right: 0,
+                borderRadius: 0.0,
+                isShowBorder: false,
+                bgColor: AppColors.background,
               ),
             ),
           ),
@@ -271,7 +292,7 @@ class _CategoryWiseProductsState extends State<CategoryWiseProducts> {
                   style: const TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 16.0,
-                    fontFamily: Fonts.gilroyMedium,
+                    fontFamily: Fonts.montserratMedium,
                   ),
                   controller: searchController,
                   cursorColor: AppColors.defaultInputBorders,
@@ -291,6 +312,8 @@ class _CategoryWiseProductsState extends State<CategoryWiseProducts> {
                     }
                   },
                   decoration: InputDecoration(
+                    filled: true,
+                    fillColor: AppColors.background,
                     hintMaxLines: 1,
                     hintText: 'Search by name',
                     counterText: '',
@@ -309,13 +332,13 @@ class _CategoryWiseProductsState extends State<CategoryWiseProducts> {
                       maxWidth: 50.0,
                     ),
                     hintStyle: const TextStyle(
-                      color: AppColors.placeholder,
+                      color: AppColors.subText,
                       fontSize: 16.0,
-                      fontFamily: Fonts.gilroyMedium,
+                      fontFamily: Fonts.montserratMedium,
                     ),
-                    focusColor: AppColors.placeholder,
+                    focusColor: AppColors.subText,
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(0.0),
                       borderSide: const BorderSide(
                         color: AppColors.highlight,
                         width: 2.0,
@@ -324,9 +347,9 @@ class _CategoryWiseProductsState extends State<CategoryWiseProducts> {
                     errorBorder: InputBorder.none,
                     disabledBorder: InputBorder.none,
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(0.0),
                       borderSide: const BorderSide(
-                        color: AppColors.defaultInputBorders,
+                        color: AppColors.background,
                         width: 2.0,
                       ),
                     ),
@@ -354,9 +377,13 @@ class _CategoryWiseProductsState extends State<CategoryWiseProducts> {
                     child: Column(
                       children: [
                         SizedBox(
-                          height: widget.isClothCategory ?? false ? 5.0 : 15.0,
+                          height: (widget.isClothCategory ?? false) ||
+                                  (widget.isCategory ?? false)
+                              ? 5.0
+                              : 15.0,
                         ),
-                        widget.isClothCategory ?? false
+                        (widget.isClothCategory ?? false) ||
+                                (widget.isCategory ?? false)
                             ? const SizedBox()
                             : SizedBox(
                                 width: double.infinity,
@@ -388,13 +415,14 @@ class _CategoryWiseProductsState extends State<CategoryWiseProducts> {
                                     () => EachProductPage(
                                       id: products[index].id,
                                     ),
+                                    transition: Transition.rightToLeft,
                                   );
                                 },
                                 child: Container(
-                                  height: 320.0,
+                                  height: 420.0,
                                   margin: const EdgeInsets.only(
                                     right: 20.0,
-                                    bottom: 15.0,
+                                    bottom: 0.0,
                                   ),
                                   child: ProductCard(
                                     name: products[index].name,
@@ -423,7 +451,7 @@ class _CategoryWiseProductsState extends State<CategoryWiseProducts> {
                                     style: TextStyle(
                                       color: AppColors.richBlack,
                                       fontSize: 16.0,
-                                      fontFamily: Fonts.gilroyMedium,
+                                      fontFamily: Fonts.montserratMedium,
                                     ),
                                   ),
                                 ),
@@ -449,10 +477,9 @@ class _CategoryWiseProductsState extends State<CategoryWiseProducts> {
           child: Container(
             margin: const EdgeInsets.only(left: 15.0),
             decoration: BoxDecoration(
-              color: selectedTab == (name)
-                  ? AppColors.highlight
-                  : AppColors.background,
-              borderRadius: BorderRadius.circular(8.0),
+              color:
+                  selectedTab == (name) ? AppColors.highlight : AppColors.white,
+              borderRadius: BorderRadius.circular(0.0),
               border: Border.all(
                 width: 1.0,
                 color: selectedTab == (name)
@@ -474,8 +501,8 @@ class _CategoryWiseProductsState extends State<CategoryWiseProducts> {
                       selectedTab == (name) ? AppColors.white : AppColors.black,
                   fontSize: 16.0,
                   fontFamily: selectedTab == (name)
-                      ? Fonts.gilroySemiBold
-                      : Fonts.gilroyMedium,
+                      ? Fonts.montserratSemiBold
+                      : Fonts.montserratMedium,
                 ),
               ),
             ),

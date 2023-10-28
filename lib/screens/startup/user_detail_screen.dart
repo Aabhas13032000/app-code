@@ -23,7 +23,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
   Future pickImage() async {
     Utility.showProgress(true);
     bool permissionsGranted = false;
-    if(Platform.isIOS) {
+    if (Platform.isIOS) {
       Future.delayed(const Duration(microseconds: 100), () async {
         Map<Permission, PermissionStatus> permissions = await [
           Permission.storage,
@@ -32,7 +32,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
         if (permissionsGranted) {
           try {
             final image =
-            await ImagePicker().pickImage(source: ImageSource.gallery);
+                await ImagePicker().pickImage(source: ImageSource.gallery);
             if (image == null) {
               Utility.showProgress(false);
               return;
@@ -56,7 +56,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
     } else {
       var deviceInfo = DeviceInfoPlugin();
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      if (androidInfo.version.sdkInt! <= 29) {
+      if (androidInfo.version.sdkInt <= 29) {
         Future.delayed(const Duration(microseconds: 100), () async {
           Map<Permission, PermissionStatus> permissions = await [
             Permission.storage,
@@ -65,13 +65,14 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
           if (permissionsGranted) {
             try {
               final image =
-              await ImagePicker().pickImage(source: ImageSource.gallery);
+                  await ImagePicker().pickImage(source: ImageSource.gallery);
               if (image == null) {
                 Utility.showProgress(false);
                 return;
               }
               final imageTemporary = File(image.path);
-              var res = await uploadImage(image.path, '$url/saveUserOrderImage');
+              var res =
+                  await uploadImage(image.path, '$url/saveUserOrderImage');
               Utility.showProgress(false);
               setState(() {
                 this.image = imageTemporary;
@@ -89,7 +90,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
       } else {
         try {
           final image =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
+              await ImagePicker().pickImage(source: ImageSource.gallery);
           if (image == null) {
             Utility.showProgress(false);
             return;
@@ -109,6 +110,82 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
       }
     }
     Utility.showProgress(false);
+  }
+
+  void saveData() async {
+    Utility.showProgress(true);
+    Map<String, String> params = {
+      'name': fullNameController.text.trim(),
+      'email': emailController.text.trim(),
+      'gender': gender == 'female'
+          ? 'FEMALE'
+          : gender == 'male'
+              ? 'MALE'
+              : 'OTHERS',
+      'age': '0',
+      'weight': '0',
+      'target_weight': '0',
+      'profile_image': image == null ? '' : selectedImage,
+      'height': '0',
+      'user_id': Application.user?.id ?? '0',
+      'phoneNumber': Application.user?.phoneNumber ?? '',
+      "medical_conditions": '',
+      "food_allergies": '',
+      "goal": '',
+      "country_code": Application.user?.countryCode ?? '0',
+    };
+    String url = '${Constants.finalUrl}/updateData';
+    Map<String, dynamic> loginData =
+        await ApiFunctions.postApiResult(url, Application.deviceToken, params);
+    bool status = loginData['status'];
+    var data = loginData['data'];
+    if (status) {
+      if (data[ApiKeys.message].toString() == 'Updated_successfully') {
+        Application.profileImage = image == null
+            ? gender == 'female'
+                ? '/images/local/female.png'
+                : gender == 'male'
+                    ? '/images/local/male.png'
+                    : '/images/local/trans.png'
+            : selectedImage;
+        Application.loggedIn = true;
+        Application.user = Users.fromJson(data[ApiKeys.user][0]);
+        Application.isPaymentAllowed = data[ApiKeys.isPaymentAllowed] ?? false;
+        Utility.showProgress(false);
+        showSnackBar(AlertMessages.getMessage(10), AppColors.lightGreen,
+            AppColors.congrats, 50.0);
+        Future.delayed(const Duration(seconds: 1), () {
+          Get.offAll(
+            () => const MainContainer(),
+          );
+        });
+      } else if (data[ApiKeys.message].toString() == 'Auth_token_failure' ||
+          data[ApiKeys.message].toString() == 'Database_connection_error') {
+        Utility.showProgress(false);
+        showSnackBar(AlertMessages.getMessage(4), AppColors.lightRed,
+            AppColors.warning, 50.0);
+      } else {
+        showSnackBar(data[ApiKeys.message].toString(), AppColors.lightRed,
+            AppColors.warning, 50.0);
+      }
+    } else {
+      Utility.printLog('Something went wrong while saving token.');
+      Utility.printLog('Some error occurred');
+      Utility.showProgress(false);
+      showSnackBar(AlertMessages.getMessage(4), AppColors.lightRed,
+          AppColors.warning, 50.0);
+    }
+  }
+
+  void showSnackBar(String message, Color bgColor, Color title, double height) {
+    Utility.showSnacbar(
+      context,
+      message,
+      bgColor,
+      title,
+      duration: 2,
+      height,
+    );
   }
 
   Future<String?> uploadImage(filename, url) async {
@@ -170,7 +247,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                 'Get Started',
                 style: TextStyle(
                   fontSize: 24.0,
-                  fontFamily: Fonts.helixSemiBold,
+                  fontFamily: Fonts.montserratSemiBold,
                   color: AppColors.richBlack,
                 ),
               ),
@@ -181,7 +258,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                 'Tell us something about yourself',
                 style: TextStyle(
                   fontSize: 16.0,
-                  fontFamily: Fonts.gilroyMedium,
+                  fontFamily: Fonts.montserratMedium,
                   color: AppColors.subText,
                 ),
               ),
@@ -232,7 +309,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                     width: 40.0,
                                     decoration: BoxDecoration(
                                       color: AppColors.warning,
-                                      borderRadius: BorderRadius.circular(50.0),
+                                      borderRadius: BorderRadius.circular(0.0),
                                     ),
                                     child: const Center(
                                       child: Icon(
@@ -265,7 +342,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                         style: const TextStyle(
                           color: AppColors.richBlack,
                           fontSize: 16.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                         controller: fullNameController,
                         cursorColor: AppColors.defaultInputBorders,
@@ -285,11 +362,11 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                           hintStyle: const TextStyle(
                             color: AppColors.placeholder,
                             fontSize: 16.0,
-                            fontFamily: Fonts.gilroyMedium,
+                            fontFamily: Fonts.montserratMedium,
                           ),
                           focusColor: AppColors.placeholder,
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(0.0),
                             borderSide: const BorderSide(
                               color: AppColors.highlight,
                               width: 2.0,
@@ -298,7 +375,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(0.0),
                             borderSide: const BorderSide(
                               color: AppColors.defaultInputBorders,
                               width: 2.0,
@@ -321,7 +398,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                   ? AppColors.highlight
                                   : AppColors.placeholder,
                               fontSize: 14.0,
-                              fontFamily: Fonts.gilroySemiBold,
+                              fontFamily: Fonts.montserratSemiBold,
                             ),
                           ),
                         ),
@@ -346,7 +423,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                         style: const TextStyle(
                           color: AppColors.richBlack,
                           fontSize: 16.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                         controller: emailController,
                         cursorColor: AppColors.defaultInputBorders,
@@ -366,11 +443,11 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                           hintStyle: const TextStyle(
                             color: AppColors.placeholder,
                             fontSize: 16.0,
-                            fontFamily: Fonts.gilroyMedium,
+                            fontFamily: Fonts.montserratMedium,
                           ),
                           focusColor: AppColors.placeholder,
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(0.0),
                             borderSide: const BorderSide(
                               color: AppColors.highlight,
                               width: 2.0,
@@ -379,7 +456,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(0.0),
                             borderSide: const BorderSide(
                               color: AppColors.defaultInputBorders,
                               width: 2.0,
@@ -402,7 +479,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                   ? AppColors.highlight
                                   : AppColors.placeholder,
                               fontSize: 14.0,
-                              fontFamily: Fonts.gilroySemiBold,
+                              fontFamily: Fonts.montserratSemiBold,
                             ),
                           ),
                         ),
@@ -418,7 +495,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                 'Select your gender',
                 style: TextStyle(
                   fontSize: 18.0,
-                  fontFamily: Fonts.gilroyMedium,
+                  fontFamily: Fonts.montserratMedium,
                   color: AppColors.richBlack,
                 ),
               ),
@@ -430,19 +507,10 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                 height: 30.0,
               ),
               CustomButton(
-                title: 'Next',
+                title: 'Save',
                 textColor: AppColors.white,
+                paddingVertical: 18,
                 onPressed: () {
-                  // if (image == null) {
-                  //   Utility.showSnacbar(
-                  //     context,
-                  //     'Please select a profile image.',
-                  //     AppColors.lightRed,
-                  //     AppColors.warning,
-                  //     duration: 2,
-                  //     50.0,
-                  //   );
-                  // } else
                   if (fullNameController.text.isEmpty) {
                     Utility.showSnacbar(
                       context,
@@ -462,22 +530,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                       50.0,
                     );
                   } else {
-                    Get.to(() => UserHeightWeight(
-                          name: fullNameController.text,
-                          email: emailController.text,
-                          selectedImage: image == null
-                              ? gender == 'female'
-                                  ? '/images/local/female.png'
-                                  : gender == 'male'
-                                      ? '/images/local/male.png'
-                                      : '/images/local/trans.png'
-                              : selectedImage,
-                          gender: gender == 'female'
-                              ? 'FEMALE'
-                              : gender == 'male'
-                                  ? 'MALE'
-                                  : 'OTHERS',
-                        ));
+                    saveData();
                   }
                 },
               ),
@@ -497,7 +550,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
       width: 140.0,
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(150.0),
+        borderRadius: BorderRadius.circular(0.0),
         border: Border.all(
           width: 3.0,
           color: AppColors.highlight,
@@ -508,8 +561,8 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
           height: 120.0,
           width: 120.0,
           decoration: BoxDecoration(
-            color: AppColors.lightYellow,
-            borderRadius: BorderRadius.circular(150.0),
+            color: AppColors.background,
+            borderRadius: BorderRadius.circular(0.0),
           ),
           child: image != null
               ? ClipRRect(
@@ -522,10 +575,10 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                     height: double.infinity,
                   ),
                 )
-              : Column(
+              : const Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(
                       Icons.photo_outlined,
                       size: 32,
@@ -539,7 +592,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16.0,
-                        fontFamily: Fonts.gilroyMedium,
+                        fontFamily: Fonts.montserratMedium,
                         color: AppColors.highlight,
                       ),
                     ),
@@ -562,41 +615,39 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
             },
             child: Container(
               decoration: BoxDecoration(
-                color: gender == 'female'
-                    ? AppColors.lightYellow
-                    : AppColors.white,
+                color:
+                    gender == 'female' ? AppColors.background : AppColors.white,
                 borderRadius: BorderRadius.circular(
-                  10.0,
+                  0.0,
                 ),
                 border: Border.all(
                   width: 2.0,
                   color: gender == 'female'
-                      ? AppColors.highlight
+                      ? AppColors.background
                       : AppColors.defaultInputBorders,
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 18.0, horizontal: 20.0),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 12.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      Images.female,
-                      height: 40.0,
-                      width: 40.0,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
-                    const Text(
+                    // Image.asset(
+                    //   Images.female,
+                    //   height: 40.0,
+                    //   width: 40.0,
+                    //   fit: BoxFit.cover,
+                    // ),
+                    // const SizedBox(
+                    //   height: 15.0,
+                    // ),
+                    Text(
                       'Women',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 16.0,
-                        fontFamily: Fonts.gilroySemiBold,
+                        fontSize: 14.0,
+                        fontFamily: Fonts.montserratSemiBold,
                         color: AppColors.richBlack,
                       ),
                     ),
@@ -607,7 +658,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
           ),
         ),
         const SizedBox(
-          width: 15.0,
+          width: 10.0,
         ),
         Expanded(
           child: GestureDetector(
@@ -619,39 +670,38 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
             child: Container(
               decoration: BoxDecoration(
                 color:
-                    gender == 'male' ? AppColors.lightYellow : AppColors.white,
+                    gender == 'male' ? AppColors.background : AppColors.white,
                 borderRadius: BorderRadius.circular(
-                  10.0,
+                  0.0,
                 ),
                 border: Border.all(
                   width: 2.0,
                   color: gender == 'male'
-                      ? AppColors.highlight
+                      ? AppColors.background
                       : AppColors.defaultInputBorders,
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 18.0, horizontal: 20.0),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 12.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      Images.male,
-                      height: 40.0,
-                      width: 40.0,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
-                    const Text(
+                    // Image.asset(
+                    //   Images.male,
+                    //   height: 40.0,
+                    //   width: 40.0,
+                    //   fit: BoxFit.cover,
+                    // ),
+                    // const SizedBox(
+                    //   height: 15.0,
+                    // ),
+                    Text(
                       'Men',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 16.0,
-                        fontFamily: Fonts.gilroySemiBold,
+                        fontSize: 14.0,
+                        fontFamily: Fonts.montserratSemiBold,
                         color: AppColors.richBlack,
                       ),
                     ),
@@ -662,7 +712,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
           ),
         ),
         const SizedBox(
-          width: 15.0,
+          width: 10.0,
         ),
         Expanded(
           child: GestureDetector(
@@ -673,41 +723,39 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
             },
             child: Container(
               decoration: BoxDecoration(
-                color: gender == 'others'
-                    ? AppColors.lightYellow
-                    : AppColors.white,
+                color:
+                    gender == 'others' ? AppColors.background : AppColors.white,
                 borderRadius: BorderRadius.circular(
-                  10.0,
+                  0.0,
                 ),
                 border: Border.all(
                   width: 2.0,
                   color: gender == 'others'
-                      ? AppColors.highlight
+                      ? AppColors.background
                       : AppColors.defaultInputBorders,
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 18.0, horizontal: 20.0),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 12.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      Images.trans,
-                      height: 40.0,
-                      width: 40.0,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
-                    const Text(
+                    // Image.asset(
+                    //   Images.trans,
+                    //   height: 40.0,
+                    //   width: 40.0,
+                    //   fit: BoxFit.cover,
+                    // ),
+                    // const SizedBox(
+                    //   height: 15.0,
+                    // ),
+                    Text(
                       'Others',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 16.0,
-                        fontFamily: Fonts.gilroySemiBold,
+                        fontSize: 14.0,
+                        fontFamily: Fonts.montserratSemiBold,
                         color: AppColors.richBlack,
                       ),
                     ),

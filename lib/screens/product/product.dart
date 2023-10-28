@@ -10,9 +10,12 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   bool isLoading = false;
   List<Product> products = [];
+  List<Blogs> popular = [];
   List<CurectCategories> productCategories = [];
   List<String> clothSlider = [];
+  List<CurectCategories> productSlider = [];
   List<CurectCategories> clothCategories = [];
+  final CardSwiperController controller = CardSwiperController();
 
   void getInitialProductData() async {
     Utility.showProgress(true);
@@ -26,7 +29,11 @@ class _ProductPageState extends State<ProductPage> {
       if (data[ApiKeys.message].toString() == 'success') {
         data[ApiKeys.clothCategories].forEach((category) {
           clothCategories.add(CurectCategories.fromJson(category));
-          if (CurectCategories.fromJson(category).imp ?? false) {
+        });
+        data[ApiKeys.productSlider].forEach((category) {
+          if ((CurectCategories.fromJson(category).mobileSlider ?? "")
+              .isNotEmpty) {
+            productSlider.add(CurectCategories.fromJson(category));
             clothSlider.add(Constants.imgFinalUrl +
                 (CurectCategories.fromJson(category).mobileSlider ??
                     "/images/local/curectLogo.png"));
@@ -34,6 +41,9 @@ class _ProductPageState extends State<ProductPage> {
         });
         data[ApiKeys.productCategories].forEach((category) => {
               productCategories.add(CurectCategories.fromJson(category)),
+            });
+        data[ApiKeys.popular].forEach((blog) => {
+              popular.add(Blogs.fromJson(blog)),
             });
         data[ApiKeys.impProducts].forEach((product) => {
               products.add(Product.fromJson(product)),
@@ -84,13 +94,14 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   void dispose() {
+    controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.white,
       appBar: CustomAppBar(
         preferredSize: const Size.fromHeight(70.0),
         showLeadingIcon: false,
@@ -118,49 +129,30 @@ class _ProductPageState extends State<ProductPage> {
               top: 12.5,
               bottom: 12.5,
               left: 0.0,
-              right: 0.0,
-            ),
-            child: GestureDetector(
-              onTap: () {
-                Get.to(
-                  () => const CartPage(),
-                );
-              },
-              child: const CustomIcon(
-                icon: MdiIcons.cartOutline,
-                borderWidth: 2.0,
-                borderColor: AppColors.defaultInputBorders,
-                isShowDot: true,
-                radius: 45.0,
-                iconSize: 24.0,
-                iconColor: AppColors.richBlack,
-                top: 8.0,
-                right: 8.0,
-                borderRadius: 8.0,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 12.5,
-              bottom: 12.5,
-              left: 15.0,
               right: 20.0,
             ),
             child: GestureDetector(
               onTap: () {
                 Get.to(
                   () => const ProfilePage(),
+                  transition: Transition.rightToLeft,
                 );
               },
-              child: CircularAvatar(
-                url: Constants.imgFinalUrl +
-                    ((Application.user?.profileImage ?? "").isEmpty
-                        ? Application.profileImage
-                        : (Application.user?.profileImage ?? "")),
+              child: CustomIcon(
+                icon: Icons.close,
+                borderWidth: 0.0,
+                borderColor: AppColors.transparent,
+                isShowDot: false,
                 radius: 45.0,
-                borderColor: AppColors.highlight,
-                borderWidth: 2.0,
+                iconSize: 30.0,
+                iconColor: AppColors.white,
+                top: 0,
+                right: 0,
+                borderRadius: 0.0,
+                isShowBorder: false,
+                bgColor: AppColors.background,
+                isNameInitial: true,
+                name: (Application.user?.name ?? '')[0],
               ),
             ),
           ),
@@ -181,29 +173,39 @@ class _ProductPageState extends State<ProductPage> {
                   clothSlider.isNotEmpty
                       ? AppSlider(
                           slider: clothSlider,
-                          height: 450,
+                          height: 600,
                           viewPortFraction: 1,
                           margin: const EdgeInsets.all(0.0),
                           borderRadius: 0.0,
-                          aspectRatio: 16 / 19,
+                          aspectRatio: 16 / 28,
                           width: double.infinity,
                           duration: 1500,
                           bottomIndicatorVerticalPadding: 30.0,
                           isProductImage: true,
                           onImageClicked: (imageUrl) {
                             Utility.printLog('Category');
-                            var item = clothCategories.firstWhere((element) =>
+                            var item = productSlider.firstWhere((element) =>
                                 (Constants.imgFinalUrl +
                                     (element.mobileSlider ??
                                         Images.curectLogo)) ==
                                 imageUrl);
 
-                            Get.to(
-                              () => CategoryWiseProducts(
-                                isClothCategory: true,
-                                clothCategory: item.name ?? "",
-                              ),
-                            );
+                            if ((item.name ?? "").isEmpty) {
+                              Get.to(
+                                () => EachProductPage(
+                                  id: item.id ?? "",
+                                ),
+                                transition: Transition.rightToLeft,
+                              );
+                            } else {
+                              Get.to(
+                                () => CategoryWiseProducts(
+                                  isClothCategory: true,
+                                  clothCategory: item.name ?? "",
+                                ),
+                                transition: Transition.rightToLeft,
+                              );
+                            }
                           },
                         )
                       : const SizedBox(),
@@ -223,6 +225,10 @@ class _ProductPageState extends State<ProductPage> {
                     },
                   ),
                   clothCategory(),
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+                  popular.isNotEmpty ? feedSection() : const SizedBox(),
                   const SizedBox(
                     height: 30.0,
                   ),
@@ -276,12 +282,15 @@ class _ProductPageState extends State<ProductPage> {
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          Get.to(() => widget);
+          Get.to(
+            () => widget,
+            transition: Transition.rightToLeft,
+          );
         },
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.background,
-            borderRadius: BorderRadius.circular(8.0),
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(0.0),
             border: Border.all(
               width: 1.0,
               color: AppColors.highlight,
@@ -308,7 +317,7 @@ class _ProductPageState extends State<ProductPage> {
                     style: const TextStyle(
                       color: AppColors.black,
                       fontSize: 16.0,
-                      fontFamily: Fonts.gilroySemiBold,
+                      fontFamily: Fonts.montserratSemiBold,
                     ),
                   ),
                 ],
@@ -330,7 +339,7 @@ class _ProductPageState extends State<ProductPage> {
             left: 20.0,
             right: 20.0,
             top: 25.0,
-            bottom: 15.0,
+            bottom: 20.0,
           ),
           child: HeadingViewAll(
             title: productCategory.name ?? "",
@@ -340,6 +349,7 @@ class _ProductPageState extends State<ProductPage> {
                   isCategory: true,
                   category: productCategory.name ?? "All",
                 ),
+                transition: Transition.rightToLeft,
               );
             },
           ),
@@ -359,8 +369,8 @@ class _ProductPageState extends State<ProductPage> {
                   .contains(productCategory.name ?? "")) {
                 return Padding(
                   padding: const EdgeInsets.only(
-                    top: 10.0,
-                    bottom: 10.0,
+                    top: 0.0,
+                    bottom: 0.0,
                   ),
                   child: GestureDetector(
                     onTap: () {
@@ -368,6 +378,7 @@ class _ProductPageState extends State<ProductPage> {
                         () => EachProductPage(
                           id: products[index].id,
                         ),
+                        transition: Transition.rightToLeft,
                       );
                     },
                     child: ProductCard(
@@ -400,7 +411,7 @@ class _ProductPageState extends State<ProductPage> {
           padding: const EdgeInsets.only(
             left: 20.0,
             right: 20.0,
-            top: 25.0,
+            top: 15.0,
             bottom: 15.0,
           ),
           child: HeadingViewAll(
@@ -431,6 +442,7 @@ class _ProductPageState extends State<ProductPage> {
                             isClothCategory: true,
                             clothCategory: category.name ?? "",
                           ),
+                          transition: Transition.rightToLeft,
                         );
                       },
                       child: Column(
@@ -443,12 +455,12 @@ class _ProductPageState extends State<ProductPage> {
                             height: 100.0,
                             decoration: BoxDecoration(
                               color: AppColors.cardBg,
-                              borderRadius: BorderRadius.circular(50.0),
+                              borderRadius: BorderRadius.circular(0.0),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(0.0),
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(50.0),
+                                borderRadius: BorderRadius.circular(0.0),
                                 child: ImagePlaceholder(
                                   url: Constants.imgFinalUrl +
                                       (category.coverPhoto ?? ""),
@@ -469,7 +481,7 @@ class _ProductPageState extends State<ProductPage> {
                               style: const TextStyle(
                                 color: AppColors.black,
                                 fontSize: 14.0,
-                                fontFamily: Fonts.gilroySemiBold,
+                                fontFamily: Fonts.montserratMedium,
                               ),
                             ),
                           ),
@@ -483,5 +495,88 @@ class _ProductPageState extends State<ProductPage> {
         ),
       ],
     );
+  }
+
+  Widget feedSection() {
+    return Column(
+      children: [
+        const Text(
+          'Feeds',
+          style: TextStyle(
+            color: AppColors.richBlack,
+            fontSize: 20.0,
+            fontFamily: Fonts.montserratSemiBold,
+          ),
+        ),
+        SizedBox(
+          height: 500.0,
+          child: CardSwiper(
+            controller: controller,
+            cardsCount: popular.length,
+            onSwipe: _onSwipe,
+            onUndo: _onUndo,
+            numberOfCardsDisplayed: popular.length < 3 ? popular.length : 3,
+            backCardOffset: const Offset(0, 35),
+            isLoop: true,
+            scale: 0.9,
+            padding: const EdgeInsets.only(
+                left: 20.0, right: 20.0, top: 20.0, bottom: 0.0),
+            cardBuilder: (
+              BuildContext context,
+              int index,
+              int horizontalThresholdPercentage,
+              int verticalThresholdPercentage,
+            ) {
+              return BlogCardThree(
+                description: popular[index].description,
+                title: popular[index].title,
+                likes: int.parse(popular[index].totalLikes.toString()),
+                date: DateTime.parse(popular[index].createdAt)
+                    .toString()
+                    .substring(0, 10),
+                photoUrl: Constants.imgFinalUrl + popular[index].coverPhoto,
+                height: 350.0,
+                width: double.infinity,
+                isLiked: true,
+                onBlogClicked: () {
+                  Get.to(
+                    () => EachBlog(
+                      id: popular[index].id,
+                    ),
+                    preventDuplicates: false,
+                    transition: Transition.rightToLeft,
+                  );
+                },
+                onCommentClicked: () {},
+                onLikeClicked: () {},
+                onShareClicked: () {},
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  bool _onSwipe(
+    int previousIndex,
+    int? currentIndex,
+    CardSwiperDirection direction,
+  ) {
+    debugPrint(
+      'The card $previousIndex was swiped to the ${direction.name}. Now the card $currentIndex is on top',
+    );
+    return true;
+  }
+
+  bool _onUndo(
+    int? previousIndex,
+    int currentIndex,
+    CardSwiperDirection direction,
+  ) {
+    debugPrint(
+      'The card $currentIndex was undod from the ${direction.name}',
+    );
+    return true;
   }
 }

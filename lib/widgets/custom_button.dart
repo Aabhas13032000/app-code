@@ -13,6 +13,8 @@ class CustomButton extends StatelessWidget {
   final double? borderRadius;
   final IconData? icon;
   final bool? showIcon;
+  final bool? showFavIcon;
+  final int? favValue;
   const CustomButton({
     Key? key,
     required this.title,
@@ -24,9 +26,11 @@ class CustomButton extends StatelessWidget {
     this.textColor = AppColors.white,
     this.paddingHorizontal = 15.0,
     this.paddingVertical = 15.0,
-    this.borderRadius = 10.0,
+    this.borderRadius = 0.0,
     this.icon,
     this.showIcon = false,
+    this.showFavIcon = false,
+    this.favValue = 0,
   }) : super(key: key);
 
   @override
@@ -71,11 +75,21 @@ class CustomButton extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                    fontFamily: Fonts.helixSemiBold,
+                    fontFamily: Fonts.montserratSemiBold,
                     fontSize: 16.0,
                     color: textColor,
                   ),
                 ),
+                showFavIcon ?? false
+                    ? const SizedBox(
+                        width: 10.0,
+                      )
+                    : const SizedBox(),
+                showFavIcon ?? false
+                    ? (favValue ?? 0) == 1
+                        ? SvgIcons.favouriteEachProductFilled
+                        : SvgIcons.favouriteEachProduct
+                    : const SizedBox(),
               ],
             ),
           ),

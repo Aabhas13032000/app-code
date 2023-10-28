@@ -23,7 +23,10 @@ class ImagePlaceholder extends StatelessWidget {
       child: GestureDetector(
         onTap: openImage ?? false
             ? () {
-                Get.to(() => OpenImage(url: url));
+                Get.to(
+                  () => OpenImage(url: url),
+                  transition: Transition.rightToLeft,
+                );
               }
             : null,
         child: CachedNetworkImage(
@@ -44,10 +47,10 @@ class ImagePlaceholder extends StatelessWidget {
 
   Widget placeholder() {
     return Container(
-      color: AppColors.lightYellow,
+      color: AppColors.background,
       child: Center(
         child: Image.asset(
-          isProductImage ?? false ? Images.curectLogo : Images.logo,
+          Images.curectLogo,
           width: 80.0,
         ),
       ),

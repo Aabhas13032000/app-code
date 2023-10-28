@@ -130,7 +130,7 @@ class _AppSliderState extends State<AppSlider> {
                         margin: const EdgeInsets.only(left: 5.0, right: 5.0),
                         width: selectedIndex == index ? 50.0 : 20.0,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50.0),
+                          borderRadius: BorderRadius.circular(0.0),
                           color: selectedIndex == index
                               ? AppColors.white
                               : AppColors.white.withOpacity(0.5),

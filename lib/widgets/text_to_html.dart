@@ -31,7 +31,7 @@ class TextToHtml extends StatelessWidget {
           : (description.replaceAll(exp, "")).toString(),
       textStyle: TextStyle(
         fontSize: fontSize,
-        fontFamily: Fonts.gilroyRegular,
+        fontFamily: Fonts.montserratRegular,
         color: textColor,
         fontStyle: fontStyleNew,
         overflow: TextOverflow.clip,
@@ -42,7 +42,7 @@ class TextToHtml extends StatelessWidget {
           const CircularProgressIndicator(),
       onTapUrl: (url) {
         Utility.printLog("Opening $url...");
-        launchUrl(Uri.parse(url ?? ""));
+        launchUrl(Uri.parse(url));
         return true;
       },
     );

@@ -183,67 +183,13 @@ class _MyAppState extends State<MyApp> {
         context.read<DeepLink>().setDeepLinkUrl('notifications');
       }
       if (notification != null) {
-        if (message.data["openURL"].toString().contains('book')) {
+        if (message.data["openURL"].toString().contains('product')) {
           Fluttertoast.showToast(
-            msg: "Go check our books",
+            msg: "Go check our product",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.TOP,
             timeInSecForIosWeb: 2,
             backgroundColor: AppColors.cardBg,
-            textColor: AppColors.richBlack,
-            fontSize: 16.0,
-          );
-        } else if (message.data["openURL"].toString().contains('program')) {
-          Fluttertoast.showToast(
-            msg: "Go check our programs",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.TOP,
-            timeInSecForIosWeb: 2,
-            backgroundColor: AppColors.lightCardBg,
-            textColor: AppColors.richBlack,
-            fontSize: 16.0,
-          );
-        } else if (message.data["openURL"].toString().contains('blog')) {
-          Fluttertoast.showToast(
-            msg: "Go check our blogs",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.TOP,
-            timeInSecForIosWeb: 2,
-            backgroundColor: AppColors.lightCardBg,
-            textColor: AppColors.richBlack,
-            fontSize: 16.0,
-          );
-        } else if (message.data["openURL"].toString().contains('myPrograms')) {
-          Fluttertoast.showToast(
-            msg: "Your session is starting in 15 min",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.TOP,
-            timeInSecForIosWeb: 2,
-            backgroundColor: AppColors.lightCardBg,
-            textColor: AppColors.richBlack,
-            fontSize: 16.0,
-          );
-        } else if (message.data["openURL"]
-            .toString()
-            .contains('foodCalories')) {
-          Fluttertoast.showToast(
-            msg: "Fill up your food calorie data",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.TOP,
-            timeInSecForIosWeb: 2,
-            backgroundColor: AppColors.lightCardBg,
-            textColor: AppColors.richBlack,
-            fontSize: 16.0,
-          );
-        } else if (message.data["openURL"]
-            .toString()
-            .contains('exerciseCalories')) {
-          Fluttertoast.showToast(
-            msg: "Fill up your workout log",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.TOP,
-            timeInSecForIosWeb: 2,
-            backgroundColor: AppColors.lightCardBg,
             textColor: AppColors.richBlack,
             fontSize: 16.0,
           );
@@ -311,12 +257,12 @@ class _MyAppState extends State<MyApp> {
           )
         : GetMaterialApp(
             builder: EasyLoading.init(),
-            title: 'HealFit',
+            title: 'Curect',
             theme: ThemeData(
               primarySwatch: Colors.blue,
               visualDensity: VisualDensity.adaptivePlatformDensity,
-              scaffoldBackgroundColor: AppColors.background,
-              fontFamily: Fonts.gilroyRegular,
+              scaffoldBackgroundColor: AppColors.black,
+              fontFamily: Fonts.montserratRegular,
             ),
             getPages: [
               GetPage(

@@ -74,7 +74,7 @@ class BlogCard extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: AppColors.white,
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(0.0),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(
@@ -98,7 +98,7 @@ class BlogCard extends StatelessWidget {
                                 style: const TextStyle(
                                   color: AppColors.subText,
                                   fontSize: 14.0,
-                                  fontFamily: Fonts.helixRegular,
+                                  fontFamily: Fonts.montserratRegular,
                                 ),
                               ),
                               const SizedBox(
@@ -110,7 +110,7 @@ class BlogCard extends StatelessWidget {
                                 style: const TextStyle(
                                   color: AppColors.richBlack,
                                   fontSize: 16.0,
-                                  fontFamily: Fonts.helixSemiBold,
+                                  fontFamily: Fonts.montserratSemiBold,
                                 ),
                               ),
                               const SizedBox(
@@ -122,7 +122,7 @@ class BlogCard extends StatelessWidget {
                                       textColor: AppColors.subText,
                                       fontSize: 14.0,
                                       maxLines: 2,
-                                      font: Fonts.gilroyRegular,
+                                      font: Fonts.montserratRegular,
                                       maxChar: 65,
                                     )
                                   : Text(
@@ -131,7 +131,7 @@ class BlogCard extends StatelessWidget {
                                       style: const TextStyle(
                                         color: AppColors.subText,
                                         fontSize: 14.0,
-                                        fontFamily: Fonts.gilroyRegular,
+                                        fontFamily: Fonts.montserratRegular,
                                       ),
                                     ),
                             ],
@@ -167,7 +167,7 @@ class BlogCard extends StatelessWidget {
                                             ? AppColors.highlight
                                             : AppColors.subText,
                                         fontSize: 16.0,
-                                        fontFamily: Fonts.helixMedium,
+                                        fontFamily: Fonts.montserratMedium,
                                       ),
                                     ),
                                   ],

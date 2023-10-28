@@ -57,10 +57,10 @@ class _OpenImageState extends State<OpenImage> {
 
   Widget placeholder() {
     return Container(
-      color: AppColors.lightYellow,
+      color: AppColors.background,
       child: Center(
         child: Image.asset(
-          'assets/images/logo.png',
+          Images.curectLogo,
           width: 80.0,
         ),
       ),

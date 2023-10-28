@@ -8,13 +8,11 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:heal_fit/screens/pages/open_image.dart';
-import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../config/config.dart';
 import '../models/models.dart';
-import '../screens/screens.dart';
 import '../utils/utility.dart';
 
 part 'blog_card.dart';

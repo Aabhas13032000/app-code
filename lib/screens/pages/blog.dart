@@ -254,7 +254,7 @@ class _BlogPageState extends State<BlogPage> {
                             iconColor: AppColors.white,
                             top: 0,
                             right: 0,
-                            borderRadius: 50.0,
+                            borderRadius: 0.0,
                             isShowBorder: false,
                             bgColor: AppColors.highlight,
                           ),
@@ -267,8 +267,8 @@ class _BlogPageState extends State<BlogPage> {
                     decoration: const BoxDecoration(
                       color: AppColors.white,
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20.0),
-                        topRight: Radius.circular(20.0),
+                        topLeft: Radius.circular(0.0),
+                        topRight: Radius.circular(0.0),
                       ),
                     ),
                     child: ConstrainedBox(
@@ -288,7 +288,7 @@ class _BlogPageState extends State<BlogPage> {
                                 ? const Expanded(
                                     child: Center(
                                       child: NoDataAvailable(
-                                        message: 'No comments available!!',
+                                        message: 'No comments available.',
                                       ),
                                     ),
                                   )
@@ -336,7 +336,7 @@ class _BlogPageState extends State<BlogPage> {
                                 style: const TextStyle(
                                   color: AppColors.richBlack,
                                   fontSize: 16.0,
-                                  fontFamily: Fonts.gilroyMedium,
+                                  fontFamily: Fonts.montserratMedium,
                                 ),
                                 controller: commentController,
                                 cursorColor: AppColors.defaultInputBorders,
@@ -363,11 +363,11 @@ class _BlogPageState extends State<BlogPage> {
                                       decoration: const BoxDecoration(
                                         color: AppColors.cardBg,
                                         borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(10.0),
-                                          bottomRight: Radius.circular(10.0),
+                                          topRight: Radius.circular(0.0),
+                                          bottomRight: Radius.circular(0.0),
                                         ),
                                       ),
-                                      child: const Center(
+                                      child: Center(
                                         child: Icon(
                                           MdiIcons.send,
                                           size: 24.0,
@@ -385,11 +385,11 @@ class _BlogPageState extends State<BlogPage> {
                                   hintStyle: const TextStyle(
                                     color: AppColors.placeholder,
                                     fontSize: 16.0,
-                                    fontFamily: Fonts.gilroyMedium,
+                                    fontFamily: Fonts.montserratMedium,
                                   ),
                                   focusColor: AppColors.placeholder,
                                   focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(0.0),
                                     borderSide: const BorderSide(
                                       color: AppColors.highlight,
                                       width: 2.0,
@@ -398,7 +398,7 @@ class _BlogPageState extends State<BlogPage> {
                                   errorBorder: InputBorder.none,
                                   disabledBorder: InputBorder.none,
                                   enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(0.0),
                                     borderSide: const BorderSide(
                                       color: AppColors.defaultInputBorders,
                                       width: 2.0,
@@ -501,7 +501,7 @@ class _BlogPageState extends State<BlogPage> {
         decoration: BoxDecoration(
           color: AppColors.white,
           border: Border.all(width: 1.5, color: AppColors.defaultInputBorders),
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(0.0),
         ),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -527,7 +527,7 @@ class _BlogPageState extends State<BlogPage> {
                       style: const TextStyle(
                         color: AppColors.richBlack,
                         fontSize: 16.0,
-                        fontFamily: Fonts.gilroyMedium,
+                        fontFamily: Fonts.montserratMedium,
                       ),
                     ),
                     const SizedBox(
@@ -538,7 +538,7 @@ class _BlogPageState extends State<BlogPage> {
                       style: const TextStyle(
                         color: AppColors.subText,
                         fontSize: 14.0,
-                        fontFamily: Fonts.gilroyRegular,
+                        fontFamily: Fonts.montserratRegular,
                       ),
                     ),
                     const SizedBox(
@@ -551,7 +551,7 @@ class _BlogPageState extends State<BlogPage> {
                       style: const TextStyle(
                         color: AppColors.subText,
                         fontSize: 14.0,
-                        fontFamily: Fonts.gilroyRegular,
+                        fontFamily: Fonts.montserratRegular,
                       ),
                     )
                   ],
@@ -660,24 +660,26 @@ class _BlogPageState extends State<BlogPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.white,
       appBar: CustomAppBar(
         preferredSize: const Size.fromHeight(138.0),
         showLeadingIcon: false,
         title: GestureDetector(
-          onTap: () {
-            Get.to(
-              () => const ProfilePage(),
-            );
-          },
-          child: CircularAvatar(
-            url: Constants.imgFinalUrl +
-                ((Application.user?.profileImage ?? "").isEmpty
-                    ? Application.profileImage
-                    : (Application.user?.profileImage ?? "")),
-            radius: 45.0,
-            borderColor: AppColors.highlight,
-            borderWidth: 2.0,
+          onTap: () {},
+          child: Row(
+            children: [
+              Image.asset(
+                Images.curectLogo,
+                width: 25.0,
+              ),
+              const SizedBox(
+                width: 10.0,
+              ),
+              Image.asset(
+                Images.curectLogoName,
+                width: 100.0,
+              ),
+            ],
           ),
         ),
         actions: [
@@ -686,52 +688,30 @@ class _BlogPageState extends State<BlogPage> {
               top: 12.5,
               bottom: 12.5,
               left: 0.0,
-              right: 0.0,
-            ),
-            child: GestureDetector(
-              onTap: () {
-                Get.to(
-                  () => const NotificationPage(),
-                );
-              },
-              child: const CustomIcon(
-                icon: MdiIcons.bellOutline,
-                borderWidth: 2.0,
-                borderColor: AppColors.defaultInputBorders,
-                isShowDot: true,
-                radius: 45.0,
-                iconSize: 24.0,
-                iconColor: AppColors.richBlack,
-                top: 8.0,
-                right: 8.0,
-                borderRadius: 8.0,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 12.5,
-              bottom: 12.5,
-              left: 15.0,
               right: 20.0,
             ),
             child: GestureDetector(
               onTap: () {
                 Get.to(
-                  () => const CartPage(),
+                  () => const ProfilePage(),
+                  transition: Transition.rightToLeft,
                 );
               },
-              child: const CustomIcon(
-                icon: MdiIcons.cartOutline,
-                borderWidth: 2.0,
-                borderColor: AppColors.defaultInputBorders,
-                isShowDot: true,
+              child: CustomIcon(
+                icon: Icons.close,
+                borderWidth: 0.0,
+                borderColor: AppColors.transparent,
+                isShowDot: false,
                 radius: 45.0,
-                iconSize: 24.0,
-                iconColor: AppColors.richBlack,
-                top: 8.0,
-                right: 8.0,
-                borderRadius: 8.0,
+                iconSize: 30.0,
+                iconColor: AppColors.white,
+                top: 0,
+                right: 0,
+                borderRadius: 0.0,
+                isShowBorder: false,
+                bgColor: AppColors.background,
+                isNameInitial: true,
+                name: (Application.user?.name ?? '')[0],
               ),
             ),
           ),
@@ -754,7 +734,7 @@ class _BlogPageState extends State<BlogPage> {
                 style: const TextStyle(
                   color: AppColors.richBlack,
                   fontSize: 16.0,
-                  fontFamily: Fonts.gilroyMedium,
+                  fontFamily: Fonts.montserratMedium,
                 ),
                 controller: searchController,
                 cursorColor: AppColors.defaultInputBorders,
@@ -774,16 +754,14 @@ class _BlogPageState extends State<BlogPage> {
                   }
                 },
                 decoration: InputDecoration(
+                  filled: true,
+                  fillColor: AppColors.background,
                   hintMaxLines: 1,
                   hintText: 'Search by title',
                   counterText: '',
                   contentPadding: const EdgeInsets.only(top: 20.0),
-                  prefixIcon: const Center(
-                    child: Icon(
-                      Icons.search_sharp,
-                      size: 24.0,
-                      color: AppColors.subText,
-                    ),
+                  prefixIcon: Center(
+                    child: SvgIcons.search,
                   ),
                   prefixIconConstraints: const BoxConstraints(
                     minHeight: 55.0,
@@ -792,13 +770,13 @@ class _BlogPageState extends State<BlogPage> {
                     maxWidth: 50.0,
                   ),
                   hintStyle: const TextStyle(
-                    color: AppColors.placeholder,
+                    color: AppColors.subText,
                     fontSize: 16.0,
-                    fontFamily: Fonts.gilroyMedium,
+                    fontFamily: Fonts.montserratMedium,
                   ),
                   focusColor: AppColors.placeholder,
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(0.0),
                     borderSide: const BorderSide(
                       color: AppColors.highlight,
                       width: 2.0,
@@ -807,9 +785,9 @@ class _BlogPageState extends State<BlogPage> {
                   errorBorder: InputBorder.none,
                   disabledBorder: InputBorder.none,
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(0.0),
                     borderSide: const BorderSide(
-                      color: AppColors.defaultInputBorders,
+                      color: AppColors.background,
                       width: 2.0,
                     ),
                   ),
@@ -838,27 +816,8 @@ class _BlogPageState extends State<BlogPage> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      // SizedBox(
-                      //   height: popularBlogs.isEmpty ? 0.0 : 20.0,
-                      // ),
-                      // popularBlogs.isEmpty ? const SizedBox() : blogs(),
-                      // SizedBox(
-                      //   height: popularBlogs.isEmpty ? 0.0 : 5.0,
-                      // ),
-                      // popularBlogs.isNotEmpty
-                      //     ? const Padding(
-                      //         padding: EdgeInsets.only(
-                      //           left: 20.0,
-                      //           right: 20.0,
-                      //         ),
-                      //         child: HeadingViewAll(
-                      //           title: 'More blogs',
-                      //           isShowViewAll: false,
-                      //         ),
-                      //       )
-                      //     : const SizedBox(),
                       Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.all(0.0),
                         child: ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
@@ -866,6 +825,7 @@ class _BlogPageState extends State<BlogPage> {
                           itemBuilder: (context, index) {
                             return BlogCardThree(
                               description: blogList[index].description,
+                              title: blogList[index].title,
                               likes: int.parse(
                                   blogList[index].totalLikes.toString()),
                               date: DateTime.parse(blogList[index].createdAt)
@@ -881,10 +841,12 @@ class _BlogPageState extends State<BlogPage> {
                                         .length >
                                     100) {
                                   Get.to(
-                                      () => EachBlog(
-                                            id: blogList[index].id,
-                                          ),
-                                      preventDuplicates: false,);
+                                    () => EachBlog(
+                                      id: blogList[index].id,
+                                    ),
+                                    preventDuplicates: false,
+                                    transition: Transition.rightToLeft,
+                                  );
                                 }
                               },
                               onCommentClicked: () {
@@ -963,7 +925,7 @@ class _BlogPageState extends State<BlogPage> {
                                   style: TextStyle(
                                     color: AppColors.richBlack,
                                     fontSize: 16.0,
-                                    fontFamily: Fonts.gilroyMedium,
+                                    fontFamily: Fonts.montserratMedium,
                                   ),
                                 ),
                               ),
@@ -989,6 +951,7 @@ class _BlogPageState extends State<BlogPage> {
             onViewAllPressed: () {
               Get.to(
                 () => const ViewAllBlogs(),
+                transition: Transition.rightToLeft,
               );
             },
           ),
@@ -1020,10 +983,12 @@ class _BlogPageState extends State<BlogPage> {
                       Constants.imgFinalUrl + popularBlogs[index].coverPhoto,
                   onBlogClicked: () {
                     Get.to(
-                        () => EachBlog(
-                              id: popularBlogs[index].id,
-                            ),
-                        preventDuplicates: false);
+                      () => EachBlog(
+                        id: popularBlogs[index].id,
+                      ),
+                      preventDuplicates: false,
+                      transition: Transition.rightToLeft,
+                    );
                   },
                   onCommentClicked: () {
                     getComments(popularBlogs[index].id, 0);

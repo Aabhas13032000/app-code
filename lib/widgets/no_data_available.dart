@@ -31,7 +31,7 @@ class NoDataAvailable extends StatelessWidget {
           style: const TextStyle(
             color: AppColors.richBlack,
             fontSize: 16.0,
-            fontFamily: Fonts.gilroySemiBold,
+            fontFamily: Fonts.montserratSemiBold,
           ),
         ),
       ],

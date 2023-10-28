@@ -35,6 +35,10 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
   bool addAddressButton = false;
   bool selectAddressButton = false;
   bool noItemsPresent = false;
+  String paymentMethod = '';
+  double finalShippingCharge = 0;
+  double codCharges = 0;
+  double finalTotal = 0;
 
   late Razorpay _razorpay;
 
@@ -58,14 +62,14 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                     [ApiKeys.shippingCharges]
                 .toString());
           }
+          codCharges = double.parse(data[ApiKeys.codCharges].toString());
           product = Cart.fromJson(data[ApiKeys.data][0]);
           product?.description = widget.selectedSize;
           product?.quantity = 1;
-          total = maximumCharge <=
-                  (Cart.fromJson(data[ApiKeys.data][0]).discountPrice ?? 0)
-              ? (Cart.fromJson(data[ApiKeys.data][0]).discountPrice ?? 0)
-              : (Cart.fromJson(data[ApiKeys.data][0]).discountPrice ?? 0) +
-                  shippingCharge;
+          total = (Cart.fromJson(data[ApiKeys.data][0]).discountPrice ?? 0);
+          paymentMethod = 'online';
+          finalShippingCharge = maximumCharge <= total ? 0 : shippingCharge;
+          finalTotal = total + finalShippingCharge;
           totalItems = 1;
           if (data[ApiKeys.eachQuantity].length != 0) {
             productSize = Sizes.fromJson(data[ApiKeys.eachQuantity][0]);
@@ -150,8 +154,8 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
       int previousQuantity = product?.quantity ?? 0;
       int newQuantity = previousQuantity + 1;
       if (newQuantity > maximumQuantity) {
-        showSnackBar(AlertMessages.getMessage(52), AppColors.lightYellow,
-            AppColors.highlight, 50.0);
+        showSnackBar(AlertMessages.getMessage(52), AppColors.background,
+            AppColors.subText, 50.0);
       } else {
         double newProductPrice = (product?.discountPrice ?? 0) * newQuantity;
         Cart? newProduct = product;
@@ -167,8 +171,8 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
       int previousQuantity = product?.quantity ?? 0;
       int newQuantity = previousQuantity - 1;
       if (newQuantity < 1) {
-        showSnackBar(AlertMessages.getMessage(53), AppColors.lightYellow,
-            AppColors.highlight, 50.0);
+        showSnackBar(AlertMessages.getMessage(53), AppColors.background,
+            AppColors.subText, 50.0);
       } else {
         double newProductPrice = (product?.discountPrice ?? 0) * newQuantity;
         Cart? newProduct = product;
@@ -288,7 +292,7 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                     iconColor: AppColors.white,
                     top: 0,
                     right: 0,
-                    borderRadius: 50.0,
+                    borderRadius: 0.0,
                     isShowBorder: false,
                     bgColor: AppColors.highlight,
                   ),
@@ -301,8 +305,8 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                   decoration: const BoxDecoration(
                     color: AppColors.white,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20.0),
-                      topRight: Radius.circular(20.0),
+                      topLeft: Radius.circular(0.0),
+                      topRight: Radius.circular(0.0),
                     ),
                   ),
                   child: ConstrainedBox(
@@ -326,7 +330,7 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                               style: TextStyle(
                                 color: AppColors.richBlack,
                                 fontSize: 20.0,
-                                fontFamily: Fonts.helixSemiBold,
+                                fontFamily: Fonts.montserratSemiBold,
                               ),
                             ),
                           ),
@@ -356,7 +360,7 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                                       bottom: 7.0,
                                     ),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12.0),
+                                      borderRadius: BorderRadius.circular(0.0),
                                       color: userAddress[index].id ==
                                               context
                                                   .watch<
@@ -404,7 +408,8 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                                               style: const TextStyle(
                                                 color: AppColors.richBlack,
                                                 fontSize: 16.0,
-                                                fontFamily: Fonts.gilroyRegular,
+                                                fontFamily:
+                                                    Fonts.montserratRegular,
                                               ),
                                             ),
                                           ),
@@ -422,7 +427,8 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                                               style: const TextStyle(
                                                 color: AppColors.richBlack,
                                                 fontSize: 16.0,
-                                                fontFamily: Fonts.gilroyRegular,
+                                                fontFamily:
+                                                    Fonts.montserratRegular,
                                               ),
                                             ),
                                           ),
@@ -442,6 +448,8 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                                                           userAddress[index],
                                                       isEditAddress: true,
                                                     ),
+                                                    transition:
+                                                        Transition.rightToLeft,
                                                   );
                                                 },
                                                 child: const CustomIcon(
@@ -455,7 +463,7 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                                                       AppColors.placeholder,
                                                   top: 0,
                                                   right: 0,
-                                                  borderRadius: 50.0,
+                                                  borderRadius: 0.0,
                                                   isShowBorder: false,
                                                   bgColor: AppColors.white,
                                                 ),
@@ -497,7 +505,7 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                                                   iconColor: AppColors.warning,
                                                   top: 0,
                                                   right: 0,
-                                                  borderRadius: 50.0,
+                                                  borderRadius: 0.0,
                                                   isShowBorder: false,
                                                   bgColor: AppColors.white,
                                                 ),
@@ -525,13 +533,14 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                                 Expanded(
                                   child: CustomButton(
                                     title: 'Add address',
-                                    paddingVertical: 10.5,
+                                    paddingVertical: 18,
                                     paddingHorizontal: 20,
-                                    borderRadius: 8.0,
+                                    borderRadius: 0.0,
                                     onPressed: () {
                                       Get.back();
                                       Get.to(
                                         () => AddEditAddressPage(),
+                                        transition: Transition.rightToLeft,
                                       );
                                     },
                                   ),
@@ -563,6 +572,7 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
         return false;
       },
       child: Scaffold(
+        backgroundColor: AppColors.white,
         appBar: CustomAppBar(
           preferredSize: const Size.fromHeight(70.0),
           showLeadingIcon: true,
@@ -572,36 +582,10 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
             style: TextStyle(
               color: AppColors.richBlack,
               fontSize: 20.0,
-              fontFamily: Fonts.helixSemiBold,
+              fontFamily: Fonts.montserratSemiBold,
             ),
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 12.5,
-                horizontal: 20.0,
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  Get.to(
-                    () => const CartPage(),
-                  );
-                },
-                child: const CustomIcon(
-                  icon: MdiIcons.cartOutline,
-                  borderWidth: 2.0,
-                  borderColor: AppColors.defaultInputBorders,
-                  isShowDot: true,
-                  radius: 45.0,
-                  iconSize: 24.0,
-                  iconColor: AppColors.richBlack,
-                  top: 8.0,
-                  right: 8.0,
-                  borderRadius: 8.0,
-                ),
-              ),
-            ),
-          ],
+          actions: const [],
           leadingWidget: Padding(
             padding: const EdgeInsets.only(
               top: 12.5,
@@ -621,9 +605,11 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                 radius: 45.0,
                 iconSize: 20.0,
                 iconColor: AppColors.richBlack,
-                top: 8.0,
-                right: 8.0,
-                borderRadius: 8.0,
+                top: 0,
+                right: 0,
+                borderRadius: 0.0,
+                isShowBorder: false,
+                bgColor: AppColors.background,
               ),
             ),
           ),
@@ -670,6 +656,7 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                               () => EachProductPage(
                                 id: product?.itemId ?? '0',
                               ),
+                              transition: Transition.rightToLeft,
                             );
                           },
                         ),
@@ -688,6 +675,7 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                           if (userAddress.isEmpty) {
                             Get.to(
                               () => AddEditAddressPage(),
+                              transition: Transition.rightToLeft,
                             );
                           } else {
                             selectAddressPopup(context);
@@ -697,12 +685,21 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                       const SizedBox(
                         height: 20.0,
                       ),
+                      paymentMethodCard(),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
                       PayCard(
-                        total: total,
+                        total: finalTotal,
+                        paymentMethod: paymentMethod,
+                        codCharges: codCharges,
                         initiatePayment: () {
                           if (Application.isPaymentAllowed) {
                             if (userAddress.isEmpty) {
                               showSnackBar(AlertMessages.getMessage(40),
+                                  AppColors.lightRed, AppColors.warning, 50.0);
+                            } else if (paymentMethod.isEmpty) {
+                              showSnackBar(AlertMessages.getMessage(60),
                                   AppColors.lightRed, AppColors.warning, 50.0);
                             } else {
                               if ((Provider.of<MainContainerProvider>(context,
@@ -717,7 +714,7 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                                           '')
                                       .isNotEmpty)) {
                                 _initiatePayment(
-                                    total, product?.name ?? 'Curect');
+                                    finalTotal, product?.name ?? '');
                               } else {
                                 showSnackBar(
                                     AlertMessages.getMessage(41),
@@ -732,36 +729,45 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                           }
                         },
                         payOnDelivery: () {
-                          Utility.printLog('Payment on delivery clicked');
-                          if (userAddress.isEmpty) {
-                            showSnackBar(AlertMessages.getMessage(40),
-                                AppColors.lightRed, AppColors.warning, 50.0);
-                          } else {
-                            if ((Provider.of<MainContainerProvider>(context,
-                                            listen: false)
-                                        .userDefaultAddress
-                                        ?.fullName !=
-                                    null) &&
-                                ((Provider.of<MainContainerProvider>(context,
-                                                listen: false)
-                                            .userDefaultAddress
-                                            ?.fullName ??
-                                        '')
-                                    .isNotEmpty)) {
-                              _payOnDelivery(Provider.of<MainContainerProvider>(
-                                      context,
-                                      listen: false)
-                                  .userDefaultAddress);
-                            } else {
-                              showSnackBar(AlertMessages.getMessage(41),
+                          if (Application.isPaymentAllowed) {
+                            if (userAddress.isEmpty) {
+                              showSnackBar(AlertMessages.getMessage(40),
                                   AppColors.lightRed, AppColors.warning, 50.0);
+                            } else if (paymentMethod.isEmpty) {
+                              showSnackBar(AlertMessages.getMessage(60),
+                                  AppColors.lightRed, AppColors.warning, 50.0);
+                            } else {
+                              if ((Provider.of<MainContainerProvider>(context,
+                                              listen: false)
+                                          .userDefaultAddress
+                                          ?.fullName !=
+                                      null) &&
+                                  ((Provider.of<MainContainerProvider>(context,
+                                                  listen: false)
+                                              .userDefaultAddress
+                                              ?.fullName ??
+                                          '')
+                                      .isNotEmpty)) {
+                                _payOnDelivery(
+                                    Provider.of<MainContainerProvider>(context,
+                                            listen: false)
+                                        .userDefaultAddress);
+                              } else {
+                                showSnackBar(
+                                    AlertMessages.getMessage(41),
+                                    AppColors.lightRed,
+                                    AppColors.warning,
+                                    50.0);
+                              }
                             }
+                          } else {
+                            showSnackBar(AlertMessages.getMessage(55),
+                                AppColors.lightRed, AppColors.warning, 75.0);
                           }
                         },
                         showPayOnDelivery: false,
                         totalItems: totalItems,
-                        shippingCharges:
-                            maximumCharge <= total ? 0 : shippingCharge,
+                        shippingCharges: finalShippingCharge,
                         maximumCharges: maximumCharge,
                       ),
                       const SizedBox(
@@ -771,6 +777,130 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                   ),
                 ),
               ),
+      ),
+    );
+  }
+
+  Widget paymentMethodCard() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(0.0),
+          color: AppColors.white,
+          border: Border.all(
+            width: 1.5,
+            color: AppColors.defaultInputBorders,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Text(
+                "Select Payment Method",
+                style: TextStyle(
+                  color: AppColors.richBlack,
+                  fontSize: 20.0,
+                  fontFamily: Fonts.montserratSemiBold,
+                ),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              Divider(
+                height: 20.0,
+                thickness: 1.0,
+                color: AppColors.placeholder.withOpacity(0.5),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        finalShippingCharge =
+                            maximumCharge <= total ? 0 : shippingCharge;
+                        finalTotal = maximumCharge <= total
+                            ? total
+                            : shippingCharge + total;
+                        setState(() {
+                          paymentMethod = 'online';
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(20.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(0.0),
+                          color: AppColors.background,
+                          border: Border.all(
+                            width: 1.5,
+                            color: paymentMethod == 'online'
+                                ? AppColors.highlight
+                                : AppColors.background,
+                          ),
+                        ),
+                        child: const Text(
+                          "Online\nPayment",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AppColors.richBlack,
+                            fontSize: 16.0,
+                            fontFamily: Fonts.montserratMedium,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20.0,
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        finalShippingCharge = maximumCharge <= total
+                            ? codCharges
+                            : shippingCharge + codCharges;
+                        finalTotal = maximumCharge <= total
+                            ? codCharges + total
+                            : shippingCharge + codCharges + total;
+                        setState(() {
+                          paymentMethod = 'cod';
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(20.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(0.0),
+                          color: AppColors.background,
+                          border: Border.all(
+                            width: 1.5,
+                            color: paymentMethod == 'cod'
+                                ? AppColors.highlight
+                                : AppColors.background,
+                          ),
+                        ),
+                        child: const Text(
+                          "Pay on\nDelivery",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AppColors.richBlack,
+                            fontSize: 16.0,
+                            fontFamily: Fonts.montserratMedium,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -786,7 +916,7 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
       "companyName": title,
       "description": "Payment for the product"
     };
-    String url = '${Constants.finalProductUrl}/productPayment/paymentInitiate';
+    String url = '${Constants.imgBackendUrl}/productPayment/paymentInitiate';
     Map<String, dynamic> initiatePayment =
         await ApiFunctions.postApiResult(url, Application.deviceToken, params);
     bool status = initiatePayment['status'];
@@ -824,12 +954,13 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
       "description": widget.selectedSize,
       "quantity": (product?.quantity ?? 1).toString(),
       "item_id": widget.id,
-      "price": total.toString(),
+      "price": finalTotal.toString(),
       "productName": product?.name ?? '',
-      "paymentMethod": 'COD'
+      "paymentMethod": paymentMethod,
+      "actual_price": total.toString(),
     };
     String url =
-        '${Constants.finalProductUrl}/productPayment/purchaseSingleItemMobile';
+        '${Constants.imgBackendUrl}/productPayment/purchaseSingleItemMobile';
     Map<String, dynamic> paymentSuccess =
         await ApiFunctions.postApiResult(url, Application.deviceToken, params);
     bool status = paymentSuccess['status'];
@@ -842,7 +973,10 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
         // setAddressRefresh();
         Get.back();
         Future.delayed(const Duration(seconds: 1), () {
-          Get.to(() => const MyOrders());
+          Get.to(
+            () => const MyOrders(),
+            transition: Transition.rightToLeft,
+          );
         });
       } else if (data[ApiKeys.message].toString() == 'payment_failed' ||
           data[ApiKeys.message].toString() == 'Database_connection_error') {

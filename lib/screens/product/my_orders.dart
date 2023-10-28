@@ -147,6 +147,7 @@ class _MyOrdersState extends State<MyOrders> {
         return false;
       },
       child: Scaffold(
+        backgroundColor: AppColors.white,
         appBar: CustomAppBar(
           preferredSize: const Size.fromHeight(70.0),
           showLeadingIcon: true,
@@ -156,36 +157,10 @@ class _MyOrdersState extends State<MyOrders> {
             style: TextStyle(
               color: AppColors.richBlack,
               fontSize: 18.0,
-              fontFamily: Fonts.helixSemiBold,
+              fontFamily: Fonts.montserratSemiBold,
             ),
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 12.5,
-                horizontal: 20.0,
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  Get.to(
-                    () => const CartPage(),
-                  );
-                },
-                child: const CustomIcon(
-                  icon: MdiIcons.cartOutline,
-                  borderWidth: 2.0,
-                  borderColor: AppColors.defaultInputBorders,
-                  isShowDot: true,
-                  radius: 45.0,
-                  iconSize: 24.0,
-                  iconColor: AppColors.richBlack,
-                  top: 8.0,
-                  right: 8.0,
-                  borderRadius: 8.0,
-                ),
-              ),
-            ),
-          ],
+          actions: const [],
           leadingWidget: Padding(
             padding: const EdgeInsets.only(
               top: 12.5,
@@ -205,9 +180,11 @@ class _MyOrdersState extends State<MyOrders> {
                 radius: 45.0,
                 iconSize: 20.0,
                 iconColor: AppColors.richBlack,
-                top: 8.0,
-                right: 8.0,
-                borderRadius: 8.0,
+                top: 0,
+                right: 0,
+                borderRadius: 0.0,
+                isShowBorder: false,
+                bgColor: AppColors.background,
               ),
             ),
           ),
@@ -224,7 +201,7 @@ class _MyOrdersState extends State<MyOrders> {
             : myOrders.isEmpty
                 ? const Center(
                     child: NoDataAvailable(
-                      message: 'Purchase some product first !!',
+                      message: 'Purchase some product first.',
                     ),
                   )
                 : LazyLoadScrollView(
@@ -278,6 +255,7 @@ class _MyOrdersState extends State<MyOrders> {
                                         () => EachProductPage(
                                           id: myOrders[index].itemId ?? '0',
                                         ),
+                                        transition: Transition.rightToLeft,
                                       );
                                     },
                                   );

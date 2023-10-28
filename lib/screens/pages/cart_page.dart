@@ -14,11 +14,13 @@ class _CartPageState extends State<CartPage> {
   List<Cart> productCartItems = [];
   bool isLoading = false;
   double total = 0;
-  String selectedTab = 'product';
+  double finalTotal = 0;
   List<Address> userAddress = [];
   Address? userDefaultAddress;
   double maximumCharge = 0;
   double shippingCharge = 0;
+  double finalShippingCharge = 0;
+  double codCharges = 0;
   bool defaultAddress = false;
   bool showAddressPopup = false;
   bool addAddressButton = false;
@@ -27,90 +29,82 @@ class _CartPageState extends State<CartPage> {
   int addressNullCounter = 0;
   String fullName = '';
   String phoneNumber = '';
+  String paymentMethod = '';
   String selectedAddress = '';
 
   late Razorpay _razorpay;
 
   void changeTab(String value) {
     setState(() {
-      selectedTab = value;
       total = 0;
       isLoading = false;
       cartItems = [];
       productCartItems = [];
     });
-    getMyCart(value);
+    getMyCart();
   }
 
-  void getMyCart(String value) async {
+  void getMyCart() async {
     Utility.showProgress(true);
-    String url = value == 'product'
-        ? '${Constants.finalUrl}/cart/getUserProductCart?user_id=${Application.user?.id}'
-        : '${Constants.finalUrl}/cart/getUserCart?user_id=${Application.user?.id}';
+    String url =
+        '${Constants.finalUrl}/cart/getUserProductCart?user_id=${Application.user?.id}';
     Map<String, dynamic> cartData =
         await ApiFunctions.getApiResult(url, Application.deviceToken);
     bool status = cartData['status'];
     var data = cartData['data'];
     if (status) {
       if (data[ApiKeys.message].toString() == 'success') {
-        cartItems.clear();
         productCartItems.clear();
         userAddress.clear();
         data[ApiKeys.data].forEach((program) {
-          if (value == 'product') {
-            total = total +
-                (Cart.fromJson(program).discountPrice ?? 0) *
-                    (Cart.fromJson(program).quantity ?? 0);
-            productCartItems.add(Cart.fromJson(program));
-          } else {
-            total = total + (Subscription.fromJson(program).price ?? 0);
-            cartItems.add(Subscription.fromJson(program));
-          }
+          total = total +
+              (Cart.fromJson(program).discountPrice ?? 0) *
+                  (Cart.fromJson(program).quantity ?? 0);
+          productCartItems.add(Cart.fromJson(program));
         });
-        if (value == 'product') {
-          if (data[ApiKeys.shippingDetails].length != 0) {
-            maximumCharge = double.parse(data[ApiKeys.shippingDetails][0]
-                    [ApiKeys.maximumValue]
-                .toString());
-            shippingCharge = double.parse(data[ApiKeys.shippingDetails][0]
-                    [ApiKeys.shippingCharges]
-                .toString());
-          }
-          double newTotal =
-              maximumCharge <= total ? total : total + shippingCharge;
-          total = newTotal;
-          if (data[ApiKeys.address].length != 0) {
-            data[ApiKeys.address].forEach((address) {
-              userAddress.add(Address.fromJson(address));
-              if (Address.fromJson(address).defaultAddress ?? false) {
-                userDefaultAddress = Address.fromJson(address);
-                fullName = Address.fromJson(address).fullName ?? '';
-                phoneNumber = Address.fromJson(address).phoneNumber ?? '';
-                selectedAddress =
-                    '${Address.fromJson(address).flatNo ?? ''} ${Address.fromJson(address).area ?? ''}, ${(Address.fromJson(address).landmark ?? '').isNotEmpty ? '${Address.fromJson(address).landmark ?? ''},' : ''} ${(Address.fromJson(address).city ?? '')}, ${(Address.fromJson(address).state ?? '')}(${(Address.fromJson(address).pincode ?? '')})';
-              } else {
-                addressNullCounter++;
-              }
-            });
-            if (addressNullCounter >= data[ApiKeys.address].length) {
-              userDefaultAddress = userAddress[0];
-              fullName = userAddress[0].fullName ?? '';
-              phoneNumber = userAddress[0].phoneNumber ?? '';
-              selectedAddress =
-                  '${userAddress[0].flatNo ?? ''} ${userAddress[0].area ?? ''}, ${(userAddress[0].landmark ?? '').isNotEmpty ? '${userAddress[0].landmark ?? ''},' : ''} ${(userAddress[0].city ?? '')}, ${(userAddress[0].state ?? '')}(${(userAddress[0].pincode ?? '')})';
-            } else {
-              defaultAddress = true;
-            }
-            addAddressButton = false;
-            selectAddressButton = true;
-            showAddressPopup = false;
-          } else {
-            addAddressButton = true;
-            selectAddressButton = false;
-            showAddressPopup = true;
-          }
-          setUserDefaultAddress(userDefaultAddress);
+        if (data[ApiKeys.shippingDetails].length != 0) {
+          maximumCharge = double.parse(data[ApiKeys.shippingDetails][0]
+                  [ApiKeys.maximumValue]
+              .toString());
+          shippingCharge = double.parse(data[ApiKeys.shippingDetails][0]
+                  [ApiKeys.shippingCharges]
+              .toString());
         }
+        codCharges = double.parse(data[ApiKeys.codCharges].toString());
+        paymentMethod = 'online';
+        finalShippingCharge = maximumCharge <= total ? 0 : shippingCharge;
+        finalTotal = total + finalShippingCharge;
+        if (data[ApiKeys.address].length != 0) {
+          data[ApiKeys.address].forEach((address) {
+            userAddress.add(Address.fromJson(address));
+            if (Address.fromJson(address).defaultAddress ?? false) {
+              userDefaultAddress = Address.fromJson(address);
+              fullName = Address.fromJson(address).fullName ?? '';
+              phoneNumber = Address.fromJson(address).phoneNumber ?? '';
+              selectedAddress =
+                  '${Address.fromJson(address).flatNo ?? ''} ${Address.fromJson(address).area ?? ''}, ${(Address.fromJson(address).landmark ?? '').isNotEmpty ? '${Address.fromJson(address).landmark ?? ''},' : ''} ${(Address.fromJson(address).city ?? '')}, ${(Address.fromJson(address).state ?? '')}(${(Address.fromJson(address).pincode ?? '')})';
+            } else {
+              addressNullCounter++;
+            }
+          });
+          if (addressNullCounter >= data[ApiKeys.address].length) {
+            userDefaultAddress = userAddress[0];
+            fullName = userAddress[0].fullName ?? '';
+            phoneNumber = userAddress[0].phoneNumber ?? '';
+            selectedAddress =
+                '${userAddress[0].flatNo ?? ''} ${userAddress[0].area ?? ''}, ${(userAddress[0].landmark ?? '').isNotEmpty ? '${userAddress[0].landmark ?? ''},' : ''} ${(userAddress[0].city ?? '')}, ${(userAddress[0].state ?? '')}(${(userAddress[0].pincode ?? '')})';
+          } else {
+            defaultAddress = true;
+          }
+          addAddressButton = false;
+          selectAddressButton = true;
+          showAddressPopup = false;
+        } else {
+          addAddressButton = true;
+          selectAddressButton = false;
+          showAddressPopup = true;
+        }
+        setUserDefaultAddress(userDefaultAddress);
         Utility.showProgress(false);
         setState(() {
           isLoading = true;
@@ -162,11 +156,7 @@ class _CartPageState extends State<CartPage> {
         Utility.showProgress(false);
         showSnackBar(AlertMessages.getMessage(54), AppColors.lightGreen,
             AppColors.congrats, 50.0);
-        if (selectedTab == 'product') {
-          changeTab('product');
-        } else {
-          changeTab('program');
-        }
+        changeTab('product');
         setState(() {});
       } else if (data[ApiKeys.message].toString() == 'Auth_token_failure' ||
           data[ApiKeys.message].toString() == 'Database_connection_error') {
@@ -194,8 +184,8 @@ class _CartPageState extends State<CartPage> {
       int previousQuantity = productCartItems[index].quantity ?? 0;
       int newQuantity = previousQuantity + 1;
       if (newQuantity > maximumQuantity) {
-        showSnackBar(AlertMessages.getMessage(52), AppColors.lightYellow,
-            AppColors.highlight, 50.0);
+        showSnackBar(AlertMessages.getMessage(52), AppColors.background,
+            AppColors.subText, 50.0);
       } else {
         incrementDecrementValue(id, value);
       }
@@ -203,8 +193,8 @@ class _CartPageState extends State<CartPage> {
       int previousQuantity = productCartItems[index].quantity ?? 0;
       int newQuantity = previousQuantity - 1;
       if (newQuantity < 1) {
-        showSnackBar(AlertMessages.getMessage(53), AppColors.lightYellow,
-            AppColors.highlight, 50.0);
+        showSnackBar(AlertMessages.getMessage(53), AppColors.background,
+            AppColors.subText, 50.0);
       } else {
         incrementDecrementValue(id, value);
       }
@@ -226,11 +216,7 @@ class _CartPageState extends State<CartPage> {
         Utility.showProgress(false);
         showSnackBar(AlertMessages.getMessage(16), AppColors.lightGreen,
             AppColors.congrats, 50.0);
-        if (selectedTab == 'product') {
-          changeTab('product');
-        } else {
-          changeTab('program');
-        }
+        changeTab('product');
         setState(() {});
       } else if (data[ApiKeys.message].toString() == 'Auth_token_failure' ||
           data[ApiKeys.message].toString() == 'Database_connection_error') {
@@ -269,11 +255,7 @@ class _CartPageState extends State<CartPage> {
         showSnackBar(AlertMessages.getMessage(37), AppColors.lightGreen,
             AppColors.congrats, 50.0);
         Get.back();
-        if (selectedTab == 'product') {
-          changeTab('product');
-        } else {
-          changeTab('program');
-        }
+        changeTab('product');
       } else if (data[ApiKeys.message].toString() == 'Auth_token_failure' ||
           data[ApiKeys.message].toString() == 'Database_connection_error') {
         Utility.showProgress(false);
@@ -313,7 +295,7 @@ class _CartPageState extends State<CartPage> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-    getMyCart(selectedTab);
+    getMyCart();
   }
 
   @override
@@ -350,7 +332,7 @@ class _CartPageState extends State<CartPage> {
                     iconColor: AppColors.white,
                     top: 0,
                     right: 0,
-                    borderRadius: 50.0,
+                    borderRadius: 0.0,
                     isShowBorder: false,
                     bgColor: AppColors.highlight,
                   ),
@@ -363,8 +345,8 @@ class _CartPageState extends State<CartPage> {
                   decoration: const BoxDecoration(
                     color: AppColors.white,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20.0),
-                      topRight: Radius.circular(20.0),
+                      topLeft: Radius.circular(0.0),
+                      topRight: Radius.circular(0.0),
                     ),
                   ),
                   child: ConstrainedBox(
@@ -388,7 +370,7 @@ class _CartPageState extends State<CartPage> {
                               style: TextStyle(
                                 color: AppColors.richBlack,
                                 fontSize: 20.0,
-                                fontFamily: Fonts.helixSemiBold,
+                                fontFamily: Fonts.montserratSemiBold,
                               ),
                             ),
                           ),
@@ -418,14 +400,14 @@ class _CartPageState extends State<CartPage> {
                                       bottom: 7.0,
                                     ),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12.0),
+                                      borderRadius: BorderRadius.circular(0.0),
                                       color: userAddress[index].id ==
                                               context
                                                   .watch<
                                                       MainContainerProvider>()
                                                   .userDefaultAddress
                                                   ?.id
-                                          ? AppColors.cardBg
+                                          ? AppColors.background
                                           : AppColors.white,
                                       border: Border.all(
                                         width: userAddress[index].id ==
@@ -466,7 +448,8 @@ class _CartPageState extends State<CartPage> {
                                               style: const TextStyle(
                                                 color: AppColors.richBlack,
                                                 fontSize: 16.0,
-                                                fontFamily: Fonts.gilroyRegular,
+                                                fontFamily:
+                                                    Fonts.montserratRegular,
                                               ),
                                             ),
                                           ),
@@ -484,7 +467,8 @@ class _CartPageState extends State<CartPage> {
                                               style: const TextStyle(
                                                 color: AppColors.richBlack,
                                                 fontSize: 16.0,
-                                                fontFamily: Fonts.gilroyRegular,
+                                                fontFamily:
+                                                    Fonts.montserratRegular,
                                               ),
                                             ),
                                           ),
@@ -504,6 +488,8 @@ class _CartPageState extends State<CartPage> {
                                                           userAddress[index],
                                                       isEditAddress: true,
                                                     ),
+                                                    transition:
+                                                        Transition.rightToLeft,
                                                   );
                                                 },
                                                 child: const CustomIcon(
@@ -517,7 +503,7 @@ class _CartPageState extends State<CartPage> {
                                                       AppColors.placeholder,
                                                   top: 0,
                                                   right: 0,
-                                                  borderRadius: 50.0,
+                                                  borderRadius: 0.0,
                                                   isShowBorder: false,
                                                   bgColor: AppColors.white,
                                                 ),
@@ -559,7 +545,7 @@ class _CartPageState extends State<CartPage> {
                                                   iconColor: AppColors.warning,
                                                   top: 0,
                                                   right: 0,
-                                                  borderRadius: 50.0,
+                                                  borderRadius: 0.0,
                                                   isShowBorder: false,
                                                   bgColor: AppColors.white,
                                                 ),
@@ -587,13 +573,14 @@ class _CartPageState extends State<CartPage> {
                                 Expanded(
                                   child: CustomButton(
                                     title: 'Add address',
-                                    paddingVertical: 10.5,
+                                    paddingVertical: 18,
                                     paddingHorizontal: 20,
-                                    borderRadius: 8.0,
+                                    borderRadius: 0.0,
                                     onPressed: () {
                                       Get.back();
                                       Get.to(
                                         () => AddEditAddressPage(),
+                                        transition: Transition.rightToLeft,
                                       );
                                     },
                                   ),
@@ -620,45 +607,63 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
       appBar: CustomAppBar(
         preferredSize: const Size.fromHeight(70.0),
-        showLeadingIcon: true,
-        centerTitle: true,
-        title: const Text(
-          'Cart',
-          style: TextStyle(
-            color: AppColors.richBlack,
-            fontSize: 18.0,
-            fontFamily: Fonts.helixSemiBold,
+        showLeadingIcon: false,
+        title: GestureDetector(
+          onTap: () {},
+          child: Row(
+            children: [
+              Image.asset(
+                Images.curectLogo,
+                width: 25.0,
+              ),
+              const SizedBox(
+                width: 10.0,
+              ),
+              Image.asset(
+                Images.curectLogoName,
+                width: 100.0,
+              ),
+            ],
           ),
         ),
-        actions: const [],
-        leadingWidget: Padding(
-          padding: const EdgeInsets.only(
-            top: 12.5,
-            left: 20.0,
-            bottom: 12.5,
-            right: 0.0,
-          ),
-          child: GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: const CustomIcon(
-              icon: Icons.arrow_back_ios_rounded,
-              borderWidth: 2.0,
-              borderColor: AppColors.defaultInputBorders,
-              isShowDot: false,
-              radius: 45.0,
-              iconSize: 20.0,
-              iconColor: AppColors.richBlack,
-              top: 8.0,
-              right: 8.0,
-              borderRadius: 8.0,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 12.5,
+              bottom: 12.5,
+              left: 0.0,
+              right: 20.0,
+            ),
+            child: GestureDetector(
+              onTap: () {
+                Get.to(
+                  () => const ProfilePage(),
+                  transition: Transition.rightToLeft,
+                );
+              },
+              child: CustomIcon(
+                icon: Icons.close,
+                borderWidth: 0.0,
+                borderColor: AppColors.transparent,
+                isShowDot: false,
+                radius: 45.0,
+                iconSize: 30.0,
+                iconColor: AppColors.white,
+                top: 0,
+                right: 0,
+                borderRadius: 0.0,
+                isShowBorder: false,
+                bgColor: AppColors.background,
+                isNameInitial: true,
+                name: (Application.user?.name ?? '')[0],
+              ),
             ),
           ),
-        ),
-        leadingWidth: 65.0,
+        ],
+        leadingWidget: const SizedBox(),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(0.0),
           child: Container(
@@ -674,41 +679,21 @@ class _CartPageState extends State<CartPage> {
                     .isAddressRefreshed) {
                   Provider.of<MainContainerProvider>(context, listen: false)
                       .setAddressRefreshValue(false);
-                  getMyCart(selectedTab);
+                  getMyCart();
                 }
               },
               child: SingleChildScrollView(
                 child: Column(
                   children: [
                     const SizedBox(
-                      height: 15.0,
+                      height: 20.0,
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 40.0,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.only(
-                          left: 5.0,
-                          right: 20.0,
-                        ),
-                        children: [
-                          eachTab('product', 'Product'),
-                          eachTab('program', 'Program'),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    (cartItems.isEmpty && selectedTab != 'product') ||
-                            (productCartItems.isEmpty &&
-                                selectedTab == 'product')
+                    (productCartItems.isEmpty)
                         ? const SizedBox(
                             height: 500.0,
                             child: Center(
                               child: NoDataAvailable(
-                                message: 'No items present in cart, Add some!!',
+                                message: 'No items present in cart, add some.',
                               ),
                             ),
                           )
@@ -718,106 +703,66 @@ class _CartPageState extends State<CartPage> {
                             child: ListView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: selectedTab == 'product'
-                                  ? productCartItems.length
-                                  : cartItems.length,
+                              itemCount: productCartItems.length,
                               itemBuilder: (context, index) {
-                                return selectedTab == 'product'
-                                    ? ProductCartCard(
-                                        product: productCartItems[index],
-                                        showDeleteButton: true,
-                                        onDecreaseQuantity: () {
-                                          incrementDecrement(
-                                            productCartItems[index].cartId ??
-                                                '0',
-                                            'sub',
-                                            productCartItems[index]
-                                                    .maximumQuantity ??
-                                                1,
-                                            index,
-                                          );
-                                        },
-                                        onIncreaseQuantity: () {
-                                          incrementDecrement(
-                                            productCartItems[index].cartId ??
-                                                '0',
-                                            'add',
-                                            productCartItems[index]
-                                                    .maximumQuantity ??
-                                                1,
-                                            index,
-                                          );
-                                        },
-                                        onDeleteCartProduct: () {
-                                          Utility.twoButtonPopup(
-                                              context,
-                                              Icons.warning_amber_rounded,
-                                              40.0,
-                                              AppColors.warning,
-                                              AlertMessages.getMessage(17),
-                                              'No',
-                                              'Yes', onFirstButtonClicked: () {
-                                            Get.back();
-                                          }, onSecondButtonClicked: () {
-                                            Get.back();
-                                            Utility.printLog(
-                                                'Cart Id = ${productCartItems[index].cartId}');
-                                            removeFromCart(
-                                                productCartItems[index]
-                                                        .cartId ??
-                                                    '',
-                                                index);
-                                          });
-                                        },
-                                        quantity:
-                                            productCartItems[index].quantity,
-                                        onProductPressed: () {
-                                          Get.to(
-                                            () => EachProductPage(
-                                              id: productCartItems[index]
-                                                      .itemId ??
-                                                  '0',
-                                            ),
-                                          );
-                                        },
-                                      )
-                                    : ProgramCardFour(
-                                        subscription: cartItems[index],
-                                        showDaysLeft: false,
-                                        onProgramPressed: () {
-                                          Get.to(
-                                            () => EachProgram(
-                                                id: cartItems[index].itemId ??
-                                                    "0"),
-                                          );
-                                        },
-                                        onDeleteButtonPressed: () {
-                                          Utility.twoButtonPopup(
-                                              context,
-                                              Icons.warning_amber_rounded,
-                                              40.0,
-                                              AppColors.warning,
-                                              AlertMessages.getMessage(17),
-                                              'No',
-                                              'Yes', onFirstButtonClicked: () {
-                                            Get.back();
-                                          }, onSecondButtonClicked: () {
-                                            Get.back();
-                                            Utility.printLog(
-                                                'Cart Id = ${cartItems[index].cartId}');
-                                            removeFromCart(
-                                                cartItems[index].cartId ?? '',
-                                                index);
-                                          });
-                                        },
-                                      );
+                                return ProductCartCard(
+                                  product: productCartItems[index],
+                                  showDeleteButton: true,
+                                  onDecreaseQuantity: () {
+                                    incrementDecrement(
+                                      productCartItems[index].cartId ?? '0',
+                                      'sub',
+                                      productCartItems[index].maximumQuantity ??
+                                          1,
+                                      index,
+                                    );
+                                  },
+                                  onIncreaseQuantity: () {
+                                    incrementDecrement(
+                                      productCartItems[index].cartId ?? '0',
+                                      'add',
+                                      productCartItems[index].maximumQuantity ??
+                                          1,
+                                      index,
+                                    );
+                                  },
+                                  onDeleteCartProduct: () {
+                                    Utility.twoButtonPopup(
+                                        context,
+                                        Icons.warning_amber_rounded,
+                                        40.0,
+                                        AppColors.highlight,
+                                        AlertMessages.getMessage(17),
+                                        'No',
+                                        'Yes', onFirstButtonClicked: () {
+                                      Get.back();
+                                    }, onSecondButtonClicked: () {
+                                      Get.back();
+                                      Utility.printLog(
+                                          'Cart Id = ${productCartItems[index].cartId}');
+                                      removeFromCart(
+                                          productCartItems[index].cartId ?? '',
+                                          index);
+                                    });
+                                  },
+                                  quantity: productCartItems[index].quantity,
+                                  onProductPressed: () {
+                                    Get.to(
+                                      () => EachProductPage(
+                                        id: productCartItems[index].itemId ??
+                                            '0',
+                                      ),
+                                      transition: Transition.rightToLeft,
+                                    );
+                                  },
+                                );
                               },
                             ),
                           ),
-                    SizedBox(
-                      height: selectedTab == 'product' ? 5.0 : 10.0,
+                    const SizedBox(
+                      height: 5.0,
                     ),
-                    productCartItems.isNotEmpty && selectedTab == 'product'
+                    productCartItems.isNotEmpty
                         ? AddressCard(
                             address: userAddress.isEmpty
                                 ? Address()
@@ -830,6 +775,7 @@ class _CartPageState extends State<CartPage> {
                               if (userAddress.isEmpty) {
                                 Get.to(
                                   () => AddEditAddressPage(),
+                                  transition: Transition.rightToLeft,
                                 );
                               } else {
                                 selectAddressPopup(context);
@@ -837,49 +783,57 @@ class _CartPageState extends State<CartPage> {
                             },
                           )
                         : const SizedBox(),
-                    SizedBox(
-                      height: selectedTab == 'product' ? 20.0 : 0.0,
+                    const SizedBox(
+                      height: 20.0,
                     ),
-                    (cartItems.isEmpty && selectedTab != 'product') ||
-                            (productCartItems.isEmpty &&
-                                selectedTab == 'product')
+                    productCartItems.isNotEmpty
+                        ? paymentMethodCard()
+                        : const SizedBox(),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    (productCartItems.isEmpty)
                         ? const SizedBox()
                         : PayCard(
-                            total: total,
+                            total: finalTotal,
+                            paymentMethod: paymentMethod,
+                            codCharges: codCharges,
                             initiatePayment: () {
                               if (Application.isPaymentAllowed) {
-                                if (selectedTab == 'product') {
-                                  if (userAddress.isEmpty) {
+                                if (userAddress.isEmpty) {
+                                  showSnackBar(
+                                      AlertMessages.getMessage(40),
+                                      AppColors.lightRed,
+                                      AppColors.warning,
+                                      50.0);
+                                } else if (paymentMethod.isEmpty) {
+                                  showSnackBar(
+                                      AlertMessages.getMessage(60),
+                                      AppColors.lightRed,
+                                      AppColors.warning,
+                                      50.0);
+                                } else {
+                                  if ((Provider.of<MainContainerProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .userDefaultAddress
+                                              ?.fullName !=
+                                          null) &&
+                                      ((Provider.of<MainContainerProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .userDefaultAddress
+                                                  ?.fullName ??
+                                              '')
+                                          .isNotEmpty)) {
+                                    _initiatePayment(finalTotal);
+                                  } else {
                                     showSnackBar(
-                                        AlertMessages.getMessage(40),
+                                        AlertMessages.getMessage(41),
                                         AppColors.lightRed,
                                         AppColors.warning,
                                         50.0);
-                                  } else {
-                                    if ((Provider.of<MainContainerProvider>(
-                                                    context,
-                                                    listen: false)
-                                                .userDefaultAddress
-                                                ?.fullName !=
-                                            null) &&
-                                        ((Provider.of<MainContainerProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .userDefaultAddress
-                                                    ?.fullName ??
-                                                '')
-                                            .isNotEmpty)) {
-                                      _initiatePayment(total);
-                                    } else {
-                                      showSnackBar(
-                                          AlertMessages.getMessage(41),
-                                          AppColors.lightRed,
-                                          AppColors.warning,
-                                          50.0);
-                                    }
                                   }
-                                } else {
-                                  _initiatePayment(total);
                                 }
                               } else {
                                 showSnackBar(
@@ -890,10 +844,16 @@ class _CartPageState extends State<CartPage> {
                               }
                             },
                             payOnDelivery: () {
-                              if (selectedTab == 'product') {
+                              if (Application.isPaymentAllowed) {
                                 if (userAddress.isEmpty) {
                                   showSnackBar(
                                       AlertMessages.getMessage(40),
+                                      AppColors.lightRed,
+                                      AppColors.warning,
+                                      50.0);
+                                } else if (paymentMethod.isEmpty) {
+                                  showSnackBar(
+                                      AlertMessages.getMessage(60),
                                       AppColors.lightRed,
                                       AppColors.warning,
                                       50.0);
@@ -925,15 +885,16 @@ class _CartPageState extends State<CartPage> {
                                   }
                                 }
                               } else {
-                                _initiatePayment(total);
+                                showSnackBar(
+                                    AlertMessages.getMessage(55),
+                                    AppColors.lightRed,
+                                    AppColors.warning,
+                                    75.0);
                               }
                             },
                             showPayOnDelivery: false,
-                            totalItems: selectedTab == 'product'
-                                ? productCartItems.length
-                                : cartItems.length,
-                            shippingCharges:
-                                maximumCharge <= total ? 0 : shippingCharge,
+                            totalItems: productCartItems.length,
+                            shippingCharges: finalShippingCharge,
                             maximumCharges: maximumCharge,
                           ),
                     const SizedBox(
@@ -946,51 +907,127 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  Widget eachTab(String name, String value) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        GestureDetector(
-          onTap: () {
-            // changeTab('program');
-            changeTab(name);
-          },
-          child: Container(
-            margin: const EdgeInsets.only(left: 15.0),
-            decoration: BoxDecoration(
-              color: selectedTab == (name)
-                  ? AppColors.highlight
-                  : AppColors.background,
-              borderRadius: BorderRadius.circular(8.0),
-              border: Border.all(
-                width: 1.0,
-                color: selectedTab == (name)
-                    ? AppColors.highlight
-                    : AppColors.placeholder,
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 15.0,
-                right: 15.0,
-                top: 8.0,
-                bottom: 8.0,
-              ),
-              child: Text(
-                value,
-                style: TextStyle(
-                  color:
-                      selectedTab == (name) ? AppColors.white : AppColors.black,
-                  fontSize: 16.0,
-                  fontFamily: selectedTab == (name)
-                      ? Fonts.gilroySemiBold
-                      : Fonts.gilroyMedium,
-                ),
-              ),
-            ),
+  Widget paymentMethodCard() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(0.0),
+          color: AppColors.white,
+          border: Border.all(
+            width: 1.5,
+            color: AppColors.defaultInputBorders,
           ),
         ),
-      ],
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Text(
+                "Select Payment Method",
+                style: TextStyle(
+                  color: AppColors.richBlack,
+                  fontSize: 20.0,
+                  fontFamily: Fonts.montserratSemiBold,
+                ),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              Divider(
+                height: 20.0,
+                thickness: 1.0,
+                color: AppColors.placeholder.withOpacity(0.5),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        finalShippingCharge =
+                            maximumCharge <= total ? 0 : shippingCharge;
+                        finalTotal = maximumCharge <= total
+                            ? total
+                            : shippingCharge + total;
+                        setState(() {
+                          paymentMethod = 'online';
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(20.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(0.0),
+                          color: AppColors.background,
+                          border: Border.all(
+                            width: 1.5,
+                            color: paymentMethod == 'online'
+                                ? AppColors.highlight
+                                : AppColors.background,
+                          ),
+                        ),
+                        child: const Text(
+                          "Online\nPayment",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AppColors.richBlack,
+                            fontSize: 16.0,
+                            fontFamily: Fonts.montserratMedium,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20.0,
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        finalShippingCharge = maximumCharge <= total
+                            ? codCharges
+                            : shippingCharge + codCharges;
+                        finalTotal = maximumCharge <= total
+                            ? codCharges + total
+                            : shippingCharge + codCharges + total;
+                        setState(() {
+                          paymentMethod = 'cod';
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(20.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(0.0),
+                          color: AppColors.background,
+                          border: Border.all(
+                            width: 1.5,
+                            color: paymentMethod == 'cod'
+                                ? AppColors.highlight
+                                : AppColors.background,
+                          ),
+                        ),
+                        child: const Text(
+                          "Pay on\nDelivery",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AppColors.richBlack,
+                            fontSize: 16.0,
+                            fontFamily: Fonts.montserratMedium,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -1002,12 +1039,10 @@ class _CartPageState extends State<CartPage> {
       "email": Application.user?.email ?? '',
       "phone": Application.user?.phoneNumber ?? '',
       "user_id": Application.user?.id ?? '',
-      "companyName": selectedTab == 'product' ? 'Curect' : 'HealFit',
+      "companyName": 'Curect',
       "description": "Payment for the cart"
     };
-    String url = selectedTab == 'product'
-        ? '${Constants.finalProductUrl}/productPayment/paymentInitiate'
-        : '${Constants.imgFinalUrl}/subscription/paymentInitiate';
+    String url = '${Constants.imgBackendUrl}/productPayment/paymentInitiate';
     Map<String, dynamic> initiatePayment =
         await ApiFunctions.postApiResult(url, Application.deviceToken, params);
     bool status = initiatePayment['status'];
@@ -1044,10 +1079,12 @@ class _CartPageState extends State<CartPage> {
       "phoneNumber": phoneNumber,
       "finalAddress":
           '${address?.flatNo} ${address?.area}, ${(address?.landmark ?? '').isEmpty ? '' : '${address?.landmark},'} ${address?.city}, ${address?.state}(${address?.pincode})',
-      "price": total.toString(),
+      "price": finalTotal.toString(),
+      "payment_method": paymentMethod,
+      "actual_price": total.toString(),
     };
     String url =
-        '${Constants.finalProductUrl}/productPayment/purchaseCartItemMobile';
+        '${Constants.imgBackendUrl}/productPayment/purchaseCartItemMobile';
     Map<String, dynamic> paymentSuccess =
         await ApiFunctions.postApiResult(url, Application.deviceToken, params);
     bool status = paymentSuccess['status'];
@@ -1059,7 +1096,10 @@ class _CartPageState extends State<CartPage> {
             AppColors.congrats, 50.0);
         setAddressRefresh();
         Future.delayed(const Duration(seconds: 1), () {
-          Get.to(() => const MyOrders());
+          Get.to(
+            () => const MyOrders(),
+            transition: Transition.rightToLeft,
+          );
         });
       } else if (data[ApiKeys.message].toString() == 'payment_failed' ||
           data[ApiKeys.message].toString() == 'Database_connection_error') {

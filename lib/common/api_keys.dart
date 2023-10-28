@@ -11,6 +11,8 @@ class ApiKeys {
   static String trainerId = 'trainer_id';
   static String sessionCount = 'session_count';
   static String subscriptionId = 'subscriptionId';
+  static String longDescription = 'long_description';
+  static String whislist = 'whislist';
   static String userId = 'user_id';
   static String programId = 'program_id';
   static String name = 'name';
@@ -122,6 +124,7 @@ class ApiKeys {
   static String webSlider = "web_slider";
   static String mobileSlider = "mobile_slider";
   static String clothCategories = "clothCategories";
+  static String productSlider = "productSlider";
   static String productCategories = "productCategories";
   static String clothCategory = "cloth_category";
   static String sizes = "sizes";
@@ -168,4 +171,5 @@ class ApiKeys {
   static String goal = 'goal';
   static String isPaymentAllowed = 'isPaymentAllowed';
   static String slider = 'slider';
+  static String codCharges = 'codCharges';
 }

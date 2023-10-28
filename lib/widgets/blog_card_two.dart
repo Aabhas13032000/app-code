@@ -32,7 +32,7 @@ class BlogCardTwo extends StatelessWidget {
       height: height,
       margin: const EdgeInsets.only(bottom: 15.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(0.0),
         color: AppColors.white,
         boxShadow: [
           BoxShadow(
@@ -47,7 +47,7 @@ class BlogCardTwo extends StatelessWidget {
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(0.0),
         child: Row(
           children: [
             ImagePlaceholder(
@@ -69,7 +69,7 @@ class BlogCardTwo extends StatelessWidget {
                       style: const TextStyle(
                         color: AppColors.subText,
                         fontSize: 12.0,
-                        fontFamily: Fonts.helixRegular,
+                        fontFamily: Fonts.montserratRegular,
                       ),
                     ),
                     const SizedBox(
@@ -81,7 +81,7 @@ class BlogCardTwo extends StatelessWidget {
                       style: const TextStyle(
                         color: AppColors.richBlack,
                         fontSize: 16.0,
-                        fontFamily: Fonts.helixSemiBold,
+                        fontFamily: Fonts.montserratSemiBold,
                       ),
                     ),
                     const Expanded(
@@ -114,7 +114,7 @@ class BlogCardTwo extends StatelessWidget {
                                         ? AppColors.highlight
                                         : AppColors.subText,
                                     fontSize: 16.0,
-                                    fontFamily: Fonts.helixMedium,
+                                    fontFamily: Fonts.montserratMedium,
                                   ),
                                 ),
                               ],

@@ -42,7 +42,7 @@ class Utility {
           child: Container(
             decoration: BoxDecoration(
               color: bgColor,
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(0.0),
               border: Border.all(
                 width: 1.5,
                 color: borderColor,
@@ -59,7 +59,7 @@ class Utility {
                       style: TextStyle(
                         color: borderColor,
                         fontSize: 14.0,
-                        fontFamily: Fonts.gilroySemiBold,
+                        fontFamily: Fonts.montserratSemiBold,
                       ),
                     ),
                   ),
@@ -104,7 +104,7 @@ class Utility {
       builder: (BuildContext context) {
         return AlertDialog(
           shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              borderRadius: BorderRadius.all(Radius.circular(0.0))),
           contentPadding: const EdgeInsets.all(0.0),
           title: Icon(
             icon,
@@ -113,7 +113,7 @@ class Utility {
           ),
           content: SingleChildScrollView(
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(0.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -124,7 +124,7 @@ class Utility {
                       message,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                        fontFamily: Fonts.gilroyMedium,
+                        fontFamily: Fonts.montserratMedium,
                         fontSize: 18.0,
                         color: AppColors.richBlack,
                       ),
@@ -150,7 +150,7 @@ class Utility {
                                 width: 2.0,
                                 color: AppColors.highlight,
                               ),
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(0.0),
                             ),
                             child: Center(
                               child: Padding(
@@ -159,7 +159,7 @@ class Utility {
                                 child: Text(
                                   buttonOneText,
                                   style: const TextStyle(
-                                    fontFamily: Fonts.gilroySemiBold,
+                                    fontFamily: Fonts.montserratSemiBold,
                                     fontSize: 16.0,
                                     color: AppColors.highlight,
                                   ),
@@ -184,7 +184,7 @@ class Utility {
                                 width: 2.0,
                                 color: AppColors.highlight,
                               ),
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(0.0),
                             ),
                             child: Center(
                               child: Padding(
@@ -193,7 +193,7 @@ class Utility {
                                 child: Text(
                                   buttonTwoText,
                                   style: const TextStyle(
-                                    fontFamily: Fonts.gilroySemiBold,
+                                    fontFamily: Fonts.montserratSemiBold,
                                     fontSize: 16.0,
                                     color: AppColors.white,
                                   ),
@@ -239,7 +239,7 @@ class Utility {
           onWillPop: () async => isForceUpdate ? false : true,
           child: AlertDialog(
             shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                borderRadius: BorderRadius.all(Radius.circular(0.0))),
             contentPadding: const EdgeInsets.all(0.0),
             title: Icon(
               icon,
@@ -248,7 +248,7 @@ class Utility {
             ),
             content: SingleChildScrollView(
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(0.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -259,7 +259,7 @@ class Utility {
                         message,
                         textAlign: TextAlign.center,
                         style: const TextStyle(
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                           fontSize: 18.0,
                           color: AppColors.richBlack,
                         ),
@@ -285,7 +285,7 @@ class Utility {
                                   width: 2.0,
                                   color: AppColors.highlight,
                                 ),
-                                borderRadius: BorderRadius.circular(10.0),
+                                borderRadius: BorderRadius.circular(0.0),
                               ),
                               child: Center(
                                 child: Padding(
@@ -294,7 +294,7 @@ class Utility {
                                   child: Text(
                                     buttonText,
                                     style: const TextStyle(
-                                      fontFamily: Fonts.gilroySemiBold,
+                                      fontFamily: Fonts.montserratSemiBold,
                                       fontSize: 16.0,
                                       color: AppColors.white,
                                     ),

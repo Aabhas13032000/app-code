@@ -27,7 +27,7 @@ class BookCardOne extends StatelessWidget {
     return Container(
       width: width,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(0.0),
         color: AppColors.white,
         boxShadow: [
           BoxShadow(
@@ -48,14 +48,14 @@ class BookCardOne extends StatelessWidget {
             Container(
               width: 125.0,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(0.0),
                 border: Border.all(
                   width: 2.5,
                   color: AppColors.highlight,
                 ),
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
+                borderRadius: BorderRadius.circular(0.0),
                 child: Stack(
                   alignment: Alignment.topCenter,
                   children: [
@@ -90,7 +90,7 @@ class BookCardOne extends StatelessWidget {
                     style: const TextStyle(
                       color: AppColors.richBlack,
                       fontSize: 16.0,
-                      fontFamily: Fonts.helixSemiBold,
+                      fontFamily: Fonts.montserratSemiBold,
                     ),
                   ),
                   const SizedBox(
@@ -102,7 +102,7 @@ class BookCardOne extends StatelessWidget {
                     style: const TextStyle(
                       color: AppColors.subText,
                       fontSize: 14.0,
-                      fontFamily: Fonts.gilroyMedium,
+                      fontFamily: Fonts.montserratMedium,
                     ),
                   ),
                   const SizedBox(
@@ -124,7 +124,7 @@ class BookCardOne extends StatelessWidget {
                         style: const TextStyle(
                           color: AppColors.highlight,
                           fontSize: 14.0,
-                          fontFamily: Fonts.helixMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                       ),
                     ],
@@ -140,7 +140,7 @@ class BookCardOne extends StatelessWidget {
                         style: const TextStyle(
                           color: AppColors.subText,
                           fontSize: 16.0,
-                          fontFamily: Fonts.helixSemiBold,
+                          fontFamily: Fonts.montserratSemiBold,
                           decoration: TextDecoration.lineThrough,
                         ),
                       ),
@@ -152,7 +152,7 @@ class BookCardOne extends StatelessWidget {
                         style: const TextStyle(
                           color: AppColors.subText,
                           fontSize: 16.0,
-                          fontFamily: Fonts.helixSemiBold,
+                          fontFamily: Fonts.montserratSemiBold,
                         ),
                       ),
                     ],
@@ -160,8 +160,8 @@ class BookCardOne extends StatelessWidget {
                   const Expanded(child: SizedBox()),
                   CustomButton(
                     title: 'Download PDF',
-                    paddingVertical: 10.5,
-                    borderRadius: 8.0,
+                    paddingVertical: 18,
+                    borderRadius: 0.0,
                     onPressed: onDownloadClicked,
                   ),
                 ],

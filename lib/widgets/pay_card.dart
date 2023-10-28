@@ -10,6 +10,8 @@ class PayCard extends StatelessWidget {
     this.totalItems,
     this.shippingCharges = 0,
     this.maximumCharges = 0,
+    this.codCharges = 0,
+    this.paymentMethod = 'online',
   });
 
   final Function() initiatePayment;
@@ -18,7 +20,9 @@ class PayCard extends StatelessWidget {
   final double? total;
   final double? shippingCharges;
   final double? maximumCharges;
+  final double? codCharges;
   final int? totalItems;
+  final String? paymentMethod;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +30,7 @@ class PayCard extends StatelessWidget {
       padding: const EdgeInsets.only(left: 20.0, right: 20.0),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(0.0),
           color: AppColors.white,
           border: Border.all(
             width: 1.5,
@@ -46,7 +50,7 @@ class PayCard extends StatelessWidget {
                     style: TextStyle(
                       color: AppColors.richBlack,
                       fontSize: 18.0,
-                      fontFamily: Fonts.gilroySemiBold,
+                      fontFamily: Fonts.montserratSemiBold,
                     ),
                   ),
                   Text(
@@ -54,7 +58,7 @@ class PayCard extends StatelessWidget {
                     style: const TextStyle(
                       color: AppColors.richBlack,
                       fontSize: 18.0,
-                      fontFamily: Fonts.gilroySemiBold,
+                      fontFamily: Fonts.montserratSemiBold,
                     ),
                   ),
                 ],
@@ -78,7 +82,7 @@ class PayCard extends StatelessWidget {
                     style: TextStyle(
                       color: AppColors.richBlack,
                       fontSize: 14.0,
-                      fontFamily: Fonts.gilroyMedium,
+                      fontFamily: Fonts.montserratMedium,
                     ),
                   ),
                   Text(
@@ -86,7 +90,7 @@ class PayCard extends StatelessWidget {
                     style: const TextStyle(
                       color: AppColors.richBlack,
                       fontSize: 14.0,
-                      fontFamily: Fonts.gilroyMedium,
+                      fontFamily: Fonts.montserratMedium,
                     ),
                   ),
                 ],
@@ -102,7 +106,7 @@ class PayCard extends StatelessWidget {
                     style: TextStyle(
                       color: AppColors.richBlack,
                       fontSize: 14.0,
-                      fontFamily: Fonts.gilroyMedium,
+                      fontFamily: Fonts.montserratMedium,
                     ),
                   ),
                   Text(
@@ -110,21 +114,34 @@ class PayCard extends StatelessWidget {
                     style: const TextStyle(
                       color: AppColors.richBlack,
                       fontSize: 14.0,
-                      fontFamily: Fonts.gilroyMedium,
+                      fontFamily: Fonts.montserratMedium,
                     ),
                   ),
                 ],
               ),
+              paymentMethod == 'cod'
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
+                      child: Text(
+                        'Note : Pay on delivery charges Rs. $codCharges',
+                        style: const TextStyle(
+                          color: AppColors.warning,
+                          fontSize: 14.0,
+                          fontFamily: Fonts.montserratRegular,
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
               SizedBox(
                 height: ((maximumCharges ?? 0) > (total ?? 0)) ? 5.0 : 0.0,
               ),
               ((maximumCharges ?? 0) > (total ?? 0))
                   ? Text(
-                      "Note : Shipping free above Rs. $maximumCharges",
+                      "Note : Shipping is free above Rs. $maximumCharges",
                       style: const TextStyle(
                         color: AppColors.warning,
                         fontSize: 14.0,
-                        fontFamily: Fonts.gilroyRegular,
+                        fontFamily: Fonts.montserratRegular,
                       ),
                     )
                   : const SizedBox(),
@@ -136,11 +153,15 @@ class PayCard extends StatelessWidget {
                   Expanded(
                     child: CustomButton(
                       title: 'Proceed to pay',
-                      paddingVertical: 10.5,
+                      paddingVertical: 18,
                       paddingHorizontal: 20,
-                      borderRadius: 8.0,
+                      borderRadius: 0.0,
                       onPressed: () {
-                        initiatePayment();
+                        if ((paymentMethod ?? '') == 'online') {
+                          initiatePayment();
+                        } else {
+                          payOnDelivery();
+                        }
                       },
                     ),
                   ),
@@ -154,9 +175,9 @@ class PayCard extends StatelessWidget {
                             isShowBorder: true,
                             bgColor: AppColors.white,
                             textColor: AppColors.highlight,
-                            paddingVertical: 10.5,
+                            paddingVertical: 18,
                             paddingHorizontal: 13.5,
-                            borderRadius: 8.0,
+                            borderRadius: 0.0,
                             onPressed: () {
                               payOnDelivery();
                             },

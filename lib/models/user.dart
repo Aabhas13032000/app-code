@@ -55,7 +55,7 @@ class Users {
     gender = jsonData[ApiKeys.gender] != null
         ? jsonData[ApiKeys.gender].toString()
         : "";
-    age = int.parse(jsonData[ApiKeys.age].toString()) ?? 0;
+    age = int.parse(jsonData[ApiKeys.age].toString());
     weight = jsonData[ApiKeys.weight] != null
         ? double.parse(jsonData[ApiKeys.weight].toString())
         : 0;

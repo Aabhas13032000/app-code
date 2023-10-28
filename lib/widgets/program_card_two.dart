@@ -19,7 +19,7 @@ class ProgramCardTwo extends StatelessWidget {
     return Container(
       width: width,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(0.0),
         color: AppColors.white,
         boxShadow: [
           BoxShadow(
@@ -34,7 +34,7 @@ class ProgramCardTwo extends StatelessWidget {
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(0.0),
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
@@ -79,7 +79,7 @@ class ProgramCardTwo extends StatelessWidget {
                               style: const TextStyle(
                                 color: AppColors.white,
                                 fontSize: 18.0,
-                                fontFamily: Fonts.helixSemiBold,
+                                fontFamily: Fonts.montserratSemiBold,
                               ),
                             ),
                             const SizedBox(
@@ -90,7 +90,7 @@ class ProgramCardTwo extends StatelessWidget {
                               style: const TextStyle(
                                 color: AppColors.defaultInputBorders,
                                 fontSize: 16.0,
-                                fontFamily: Fonts.gilroyMedium,
+                                fontFamily: Fonts.montserratMedium,
                               ),
                             ),
                           ],
@@ -109,7 +109,7 @@ class ProgramCardTwo extends StatelessWidget {
                         iconColor: AppColors.white,
                         top: 0,
                         right: 0,
-                        borderRadius: 50.0,
+                        borderRadius: 0.0,
                         isShowBorder: false,
                         bgColor: AppColors.highlight,
                       )

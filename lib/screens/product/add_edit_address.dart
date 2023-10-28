@@ -1,13 +1,14 @@
 part of screens;
 
 class AddEditAddressPage extends StatefulWidget {
-  Address? address;
-  bool? isEditAddress;
-  AddEditAddressPage({
-    super.key,
+  final Address? address;
+  final bool? isEditAddress;
+
+  const AddEditAddressPage({
+    Key? key,
     this.address,
     this.isEditAddress = false,
-  });
+  }) : super(key: key);
 
   @override
   State<AddEditAddressPage> createState() => _AddEditAddressPageState();
@@ -364,6 +365,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
         return false;
       },
       child: Scaffold(
+        backgroundColor: AppColors.white,
         appBar: CustomAppBar(
           preferredSize: const Size.fromHeight(70.0),
           showLeadingIcon: true,
@@ -373,36 +375,10 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
             style: TextStyle(
               color: AppColors.richBlack,
               fontSize: 18.0,
-              fontFamily: Fonts.helixSemiBold,
+              fontFamily: Fonts.montserratSemiBold,
             ),
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 12.5,
-                horizontal: 20.0,
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  Get.to(
-                    () => const CartPage(),
-                  );
-                },
-                child: const CustomIcon(
-                  icon: MdiIcons.cartOutline,
-                  borderWidth: 2.0,
-                  borderColor: AppColors.defaultInputBorders,
-                  isShowDot: true,
-                  radius: 45.0,
-                  iconSize: 24.0,
-                  iconColor: AppColors.richBlack,
-                  top: 8.0,
-                  right: 8.0,
-                  borderRadius: 8.0,
-                ),
-              ),
-            ),
-          ],
+          actions: const [],
           leadingWidget: Padding(
             padding: const EdgeInsets.only(
               top: 12.5,
@@ -422,9 +398,11 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                 radius: 45.0,
                 iconSize: 20.0,
                 iconColor: AppColors.richBlack,
-                top: 8.0,
-                right: 8.0,
-                borderRadius: 8.0,
+                top: 0,
+                right: 0,
+                borderRadius: 0.0,
+                isShowBorder: false,
+                bgColor: AppColors.background,
               ),
             ),
           ),
@@ -441,7 +419,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
             : states.isEmpty || cities.isEmpty
                 ? const Center(
                     child: NoDataAvailable(
-                      message: 'Some error occurred !!',
+                      message: 'Some error occurred.',
                     ),
                   )
                 : SingleChildScrollView(
@@ -466,7 +444,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                     style: const TextStyle(
                                       color: AppColors.richBlack,
                                       fontSize: 16.0,
-                                      fontFamily: Fonts.gilroyMedium,
+                                      fontFamily: Fonts.montserratMedium,
                                     ),
                                     controller: fullNameController,
                                     cursorColor: AppColors.defaultInputBorders,
@@ -486,12 +464,12 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                       hintStyle: const TextStyle(
                                         color: AppColors.placeholder,
                                         fontSize: 16.0,
-                                        fontFamily: Fonts.gilroyMedium,
+                                        fontFamily: Fonts.montserratMedium,
                                       ),
                                       focusColor: AppColors.placeholder,
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(10.0),
+                                            BorderRadius.circular(0.0),
                                         borderSide: const BorderSide(
                                           color: AppColors.highlight,
                                           width: 2.0,
@@ -501,7 +479,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                       disabledBorder: InputBorder.none,
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(10.0),
+                                            BorderRadius.circular(0.0),
                                         borderSide: const BorderSide(
                                           color: AppColors.defaultInputBorders,
                                           width: 2.0,
@@ -514,7 +492,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                   left: 20.0,
                                   top: -8.0,
                                   child: Container(
-                                    color: AppColors.background,
+                                    color: AppColors.white,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           left: 5.0, right: 5.0),
@@ -525,7 +503,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                               ? AppColors.highlight
                                               : AppColors.placeholder,
                                           fontSize: 14.0,
-                                          fontFamily: Fonts.gilroySemiBold,
+                                          fontFamily: Fonts.montserratSemiBold,
                                         ),
                                       ),
                                     ),
@@ -550,7 +528,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                     style: const TextStyle(
                                       color: AppColors.richBlack,
                                       fontSize: 16.0,
-                                      fontFamily: Fonts.gilroyMedium,
+                                      fontFamily: Fonts.montserratMedium,
                                     ),
                                     controller: mobileController,
                                     cursorColor: AppColors.defaultInputBorders,
@@ -571,7 +549,8 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                           style: TextStyle(
                                             color: AppColors.richBlack,
                                             fontSize: 16.0,
-                                            fontFamily: Fonts.gilroySemiBold,
+                                            fontFamily:
+                                                Fonts.montserratSemiBold,
                                           ),
                                         ),
                                       ),
@@ -587,12 +566,12 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                       hintStyle: const TextStyle(
                                         color: AppColors.placeholder,
                                         fontSize: 16.0,
-                                        fontFamily: Fonts.gilroyMedium,
+                                        fontFamily: Fonts.montserratMedium,
                                       ),
                                       focusColor: AppColors.placeholder,
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(10.0),
+                                            BorderRadius.circular(0.0),
                                         borderSide: const BorderSide(
                                           color: AppColors.highlight,
                                           width: 2.0,
@@ -602,7 +581,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                       disabledBorder: InputBorder.none,
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(10.0),
+                                            BorderRadius.circular(0.0),
                                         borderSide: const BorderSide(
                                           color: AppColors.defaultInputBorders,
                                           width: 2.0,
@@ -615,7 +594,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                   left: 20.0,
                                   top: -8.0,
                                   child: Container(
-                                    color: AppColors.background,
+                                    color: AppColors.white,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           left: 5.0, right: 5.0),
@@ -626,7 +605,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                               ? AppColors.highlight
                                               : AppColors.placeholder,
                                           fontSize: 14.0,
-                                          fontFamily: Fonts.gilroySemiBold,
+                                          fontFamily: Fonts.montserratSemiBold,
                                         ),
                                       ),
                                     ),
@@ -651,7 +630,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                     style: const TextStyle(
                                       color: AppColors.richBlack,
                                       fontSize: 16.0,
-                                      fontFamily: Fonts.gilroyMedium,
+                                      fontFamily: Fonts.montserratMedium,
                                     ),
                                     controller: pincodeController,
                                     cursorColor: AppColors.defaultInputBorders,
@@ -672,12 +651,12 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                       hintStyle: const TextStyle(
                                         color: AppColors.placeholder,
                                         fontSize: 16.0,
-                                        fontFamily: Fonts.gilroyMedium,
+                                        fontFamily: Fonts.montserratMedium,
                                       ),
                                       focusColor: AppColors.placeholder,
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(10.0),
+                                            BorderRadius.circular(0.0),
                                         borderSide: const BorderSide(
                                           color: AppColors.highlight,
                                           width: 2.0,
@@ -687,7 +666,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                       disabledBorder: InputBorder.none,
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(10.0),
+                                            BorderRadius.circular(0.0),
                                         borderSide: const BorderSide(
                                           color: AppColors.defaultInputBorders,
                                           width: 2.0,
@@ -700,7 +679,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                   left: 20.0,
                                   top: -8.0,
                                   child: Container(
-                                    color: AppColors.background,
+                                    color: AppColors.white,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           left: 5.0, right: 5.0),
@@ -711,7 +690,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                               ? AppColors.highlight
                                               : AppColors.placeholder,
                                           fontSize: 14.0,
-                                          fontFamily: Fonts.gilroySemiBold,
+                                          fontFamily: Fonts.montserratSemiBold,
                                         ),
                                       ),
                                     ),
@@ -736,7 +715,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                     style: const TextStyle(
                                       color: AppColors.richBlack,
                                       fontSize: 16.0,
-                                      fontFamily: Fonts.gilroyMedium,
+                                      fontFamily: Fonts.montserratMedium,
                                     ),
                                     controller: flatNoController,
                                     cursorColor: AppColors.defaultInputBorders,
@@ -756,12 +735,12 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                       hintStyle: const TextStyle(
                                         color: AppColors.placeholder,
                                         fontSize: 16.0,
-                                        fontFamily: Fonts.gilroyMedium,
+                                        fontFamily: Fonts.montserratMedium,
                                       ),
                                       focusColor: AppColors.placeholder,
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(10.0),
+                                            BorderRadius.circular(0.0),
                                         borderSide: const BorderSide(
                                           color: AppColors.highlight,
                                           width: 2.0,
@@ -771,7 +750,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                       disabledBorder: InputBorder.none,
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(10.0),
+                                            BorderRadius.circular(0.0),
                                         borderSide: const BorderSide(
                                           color: AppColors.defaultInputBorders,
                                           width: 2.0,
@@ -784,7 +763,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                   left: 20.0,
                                   top: -8.0,
                                   child: Container(
-                                    color: AppColors.background,
+                                    color: AppColors.white,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           left: 5.0, right: 5.0),
@@ -795,7 +774,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                               ? AppColors.highlight
                                               : AppColors.placeholder,
                                           fontSize: 14.0,
-                                          fontFamily: Fonts.gilroySemiBold,
+                                          fontFamily: Fonts.montserratSemiBold,
                                         ),
                                       ),
                                     ),
@@ -820,7 +799,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                     style: const TextStyle(
                                       color: AppColors.richBlack,
                                       fontSize: 16.0,
-                                      fontFamily: Fonts.gilroyMedium,
+                                      fontFamily: Fonts.montserratMedium,
                                     ),
                                     controller: areaController,
                                     cursorColor: AppColors.defaultInputBorders,
@@ -840,12 +819,12 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                       hintStyle: const TextStyle(
                                         color: AppColors.placeholder,
                                         fontSize: 16.0,
-                                        fontFamily: Fonts.gilroyMedium,
+                                        fontFamily: Fonts.montserratMedium,
                                       ),
                                       focusColor: AppColors.placeholder,
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(10.0),
+                                            BorderRadius.circular(0.0),
                                         borderSide: const BorderSide(
                                           color: AppColors.highlight,
                                           width: 2.0,
@@ -855,7 +834,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                       disabledBorder: InputBorder.none,
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(10.0),
+                                            BorderRadius.circular(0.0),
                                         borderSide: const BorderSide(
                                           color: AppColors.defaultInputBorders,
                                           width: 2.0,
@@ -868,7 +847,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                   left: 20.0,
                                   top: -8.0,
                                   child: Container(
-                                    color: AppColors.background,
+                                    color: AppColors.white,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           left: 5.0, right: 5.0),
@@ -879,7 +858,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                               ? AppColors.highlight
                                               : AppColors.placeholder,
                                           fontSize: 14.0,
-                                          fontFamily: Fonts.gilroySemiBold,
+                                          fontFamily: Fonts.montserratSemiBold,
                                         ),
                                       ),
                                     ),
@@ -904,7 +883,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                     style: const TextStyle(
                                       color: AppColors.richBlack,
                                       fontSize: 16.0,
-                                      fontFamily: Fonts.gilroyMedium,
+                                      fontFamily: Fonts.montserratMedium,
                                     ),
                                     controller: landmarkController,
                                     cursorColor: AppColors.defaultInputBorders,
@@ -924,12 +903,12 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                       hintStyle: const TextStyle(
                                         color: AppColors.placeholder,
                                         fontSize: 16.0,
-                                        fontFamily: Fonts.gilroyMedium,
+                                        fontFamily: Fonts.montserratMedium,
                                       ),
                                       focusColor: AppColors.placeholder,
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(10.0),
+                                            BorderRadius.circular(0.0),
                                         borderSide: const BorderSide(
                                           color: AppColors.highlight,
                                           width: 2.0,
@@ -939,7 +918,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                       disabledBorder: InputBorder.none,
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(10.0),
+                                            BorderRadius.circular(0.0),
                                         borderSide: const BorderSide(
                                           color: AppColors.defaultInputBorders,
                                           width: 2.0,
@@ -952,7 +931,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                   left: 20.0,
                                   top: -8.0,
                                   child: Container(
-                                    color: AppColors.background,
+                                    color: AppColors.white,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           left: 5.0, right: 5.0),
@@ -963,7 +942,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                               ? AppColors.highlight
                                               : AppColors.placeholder,
                                           fontSize: 14.0,
-                                          fontFamily: Fonts.gilroySemiBold,
+                                          fontFamily: Fonts.montserratSemiBold,
                                         ),
                                       ),
                                     ),
@@ -987,7 +966,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                   child: Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderRadius: BorderRadius.circular(0.0),
                                       border: Border.all(
                                         width: 1.5,
                                         color: isCityFocused
@@ -1016,7 +995,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                               ? AppColors.richBlack
                                               : AppColors.placeholder,
                                           fontSize: 16.0,
-                                          fontFamily: Fonts.gilroyMedium,
+                                          fontFamily: Fonts.montserratMedium,
                                         ),
                                       ),
                                     ),
@@ -1026,7 +1005,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                   left: 20.0,
                                   top: -8.0,
                                   child: Container(
-                                    color: AppColors.background,
+                                    color: AppColors.white,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           left: 5.0, right: 5.0),
@@ -1037,7 +1016,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                               ? AppColors.highlight
                                               : AppColors.placeholder,
                                           fontSize: 14.0,
-                                          fontFamily: Fonts.gilroySemiBold,
+                                          fontFamily: Fonts.montserratSemiBold,
                                         ),
                                       ),
                                     ),
@@ -1061,7 +1040,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                   child: Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderRadius: BorderRadius.circular(0.0),
                                       border: Border.all(
                                         width: 1.5,
                                         color: isStateFocused
@@ -1090,7 +1069,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                               ? AppColors.richBlack
                                               : AppColors.placeholder,
                                           fontSize: 16.0,
-                                          fontFamily: Fonts.gilroyMedium,
+                                          fontFamily: Fonts.montserratMedium,
                                         ),
                                       ),
                                     ),
@@ -1100,7 +1079,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                   left: 20.0,
                                   top: -8.0,
                                   child: Container(
-                                    color: AppColors.background,
+                                    color: AppColors.white,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           left: 5.0, right: 5.0),
@@ -1111,7 +1090,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                               ? AppColors.highlight
                                               : AppColors.placeholder,
                                           fontSize: 14.0,
-                                          fontFamily: Fonts.gilroySemiBold,
+                                          fontFamily: Fonts.montserratSemiBold,
                                         ),
                                       ),
                                     ),
@@ -1130,7 +1109,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                               children: [
                                 Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(0.0),
                                     border: Border.all(
                                       width: 1.5,
                                       color: isAddressTypeFocused
@@ -1166,7 +1145,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                                   color: AppColors.richBlack,
                                                   fontSize: 16.0,
                                                   fontFamily:
-                                                      Fonts.helixSemiBold,
+                                                      Fonts.montserratSemiBold,
                                                 ),
                                               ),
                                             ],
@@ -1186,7 +1165,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                   left: 20.0,
                                   top: -8.0,
                                   child: Container(
-                                    color: AppColors.background,
+                                    color: AppColors.white,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           left: 5.0, right: 5.0),
@@ -1197,7 +1176,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                               ? AppColors.highlight
                                               : AppColors.placeholder,
                                           fontSize: 14.0,
-                                          fontFamily: Fonts.gilroySemiBold,
+                                          fontFamily: Fonts.montserratSemiBold,
                                         ),
                                       ),
                                     ),
@@ -1231,7 +1210,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                   style: TextStyle(
                                     color: AppColors.richBlack,
                                     fontSize: 16.0,
-                                    fontFamily: Fonts.gilroyRegular,
+                                    fontFamily: Fonts.montserratRegular,
                                   ),
                                 ),
                               ),
@@ -1242,8 +1221,9 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                           ),
                           CustomButton(
                             title:
-                                widget.isEditAddress ?? false ? 'Edit' : 'Add',
+                                widget.isEditAddress ?? false ? 'Save' : 'Add',
                             textColor: AppColors.white,
+                            paddingVertical: 18,
                             onPressed: () {
                               if (fullNameController.text.trim().isEmpty) {
                                 showSnackBar(
@@ -1351,7 +1331,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                     iconColor: AppColors.white,
                     top: 0,
                     right: 0,
-                    borderRadius: 50.0,
+                    borderRadius: 0.0,
                     isShowBorder: false,
                     bgColor: AppColors.highlight,
                   ),
@@ -1364,8 +1344,8 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                   decoration: const BoxDecoration(
                     color: AppColors.white,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20.0),
-                      topRight: Radius.circular(20.0),
+                      topLeft: Radius.circular(0.0),
+                      topRight: Radius.circular(0.0),
                     ),
                   ),
                   child: ConstrainedBox(
@@ -1392,7 +1372,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                               style: const TextStyle(
                                 color: AppColors.richBlack,
                                 fontSize: 20.0,
-                                fontFamily: Fonts.helixSemiBold,
+                                fontFamily: Fonts.montserratSemiBold,
                               ),
                             ),
                           ),
@@ -1419,7 +1399,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                 style: const TextStyle(
                                   color: AppColors.richBlack,
                                   fontSize: 16.0,
-                                  fontFamily: Fonts.gilroyMedium,
+                                  fontFamily: Fonts.montserratMedium,
                                 ),
                                 controller: searchController,
                                 cursorColor: AppColors.defaultInputBorders,
@@ -1508,11 +1488,11 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                   hintStyle: const TextStyle(
                                     color: AppColors.placeholder,
                                     fontSize: 16.0,
-                                    fontFamily: Fonts.gilroyMedium,
+                                    fontFamily: Fonts.montserratMedium,
                                   ),
                                   focusColor: AppColors.placeholder,
                                   focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(0.0),
                                     borderSide: const BorderSide(
                                       color: AppColors.highlight,
                                       width: 2.0,
@@ -1521,7 +1501,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                   errorBorder: InputBorder.none,
                                   disabledBorder: InputBorder.none,
                                   enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(0.0),
                                     borderSide: const BorderSide(
                                       color: AppColors.defaultInputBorders,
                                       width: 2.0,
@@ -1578,7 +1558,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                       ),
                                       decoration: BoxDecoration(
                                         borderRadius:
-                                            BorderRadius.circular(8.0),
+                                            BorderRadius.circular(0.0),
                                         color: value == 'state'
                                             ? context
                                                         .watch<
@@ -1669,7 +1649,8 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
                                               style: const TextStyle(
                                                 color: AppColors.richBlack,
                                                 fontSize: 16.0,
-                                                fontFamily: Fonts.gilroyRegular,
+                                                fontFamily:
+                                                    Fonts.montserratRegular,
                                               ),
                                             ),
                                           ],

@@ -18,7 +18,7 @@ class AddressCard extends StatelessWidget {
       padding: const EdgeInsets.only(left: 20.0, right: 20.0),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(0.0),
           color: AppColors.white,
           border: Border.all(
             width: 1.5,
@@ -36,7 +36,7 @@ class AddressCard extends StatelessWidget {
                 style: TextStyle(
                   color: AppColors.richBlack,
                   fontSize: 20.0,
-                  fontFamily: Fonts.helixSemiBold,
+                  fontFamily: Fonts.montserratSemiBold,
                 ),
               ),
               const SizedBox(
@@ -45,7 +45,10 @@ class AddressCard extends StatelessWidget {
               Divider(
                 height: 20.0,
                 thickness: 1.0,
-                color: AppColors.defaultInputBorders.withOpacity(0.7),
+                color: AppColors.placeholder.withOpacity(0.5),
+              ),
+              const SizedBox(
+                height: 10.0,
               ),
               showChangeAddress
                   ? address?.defaultAddress ?? false
@@ -55,8 +58,8 @@ class AddressCard extends StatelessWidget {
                             Container(
                               margin: const EdgeInsets.only(left: 0.0),
                               decoration: BoxDecoration(
-                                color: AppColors.cardBg,
-                                borderRadius: BorderRadius.circular(50.0),
+                                color: AppColors.background,
+                                borderRadius: BorderRadius.circular(0.0),
                                 border: Border.all(
                                   width: 1.0,
                                   color: AppColors.defaultInputBorders,
@@ -74,7 +77,7 @@ class AddressCard extends StatelessWidget {
                                   style: TextStyle(
                                     color: AppColors.subText,
                                     fontSize: 14.0,
-                                    fontFamily: Fonts.gilroyRegular,
+                                    fontFamily: Fonts.montserratMedium,
                                   ),
                                 ),
                               ),
@@ -92,7 +95,7 @@ class AddressCard extends StatelessWidget {
                       style: const TextStyle(
                         color: AppColors.richBlack,
                         fontSize: 16.0,
-                        fontFamily: Fonts.gilroyRegular,
+                        fontFamily: Fonts.montserratRegular,
                       ),
                     )
                   : const SizedBox(),
@@ -105,7 +108,7 @@ class AddressCard extends StatelessWidget {
                       style: const TextStyle(
                         color: AppColors.richBlack,
                         fontSize: 16.0,
-                        fontFamily: Fonts.gilroyRegular,
+                        fontFamily: Fonts.montserratRegular,
                       ),
                     )
                   : const SizedBox(),
@@ -118,9 +121,9 @@ class AddressCard extends StatelessWidget {
                     child: CustomButton(
                       title:
                           showChangeAddress ? 'Change address' : 'Add address',
-                      paddingVertical: 10.5,
+                      paddingVertical: 18,
                       paddingHorizontal: 20,
-                      borderRadius: 8.0,
+                      borderRadius: 0.0,
                       onPressed: onButtonPressed,
                     ),
                   ),

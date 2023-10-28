@@ -23,7 +23,7 @@ class ProgramCardFour extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 15.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(0.0),
         color: AppColors.white,
         boxShadow: [
           BoxShadow(
@@ -50,7 +50,7 @@ class ProgramCardFour extends StatelessWidget {
                     child: SizedBox(
                       height: 115.0,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(0.0),
                         child: ImagePlaceholder(
                           url: Constants.imgFinalUrl +
                               (subscription.coverPhoto ??
@@ -72,7 +72,7 @@ class ProgramCardFour extends StatelessWidget {
                       style: const TextStyle(
                         color: AppColors.richBlack,
                         fontSize: 20.0,
-                        fontFamily: Fonts.gilroyMedium,
+                        fontFamily: Fonts.montserratMedium,
                       ),
                     ),
                   )
@@ -98,7 +98,7 @@ class ProgramCardFour extends StatelessWidget {
                   style: TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroySemiBold,
+                    fontFamily: Fonts.montserratSemiBold,
                   ),
                 ),
                 Text(
@@ -106,7 +106,7 @@ class ProgramCardFour extends StatelessWidget {
                   style: const TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroyMedium,
+                    fontFamily: Fonts.montserratMedium,
                   ),
                 ),
               ],
@@ -122,7 +122,7 @@ class ProgramCardFour extends StatelessWidget {
                   style: TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroySemiBold,
+                    fontFamily: Fonts.montserratSemiBold,
                   ),
                 ),
                 Text(
@@ -130,7 +130,7 @@ class ProgramCardFour extends StatelessWidget {
                   style: const TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroyMedium,
+                    fontFamily: Fonts.montserratMedium,
                   ),
                 ),
               ],
@@ -146,7 +146,7 @@ class ProgramCardFour extends StatelessWidget {
                   style: TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroySemiBold,
+                    fontFamily: Fonts.montserratSemiBold,
                   ),
                 ),
                 Text(
@@ -154,7 +154,7 @@ class ProgramCardFour extends StatelessWidget {
                   style: const TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroyMedium,
+                    fontFamily: Fonts.montserratMedium,
                   ),
                 ),
               ],
@@ -170,7 +170,7 @@ class ProgramCardFour extends StatelessWidget {
                   style: TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroySemiBold,
+                    fontFamily: Fonts.montserratSemiBold,
                   ),
                 ),
                 Text(
@@ -178,7 +178,7 @@ class ProgramCardFour extends StatelessWidget {
                   style: const TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroyMedium,
+                    fontFamily: Fonts.montserratMedium,
                   ),
                 ),
               ],
@@ -194,7 +194,7 @@ class ProgramCardFour extends StatelessWidget {
                   style: TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroySemiBold,
+                    fontFamily: Fonts.montserratSemiBold,
                   ),
                 ),
                 Text(
@@ -202,7 +202,7 @@ class ProgramCardFour extends StatelessWidget {
                   style: const TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroyMedium,
+                    fontFamily: Fonts.montserratMedium,
                   ),
                 ),
               ],
@@ -216,15 +216,15 @@ class ProgramCardFour extends StatelessWidget {
                         style: TextStyle(
                           color: AppColors.richBlack,
                           fontSize: 14.0,
-                          fontFamily: Fonts.gilroySemiBold,
+                          fontFamily: Fonts.montserratSemiBold,
                         ),
                       ),
                       Text(
-                        subscription.daysLeft.toString() ?? "",
+                        subscription.daysLeft.toString(),
                         style: const TextStyle(
                           color: AppColors.richBlack,
                           fontSize: 14.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                       ),
                     ],
@@ -250,7 +250,7 @@ class ProgramCardFour extends StatelessWidget {
                         style: const TextStyle(
                           color: AppColors.richBlack,
                           fontSize: 16.0,
-                          fontFamily: Fonts.gilroySemiBold,
+                          fontFamily: Fonts.montserratSemiBold,
                         ),
                       ),
                 const Expanded(
@@ -263,7 +263,7 @@ class ProgramCardFour extends StatelessWidget {
                             title: 'PDF',
                             paddingVertical: 8.0,
                             paddingHorizontal: 20,
-                            borderRadius: 8.0,
+                            borderRadius: 0.0,
                             isShowBorder: true,
                             onPressed: onDownloadPdfClicked,
                             borderWidth: 1.5,
@@ -282,9 +282,9 @@ class ProgramCardFour extends StatelessWidget {
                 showDaysLeft
                     ? CustomButton(
                         title: 'Join now',
-                        paddingVertical: 10.5,
+                        paddingVertical: 18,
                         paddingHorizontal: 20,
-                        borderRadius: 8.0,
+                        borderRadius: 0.0,
                         onPressed: onJoinButtonPressed,
                       )
                     : GestureDetector(
@@ -299,7 +299,7 @@ class ProgramCardFour extends StatelessWidget {
                           iconColor: AppColors.white,
                           top: 0,
                           right: 0,
-                          borderRadius: 50.0,
+                          borderRadius: 0.0,
                           isShowBorder: false,
                           bgColor: AppColors.warning,
                         ),

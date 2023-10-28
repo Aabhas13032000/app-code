@@ -31,11 +31,11 @@ class Application {
   static bool isShowSomeErrorToast = false;
   static bool isPaymentAllowed = false;
   static int age = 0;
-  static String termsAndConditionUrl = '/terms-conditions';
+  static String termsAndConditionUrl = '/terms-conditions-mobile';
   static String aboutUs = '/about-mobile';
   static String contactUs = '/contact-mobile';
-  static String privacyPolicyUrl = '/privacy-policy';
-  static String refundPolicyUrl = '/refund-policy';
+  static String privacyPolicyUrl = '/privacy-policy-mobile';
+  static String refundPolicyUrl = '/refund-policy-mobile';
   static String faqUrl = '/faq-mobile';
 
   //userData
@@ -127,7 +127,7 @@ class Application {
         await launchUrl(Uri.parse(path.replaceAll(' ', '%20')));
       } else {
         Utility.showSnacbar(context, AlertMessages.getMessage(2),
-            AppColors.lightYellow, AppColors.highlight, 50.0);
+            AppColors.background, AppColors.subText, 50.0);
       }
     } else {
       // android , web
@@ -135,7 +135,7 @@ class Application {
         await launchUrl(Uri.parse(path.replaceAll(' ', '%20')));
       } else {
         Utility.showSnacbar(context, AlertMessages.getMessage(2),
-            AppColors.lightYellow, AppColors.highlight, 50.0);
+            AppColors.background, AppColors.subText, 50.0);
       }
     }
     // }

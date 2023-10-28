@@ -98,7 +98,7 @@ class TestimonialSlider extends StatelessWidget {
                                   style: const TextStyle(
                                     color: AppColors.richBlack,
                                     fontSize: 18.0,
-                                    fontFamily: Fonts.helixSemiBold,
+                                    fontFamily: Fonts.montserratSemiBold,
                                   ),
                                 ),
                                 const SizedBox(
@@ -110,7 +110,7 @@ class TestimonialSlider extends StatelessWidget {
                                   style: const TextStyle(
                                     color: AppColors.subText,
                                     fontSize: 16.0,
-                                    fontFamily: Fonts.gilroyMedium,
+                                    fontFamily: Fonts.montserratMedium,
                                   ),
                                 ),
                               ],
@@ -128,7 +128,7 @@ class TestimonialSlider extends StatelessWidget {
                               textColor: AppColors.subText,
                               fontSize: 14.0,
                               maxLines: 2,
-                              font: Fonts.gilroyRegular,
+                              font: Fonts.montserratRegular,
                               fontStyleNew: FontStyle.italic,
                               maxChar: slider[index].message.length > 250
                                   ? 250
@@ -140,7 +140,7 @@ class TestimonialSlider extends StatelessWidget {
                               style: const TextStyle(
                                 color: AppColors.richBlack,
                                 fontSize: 14.0,
-                                fontFamily: Fonts.gilroyRegular,
+                                fontFamily: Fonts.montserratRegular,
                                 fontStyle: FontStyle.italic,
                               ),
                             ),
@@ -220,7 +220,7 @@ class TestimonialSlider extends StatelessWidget {
                           //   style: TextStyle(
                           //     color: AppColors.highlight,
                           //     fontSize: 16.0,
-                          //     fontFamily: Fonts.helixSemiBold,
+                          //     fontFamily: Fonts.montserratSemiBold,
                           //   ),
                           // ),
                         ],

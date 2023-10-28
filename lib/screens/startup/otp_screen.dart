@@ -37,6 +37,7 @@ class _OtpScreenState extends State<OtpScreen> {
     Map<String, String> params = {
       'phoneNumber': widget.phoneNumber,
       'country_code': widget.selectedCode,
+      'userId': Application.user?.id ?? '0',
     };
     String url = '${Constants.finalUrl}/updatePhoneNumber';
     Map<String, dynamic> loginData =
@@ -60,15 +61,6 @@ class _OtpScreenState extends State<OtpScreen> {
               (Application.user?.gender ?? "").isEmpty) {
             Get.offAll(
               () => const UserDetailScreen(),
-            );
-          } else if ((Application.user?.age ?? 0) == 0) {
-            Get.offAll(
-              () => UserHeightWeight(
-                name: Application.user?.name ?? "",
-                email: Application.user?.email,
-                selectedImage: Application.user?.profileImage,
-                gender: Application.user?.gender ?? 'MALE',
-              ),
             );
           } else {
             Get.offAll(
@@ -151,14 +143,14 @@ class _OtpScreenState extends State<OtpScreen> {
       // timeout: const Duration(seconds: 60),
       phoneNumber: '+91${widget.phoneNumber}',
       verificationCompleted: (PhoneAuthCredential phoneAuthCredential) async {
-        User? user;
-        bool error = false;
+        // User? user;
+        // bool error = false;
         try {
-          user = (await auth.signInWithCredential(phoneAuthCredential)).user!;
+          // user = (await auth.signInWithCredential(phoneAuthCredential)).user!;
           Utility.showProgress(false);
         } catch (e) {
           Utility.printLog("Failed to sign in: $e");
-          error = true;
+          // error = true;
         }
       },
       verificationFailed: (FirebaseAuthException verificationFailed) async {
@@ -231,9 +223,9 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   void startTimer() async {
-    if (verificationId.isEmpty) {
-      await verifyPhoneNumber();
-    }
+    // if (verificationId.isEmpty) {
+    await verifyPhoneNumber();
+    // }
     const oneSec = Duration(seconds: 1);
     start = 60;
     timer = Timer.periodic(
@@ -277,19 +269,28 @@ class _OtpScreenState extends State<OtpScreen> {
                 children: [
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 3 / 5,
-                    child: AppSlider(
-                      slider: Provider.of<MainContainerProvider>(context,
-                              listen: false)
-                          .slider,
-                      height: MediaQuery.of(context).size.height * 3 / 5,
-                      viewPortFraction: 1,
-                      margin: const EdgeInsets.all(0.0),
-                      borderRadius: 0.0,
-                      aspectRatio: 9 / 16,
-                      width: double.infinity,
-                      duration: 1500,
-                      bottomIndicatorVerticalPadding: 45.0,
+                    child: Center(
+                      child: Image.asset(
+                        Images.splashCurect,
+                        width: 200.0,
+                        height: 100,
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                      ),
                     ),
+                    // child: AppSlider(
+                    //   slider: Provider.of<MainContainerProvider>(context,
+                    //           listen: false)
+                    //       .slider,
+                    //   height: MediaQuery.of(context).size.height * 3 / 5,
+                    //   viewPortFraction: 1,
+                    //   margin: const EdgeInsets.all(0.0),
+                    //   borderRadius: 0.0,
+                    //   aspectRatio: 9 / 16,
+                    //   width: double.infinity,
+                    //   duration: 1500,
+                    //   bottomIndicatorVerticalPadding: 45.0,
+                    // ),
                   ),
                   Positioned(
                     bottom: 0.0,
@@ -310,10 +311,10 @@ class _OtpScreenState extends State<OtpScreen> {
         color: AppColors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(
-            20.0,
+            0.0,
           ),
           topRight: Radius.circular(
-            20.0,
+            0.0,
           ),
         ),
       ),
@@ -330,7 +331,7 @@ class _OtpScreenState extends State<OtpScreen> {
               'OTP Verification',
               style: TextStyle(
                 fontSize: 20.0,
-                fontFamily: Fonts.helixSemiBold,
+                fontFamily: Fonts.montserratSemiBold,
                 color: AppColors.richBlack,
               ),
             ),
@@ -343,7 +344,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         const TextSpan(
                           text: 'Enter the OTP sent to ',
                           style: TextStyle(
-                            fontFamily: Fonts.gilroyMedium,
+                            fontFamily: Fonts.montserratMedium,
                             fontSize: 16.0,
                             color: AppColors.subText,
                           ),
@@ -351,7 +352,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         TextSpan(
                           text: '${widget.selectedCode}-${widget.phoneNumber}',
                           style: const TextStyle(
-                            fontFamily: Fonts.gilroySemiBold,
+                            fontFamily: Fonts.montserratSemiBold,
                             fontSize: 16.0,
                             color: AppColors.richBlack,
                           ),
@@ -393,7 +394,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       style: const TextStyle(
                         color: AppColors.richBlack,
                         fontSize: 16.0,
-                        fontFamily: Fonts.gilroyMedium,
+                        fontFamily: Fonts.montserratMedium,
                       ),
                       controller: otpControllerOne,
                       cursorColor: AppColors.defaultInputBorders,
@@ -413,11 +414,11 @@ class _OtpScreenState extends State<OtpScreen> {
                         hintStyle: const TextStyle(
                           color: AppColors.placeholder,
                           fontSize: 16.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                         focusColor: AppColors.placeholder,
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(0.0),
                           borderSide: const BorderSide(
                             color: AppColors.highlight,
                             width: 2.0,
@@ -426,7 +427,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         errorBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(0.0),
                           borderSide: const BorderSide(
                             color: AppColors.defaultInputBorders,
                             width: 2.0,
@@ -454,7 +455,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       style: const TextStyle(
                         color: AppColors.richBlack,
                         fontSize: 16.0,
-                        fontFamily: Fonts.gilroyMedium,
+                        fontFamily: Fonts.montserratMedium,
                       ),
                       controller: otpControllerTwo,
                       cursorColor: AppColors.defaultInputBorders,
@@ -474,11 +475,11 @@ class _OtpScreenState extends State<OtpScreen> {
                         hintStyle: const TextStyle(
                           color: AppColors.placeholder,
                           fontSize: 16.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                         focusColor: AppColors.placeholder,
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(0.0),
                           borderSide: const BorderSide(
                             color: AppColors.highlight,
                             width: 2.0,
@@ -487,7 +488,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         errorBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(0.0),
                           borderSide: const BorderSide(
                             color: AppColors.defaultInputBorders,
                             width: 2.0,
@@ -515,7 +516,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       style: const TextStyle(
                         color: AppColors.richBlack,
                         fontSize: 16.0,
-                        fontFamily: Fonts.gilroyMedium,
+                        fontFamily: Fonts.montserratMedium,
                       ),
                       controller: otpControllerThree,
                       cursorColor: AppColors.defaultInputBorders,
@@ -535,11 +536,11 @@ class _OtpScreenState extends State<OtpScreen> {
                         hintStyle: const TextStyle(
                           color: AppColors.placeholder,
                           fontSize: 16.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                         focusColor: AppColors.placeholder,
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(0.0),
                           borderSide: const BorderSide(
                             color: AppColors.highlight,
                             width: 2.0,
@@ -548,7 +549,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         errorBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(0.0),
                           borderSide: const BorderSide(
                             color: AppColors.defaultInputBorders,
                             width: 2.0,
@@ -576,7 +577,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       style: const TextStyle(
                         color: AppColors.richBlack,
                         fontSize: 16.0,
-                        fontFamily: Fonts.gilroyMedium,
+                        fontFamily: Fonts.montserratMedium,
                       ),
                       controller: otpControllerFour,
                       cursorColor: AppColors.defaultInputBorders,
@@ -596,11 +597,11 @@ class _OtpScreenState extends State<OtpScreen> {
                         hintStyle: const TextStyle(
                           color: AppColors.placeholder,
                           fontSize: 16.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                         focusColor: AppColors.placeholder,
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(0.0),
                           borderSide: const BorderSide(
                             color: AppColors.highlight,
                             width: 2.0,
@@ -609,7 +610,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         errorBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(0.0),
                           borderSide: const BorderSide(
                             color: AppColors.defaultInputBorders,
                             width: 2.0,
@@ -637,7 +638,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       style: const TextStyle(
                         color: AppColors.richBlack,
                         fontSize: 16.0,
-                        fontFamily: Fonts.gilroyMedium,
+                        fontFamily: Fonts.montserratMedium,
                       ),
                       controller: otpControllerFive,
                       cursorColor: AppColors.defaultInputBorders,
@@ -657,11 +658,11 @@ class _OtpScreenState extends State<OtpScreen> {
                         hintStyle: const TextStyle(
                           color: AppColors.placeholder,
                           fontSize: 16.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                         focusColor: AppColors.placeholder,
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(0.0),
                           borderSide: const BorderSide(
                             color: AppColors.highlight,
                             width: 2.0,
@@ -670,7 +671,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         errorBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(0.0),
                           borderSide: const BorderSide(
                             color: AppColors.defaultInputBorders,
                             width: 2.0,
@@ -698,7 +699,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       style: const TextStyle(
                         color: AppColors.richBlack,
                         fontSize: 16.0,
-                        fontFamily: Fonts.gilroyMedium,
+                        fontFamily: Fonts.montserratMedium,
                       ),
                       controller: otpControllerSix,
                       cursorColor: AppColors.defaultInputBorders,
@@ -718,11 +719,11 @@ class _OtpScreenState extends State<OtpScreen> {
                         hintStyle: const TextStyle(
                           color: AppColors.placeholder,
                           fontSize: 16.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                         focusColor: AppColors.placeholder,
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(0.0),
                           borderSide: const BorderSide(
                             color: AppColors.highlight,
                             width: 2.0,
@@ -731,7 +732,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         errorBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(0.0),
                           borderSide: const BorderSide(
                             color: AppColors.defaultInputBorders,
                             width: 2.0,
@@ -756,6 +757,7 @@ class _OtpScreenState extends State<OtpScreen> {
             CustomButton(
               title: 'Verify',
               textColor: AppColors.white,
+              paddingVertical: 18,
               onPressed: () {
                 String otp = otpControllerOne.text +
                     otpControllerTwo.text +
@@ -785,10 +787,10 @@ class _OtpScreenState extends State<OtpScreen> {
                 ? SizedBox(
                     child: Center(
                       child: Text(
-                        '00:$start',
+                        '00:${start < 10 ? '0$start' : start}',
                         textAlign: TextAlign.center,
                         style: const TextStyle(
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                           fontSize: 14.0,
                           color: AppColors.subText,
                         ),
@@ -809,7 +811,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       const TextSpan(
                         text: 'Didn’t recieved the OTP ? ',
                         style: TextStyle(
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                           fontSize: 16.0,
                           color: AppColors.subText,
                         ),
@@ -817,7 +819,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       TextSpan(
                         text: 'Resend',
                         style: TextStyle(
-                          fontFamily: Fonts.gilroySemiBold,
+                          fontFamily: Fonts.montserratSemiBold,
                           fontSize: 16.0,
                           color: counter == 4
                               ? AppColors.subText
@@ -828,6 +830,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             if (!isDisabled && counter < 4) {
+                              Utility.printLog('Starting timer again !');
                               startTimer();
                             }
                           },

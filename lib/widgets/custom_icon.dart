@@ -13,8 +13,11 @@ class CustomIcon extends StatelessWidget {
     required this.top,
     required this.right,
     this.borderRadius = 10.0,
+    this.fontSize = 20.0,
     this.isShowBorder = true,
+    this.isNameInitial = false,
     this.bgColor = AppColors.white,
+    this.name = '',
   }) : super(key: key);
 
   final IconData icon;
@@ -26,9 +29,12 @@ class CustomIcon extends StatelessWidget {
   final Color iconColor;
   final bool isShowDot;
   final double radius;
+  final double? fontSize;
   final double? borderRadius;
   final bool? isShowBorder;
+  final bool? isNameInitial;
   final Color? bgColor;
+  final String? name;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +43,7 @@ class CustomIcon extends StatelessWidget {
       width: radius,
       decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: BorderRadius.circular(borderRadius ?? 10.0),
+        borderRadius: BorderRadius.circular(borderRadius ?? 0.0),
         border: isShowBorder ?? true
             ? Border.all(
                 width: borderWidth,
@@ -48,11 +54,20 @@ class CustomIcon extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Icon(
-            icon,
-            size: iconSize,
-            color: iconColor,
-          ),
+          isNameInitial ?? false
+              ? Text(
+                  (name ?? '').toUpperCase(),
+                  style: TextStyle(
+                    color: AppColors.black,
+                    fontSize: fontSize,
+                    fontFamily: Fonts.montserratRegular,
+                  ),
+                )
+              : Icon(
+                  icon,
+                  size: iconSize,
+                  color: iconColor,
+                ),
           isShowDot
               ? Positioned(
                   top: top,
@@ -61,7 +76,7 @@ class CustomIcon extends StatelessWidget {
                     height: 10.0,
                     width: 10.0,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50.0),
+                        borderRadius: BorderRadius.circular(0.0),
                         color: AppColors.congrats,
                         border: Border.all(
                           width: 1.0,

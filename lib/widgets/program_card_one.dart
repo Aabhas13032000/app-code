@@ -9,7 +9,8 @@ class ProgramCardOne extends StatelessWidget {
     required this.isJoined,
     required this.numberOfTrainers,
     required this.firstTrainerUrl,
-    required this.secondTrainerUrl, this.onCardClicked,
+    required this.secondTrainerUrl,
+    this.onCardClicked,
   }) : super(key: key);
 
   final String photoUrl;
@@ -28,7 +29,7 @@ class ProgramCardOne extends StatelessWidget {
       child: Container(
         width: 230.0,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(0.0),
           color: AppColors.white,
           boxShadow: [
             BoxShadow(
@@ -51,8 +52,8 @@ class ProgramCardOne extends StatelessWidget {
               width: 230.0,
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(12.0),
-                  topLeft: Radius.circular(12.0),
+                  topRight: Radius.circular(0.0),
+                  topLeft: Radius.circular(0.0),
                 ),
                 child: ImagePlaceholder(
                   url: photoUrl,
@@ -75,7 +76,7 @@ class ProgramCardOne extends StatelessWidget {
                 style: const TextStyle(
                   color: AppColors.richBlack,
                   fontSize: 16.0,
-                  fontFamily: Fonts.helixSemiBold,
+                  fontFamily: Fonts.montserratSemiBold,
                 ),
               ),
             ),
@@ -92,7 +93,7 @@ class ProgramCardOne extends StatelessWidget {
                 style: const TextStyle(
                   color: AppColors.subText,
                   fontSize: 14.0,
-                  fontFamily: Fonts.gilroyMedium,
+                  fontFamily: Fonts.montserratMedium,
                 ),
               ),
             ),
@@ -136,7 +137,7 @@ class ProgramCardOne extends StatelessWidget {
                 //                 height: 40.0,
                 //                 width: 40.0,
                 //                 decoration: BoxDecoration(
-                //                     borderRadius: BorderRadius.circular(50.0),
+                //                     borderRadius: BorderRadius.circular(0.0),
                 //                     color: AppColors.defaultInputBorders,
                 //                     border: Border.all(
                 //                       width: 2.0,
@@ -146,7 +147,7 @@ class ProgramCardOne extends StatelessWidget {
                 //                   child: Text(
                 //                     '+${numberOfTrainers - 2}',
                 //                     style: const TextStyle(
-                //                       fontFamily: Fonts.gilroyMedium,
+                //                       fontFamily: Fonts.montserratMedium,
                 //                       fontSize: 13.0,
                 //                       color: AppColors.richBlack,
                 //                     ),
@@ -164,9 +165,9 @@ class ProgramCardOne extends StatelessWidget {
                 Expanded(
                   child: CustomButton(
                     title: isJoined ? 'Join now' : 'Book now',
-                    paddingVertical: 10.5,
+                    paddingVertical: 18,
                     paddingHorizontal: 13.5,
-                    borderRadius: 8.0,
+                    borderRadius: 0.0,
                   ),
                 ),
                 const SizedBox(

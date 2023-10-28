@@ -78,15 +78,6 @@ class _SplashScreenState extends State<SplashScreen>
                   Get.offAll(
                     () => const UserDetailScreen(),
                   );
-                } else if (Application.age == 0) {
-                  Get.offAll(
-                    () => UserHeightWeight(
-                      name: Application.userName,
-                      email: Application.user?.email,
-                      selectedImage: Application.user?.profileImage,
-                      gender: Application.user?.gender ?? 'MALE',
-                    ),
-                  );
                 } else {
                   Get.offAll(
                     () => const LoginScreen(),
@@ -183,7 +174,7 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: AppColors.lightYellow,
+        color: AppColors.black,
         width: double.infinity,
         height: double.infinity,
         child: AnimatedBuilder(
@@ -196,18 +187,24 @@ class _SplashScreenState extends State<SplashScreen>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    Images.logo,
-                    width: 120.0,
+                    Images.splashCurect,
+                    width: 300.0,
                     fit: BoxFit.cover,
                     alignment: Alignment.center,
                   ),
                   // const SizedBox(
-                  //   height: 20.0,
+                  //   height: 15.0,
+                  // ),
+                  // Image.asset(
+                  //   Images.curectName,
+                  //   width: 150.0,
+                  //   fit: BoxFit.cover,
+                  //   alignment: Alignment.center,
                   // ),
                   // const Text(
                   //   'HEALFIT',
                   //   style: TextStyle(
-                  //     fontFamily: Fonts.helixExtraBold,
+                  //     fontFamily: Fonts.montserratExtraBold,
                   //     fontSize: 48.0,
                   //   ),
                   // )

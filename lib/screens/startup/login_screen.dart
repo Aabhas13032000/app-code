@@ -135,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             iconColor: AppColors.white,
                             top: 0,
                             right: 0,
-                            borderRadius: 50.0,
+                            borderRadius: 0.0,
                             isShowBorder: false,
                             bgColor: AppColors.highlight,
                           ),
@@ -148,8 +148,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: const BoxDecoration(
                       color: AppColors.white,
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20.0),
-                        topRight: Radius.circular(20.0),
+                        topLeft: Radius.circular(0.0),
+                        topRight: Radius.circular(0.0),
                       ),
                     ),
                     child: ConstrainedBox(
@@ -172,14 +172,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: AppColors.defaultInputBorders,
                                     width: 2.0,
                                   ),
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(0.0),
                                 ),
                                 child: TextField(
                                   textAlignVertical: TextAlignVertical.center,
                                   style: const TextStyle(
                                     color: AppColors.richBlack,
                                     fontSize: 16.0,
-                                    fontFamily: Fonts.gilroyMedium,
+                                    fontFamily: Fonts.montserratMedium,
                                   ),
                                   controller: searchController,
                                   cursorColor: AppColors.defaultInputBorders,
@@ -189,7 +189,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   cursorWidth: 1.5,
                                   onSubmitted: (value) {
                                     if (value.isEmpty) {
-                                      setState(() => {searchCodes = codes});
+                                      setState(() {
+                                        searchCodes = codes;
+                                      });
                                     } else {
                                       var newArray = codes
                                           .where((element) => element
@@ -197,12 +199,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                               .toUpperCase()
                                               .contains(value.toUpperCase()))
                                           .toList();
-                                      setState(() => {searchCodes = newArray});
+                                      setState(() {
+                                        searchCodes = newArray;
+                                      });
                                     }
                                   },
                                   onChanged: (value) {
                                     if (value.isEmpty) {
-                                      setState(() => {searchCodes = codes});
+                                      setState(() {
+                                        searchCodes = codes;
+                                      });
                                     } else {
                                       var newArray = codes
                                           .where((element) => element
@@ -210,7 +216,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                               .toUpperCase()
                                               .contains(value.toUpperCase()))
                                           .toList();
-                                      setState(() => {searchCodes = newArray});
+                                      setState(() {
+                                        searchCodes = newArray;
+                                      });
                                     }
                                   },
                                   decoration: InputDecoration(
@@ -235,11 +243,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                     hintStyle: const TextStyle(
                                       color: AppColors.placeholder,
                                       fontSize: 16.0,
-                                      fontFamily: Fonts.gilroyMedium,
+                                      fontFamily: Fonts.montserratMedium,
                                     ),
                                     focusColor: AppColors.placeholder,
                                     focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderRadius: BorderRadius.circular(0.0),
                                       borderSide: const BorderSide(
                                         color: AppColors.transparent,
                                         width: 0.0,
@@ -248,7 +256,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     errorBorder: InputBorder.none,
                                     disabledBorder: InputBorder.none,
                                     enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderRadius: BorderRadius.circular(0.0),
                                       borderSide: const BorderSide(
                                         color: AppColors.transparent,
                                         width: 0.0,
@@ -290,7 +298,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 AppColors.defaultInputBorders,
                                           ),
                                           borderRadius:
-                                              BorderRadius.circular(8.0)),
+                                              BorderRadius.circular(0.0)),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -301,7 +309,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                               searchCodes[index].countryName,
                                               style: const TextStyle(
                                                 fontSize: 16.0,
-                                                fontFamily: Fonts.gilroyMedium,
+                                                fontFamily:
+                                                    Fonts.montserratMedium,
                                                 color: AppColors.richBlack,
                                               ),
                                             ),
@@ -310,7 +319,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                             searchCodes[index].countryCode,
                                             style: const TextStyle(
                                               fontSize: 16.0,
-                                              fontFamily: Fonts.helixSemiBold,
+                                              fontFamily:
+                                                  Fonts.montserratSemiBold,
                                               color: AppColors.richBlack,
                                             ),
                                           ),
@@ -356,19 +366,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   )
                 : SizedBox(
                     height: MediaQuery.of(context).size.height * 3 / 5,
-                    child: AppSlider(
-                      slider: Provider.of<MainContainerProvider>(context,
-                              listen: false)
-                          .slider,
-                      height: MediaQuery.of(context).size.height * 3 / 5,
-                      viewPortFraction: 1,
-                      margin: const EdgeInsets.all(0.0),
-                      borderRadius: 0.0,
-                      aspectRatio: 9 / 16,
-                      width: double.infinity,
-                      duration: 1500,
-                      bottomIndicatorVerticalPadding: 55.0,
+                    child: Center(
+                      child: Image.asset(
+                        Images.splashCurect,
+                        width: 200.0,
+                        height: 100,
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                      ),
                     ),
+                    // child: AppSlider(
+                    //   slider: Provider.of<MainContainerProvider>(context,
+                    //           listen: false)
+                    //       .slider,
+                    //   height: MediaQuery.of(context).size.height * 3 / 5,
+                    //   viewPortFraction: 1,
+                    //   margin: const EdgeInsets.all(0.0),
+                    //   borderRadius: 0.0,
+                    //   aspectRatio: 9 / 16,
+                    //   width: double.infinity,
+                    //   duration: 1500,
+                    //   bottomIndicatorVerticalPadding: 55.0,
+                    // ),
                   ),
             Positioned(
               bottom: 0.0,
@@ -389,10 +408,10 @@ class _LoginScreenState extends State<LoginScreen> {
         color: AppColors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(
-            20.0,
+            0.0,
           ),
           topRight: Radius.circular(
-            20.0,
+            0.0,
           ),
         ),
       ),
@@ -409,7 +428,7 @@ class _LoginScreenState extends State<LoginScreen> {
               'OTP Verification',
               style: TextStyle(
                 fontSize: 20.0,
-                fontFamily: Fonts.helixSemiBold,
+                fontFamily: Fonts.montserratSemiBold,
                 color: AppColors.richBlack,
               ),
             ),
@@ -420,7 +439,7 @@ class _LoginScreenState extends State<LoginScreen> {
               'We will send you a One Time Password on this\nphone number',
               style: TextStyle(
                 fontSize: 14.0,
-                fontFamily: Fonts.gilroyMedium,
+                fontFamily: Fonts.montserratMedium,
                 color: AppColors.subText,
               ),
             ),
@@ -441,7 +460,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             : AppColors.defaultInputBorders,
                         width: 2.0,
                       ),
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(0.0),
                     ),
                     child: TextField(
                       focusNode: _focus,
@@ -449,7 +468,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: const TextStyle(
                         color: AppColors.richBlack,
                         fontSize: 16.0,
-                        fontFamily: Fonts.gilroyMedium,
+                        fontFamily: Fonts.montserratMedium,
                       ),
                       controller: phoneNumberController,
                       cursorColor: AppColors.defaultInputBorders,
@@ -479,7 +498,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   style: const TextStyle(
                                     color: AppColors.richBlack,
                                     fontSize: 16.0,
-                                    fontFamily: Fonts.gilroySemiBold,
+                                    fontFamily: Fonts.montserratSemiBold,
                                   ),
                                 ),
                                 const SizedBox(
@@ -504,11 +523,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         hintStyle: const TextStyle(
                           color: AppColors.placeholder,
                           fontSize: 16.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                         focusColor: AppColors.placeholder,
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(0.0),
                           borderSide: const BorderSide(
                             color: AppColors.transparent,
                             width: 0.0,
@@ -517,7 +536,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         errorBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(0.0),
                           borderSide: const BorderSide(
                             color: AppColors.transparent,
                             width: 0.0,
@@ -540,7 +559,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ? AppColors.highlight
                                 : AppColors.placeholder,
                             fontSize: 14.0,
-                            fontFamily: Fonts.gilroySemiBold,
+                            fontFamily: Fonts.montserratSemiBold,
                           ),
                         ),
                       ),
@@ -555,6 +574,7 @@ class _LoginScreenState extends State<LoginScreen> {
             CustomButton(
               title: 'Get OTP',
               textColor: AppColors.white,
+              paddingVertical: 18,
               onPressed: () async {
                 Utility.showProgress(true);
                 if (phoneNumberController.text.length >= 10) {
@@ -566,13 +586,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         '${Provider.of<LoginPageViewModel>(context, listen: false).selectedCode}${phoneNumberController.text}',
                     verificationCompleted:
                         (PhoneAuthCredential phoneAuthCredential) async {
-                      User? user;
-                      bool error = false;
+                      // User? user;
+                      // bool error = false;
                       try {
                         Utility.showProgress(false);
                       } catch (e) {
                         Utility.printLog("Failed to sign in: $e");
-                        error = true;
+                        // error = true;
                       }
                     },
                     verificationFailed:
@@ -637,7 +657,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const TextSpan(
                         text: 'Read ',
                         style: TextStyle(
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                           fontSize: 16.0,
                           color: AppColors.subText,
                         ),
@@ -645,7 +665,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextSpan(
                         text: 'Terms & Condition',
                         style: const TextStyle(
-                          fontFamily: Fonts.gilroySemiBold,
+                          fontFamily: Fonts.montserratSemiBold,
                           fontSize: 16.0,
                           color: AppColors.highlight,
                         ),
@@ -663,7 +683,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const TextSpan(
                         text: ' and ',
                         style: TextStyle(
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                           fontSize: 16.0,
                           color: AppColors.subText,
                         ),
@@ -671,7 +691,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextSpan(
                         text: 'Privacy Policy',
                         style: const TextStyle(
-                          fontFamily: Fonts.gilroySemiBold,
+                          fontFamily: Fonts.montserratSemiBold,
                           fontSize: 16.0,
                           color: AppColors.highlight,
                         ),

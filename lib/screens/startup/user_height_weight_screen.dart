@@ -227,7 +227,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                 'Hello, ${widget.name}',
                 style: const TextStyle(
                   fontSize: 24.0,
-                  fontFamily: Fonts.helixSemiBold,
+                  fontFamily: Fonts.montserratSemiBold,
                   color: AppColors.richBlack,
                 ),
               ),
@@ -238,7 +238,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                 'Tell us about your age, height and weight',
                 style: TextStyle(
                   fontSize: 16.0,
-                  fontFamily: Fonts.gilroyMedium,
+                  fontFamily: Fonts.montserratMedium,
                   color: AppColors.subText,
                 ),
               ),
@@ -258,7 +258,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                         style: const TextStyle(
                           color: AppColors.richBlack,
                           fontSize: 16.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                         controller: ageController,
                         cursorColor: AppColors.defaultInputBorders,
@@ -282,11 +282,11 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                           hintStyle: const TextStyle(
                             color: AppColors.placeholder,
                             fontSize: 16.0,
-                            fontFamily: Fonts.gilroyMedium,
+                            fontFamily: Fonts.montserratMedium,
                           ),
                           focusColor: AppColors.placeholder,
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(0.0),
                             borderSide: const BorderSide(
                               color: AppColors.highlight,
                               width: 2.0,
@@ -295,7 +295,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(0.0),
                             borderSide: const BorderSide(
                               color: AppColors.defaultInputBorders,
                               width: 2.0,
@@ -318,7 +318,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                                   ? AppColors.highlight
                                   : AppColors.placeholder,
                               fontSize: 14.0,
-                              fontFamily: Fonts.gilroySemiBold,
+                              fontFamily: Fonts.montserratSemiBold,
                             ),
                           ),
                         ),
@@ -346,7 +346,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                               style: const TextStyle(
                                 color: AppColors.richBlack,
                                 fontSize: 16.0,
-                                fontFamily: Fonts.gilroyMedium,
+                                fontFamily: Fonts.montserratMedium,
                               ),
                               controller: heightFeetController,
                               cursorColor: AppColors.defaultInputBorders,
@@ -367,7 +367,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                                     style: TextStyle(
                                       color: AppColors.subText,
                                       fontSize: 16.0,
-                                      fontFamily: Fonts.gilroySemiBold,
+                                      fontFamily: Fonts.montserratSemiBold,
                                     ),
                                   ),
                                 ),
@@ -386,11 +386,11 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                                 hintStyle: const TextStyle(
                                   color: AppColors.placeholder,
                                   fontSize: 16.0,
-                                  fontFamily: Fonts.gilroyMedium,
+                                  fontFamily: Fonts.montserratMedium,
                                 ),
                                 focusColor: AppColors.placeholder,
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(0.0),
                                   borderSide: const BorderSide(
                                     color: AppColors.highlight,
                                     width: 2.0,
@@ -399,7 +399,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                                 errorBorder: InputBorder.none,
                                 disabledBorder: InputBorder.none,
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(0.0),
                                   borderSide: const BorderSide(
                                     color: AppColors.defaultInputBorders,
                                     width: 2.0,
@@ -423,7 +423,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                                         ? AppColors.highlight
                                         : AppColors.placeholder,
                                     fontSize: 14.0,
-                                    fontFamily: Fonts.gilroySemiBold,
+                                    fontFamily: Fonts.montserratSemiBold,
                                   ),
                                 ),
                               ),
@@ -450,7 +450,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                               style: const TextStyle(
                                 color: AppColors.richBlack,
                                 fontSize: 16.0,
-                                fontFamily: Fonts.gilroyMedium,
+                                fontFamily: Fonts.montserratMedium,
                               ),
                               controller: heightInchController,
                               cursorColor: AppColors.defaultInputBorders,
@@ -471,7 +471,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                                     style: TextStyle(
                                       color: AppColors.subText,
                                       fontSize: 16.0,
-                                      fontFamily: Fonts.gilroySemiBold,
+                                      fontFamily: Fonts.montserratSemiBold,
                                     ),
                                   ),
                                 ),
@@ -490,11 +490,11 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                                 hintStyle: const TextStyle(
                                   color: AppColors.placeholder,
                                   fontSize: 16.0,
-                                  fontFamily: Fonts.gilroyMedium,
+                                  fontFamily: Fonts.montserratMedium,
                                 ),
                                 focusColor: AppColors.placeholder,
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(0.0),
                                   borderSide: const BorderSide(
                                     color: AppColors.highlight,
                                     width: 2.0,
@@ -503,7 +503,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                                 errorBorder: InputBorder.none,
                                 disabledBorder: InputBorder.none,
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(0.0),
                                   borderSide: const BorderSide(
                                     color: AppColors.defaultInputBorders,
                                     width: 2.0,
@@ -527,7 +527,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                                         ? AppColors.highlight
                                         : AppColors.placeholder,
                                     fontSize: 14.0,
-                                    fontFamily: Fonts.gilroySemiBold,
+                                    fontFamily: Fonts.montserratSemiBold,
                                   ),
                                 ),
                               ),
@@ -555,7 +555,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                         style: const TextStyle(
                           color: AppColors.richBlack,
                           fontSize: 16.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                         controller: weightController,
                         cursorColor: AppColors.defaultInputBorders,
@@ -588,7 +588,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                           hintStyle: const TextStyle(
                             color: AppColors.placeholder,
                             fontSize: 16.0,
-                            fontFamily: Fonts.gilroyMedium,
+                            fontFamily: Fonts.montserratMedium,
                           ),
                           suffixIcon: const Center(
                             child: Text(
@@ -596,7 +596,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                               style: TextStyle(
                                 color: AppColors.subText,
                                 fontSize: 16.0,
-                                fontFamily: Fonts.gilroySemiBold,
+                                fontFamily: Fonts.montserratSemiBold,
                               ),
                             ),
                           ),
@@ -608,7 +608,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                           ),
                           focusColor: AppColors.placeholder,
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(0.0),
                             borderSide: const BorderSide(
                               color: AppColors.highlight,
                               width: 2.0,
@@ -617,7 +617,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(0.0),
                             borderSide: const BorderSide(
                               color: AppColors.defaultInputBorders,
                               width: 2.0,
@@ -640,7 +640,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                                   ? AppColors.highlight
                                   : AppColors.placeholder,
                               fontSize: 14.0,
-                              fontFamily: Fonts.gilroySemiBold,
+                              fontFamily: Fonts.montserratSemiBold,
                             ),
                           ),
                         ),
@@ -665,7 +665,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                         style: const TextStyle(
                           color: AppColors.richBlack,
                           fontSize: 16.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                         controller: targetWeightController,
                         cursorColor: AppColors.defaultInputBorders,
@@ -698,7 +698,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                           hintStyle: const TextStyle(
                             color: AppColors.placeholder,
                             fontSize: 16.0,
-                            fontFamily: Fonts.gilroyMedium,
+                            fontFamily: Fonts.montserratMedium,
                           ),
                           suffixIcon: const Center(
                             child: Text(
@@ -706,7 +706,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                               style: TextStyle(
                                 color: AppColors.subText,
                                 fontSize: 16.0,
-                                fontFamily: Fonts.gilroySemiBold,
+                                fontFamily: Fonts.montserratSemiBold,
                               ),
                             ),
                           ),
@@ -718,7 +718,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                           ),
                           focusColor: AppColors.placeholder,
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(0.0),
                             borderSide: const BorderSide(
                               color: AppColors.highlight,
                               width: 2.0,
@@ -727,7 +727,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(0.0),
                             borderSide: const BorderSide(
                               color: AppColors.defaultInputBorders,
                               width: 2.0,
@@ -750,7 +750,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                                   ? AppColors.highlight
                                   : AppColors.placeholder,
                               fontSize: 14.0,
-                              fontFamily: Fonts.gilroySemiBold,
+                              fontFamily: Fonts.montserratSemiBold,
                             ),
                           ),
                         ),
@@ -775,7 +775,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                         style: const TextStyle(
                           color: AppColors.richBlack,
                           fontSize: 16.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                         controller: medicalConditionsController,
                         cursorColor: AppColors.defaultInputBorders,
@@ -796,11 +796,11 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                           hintStyle: const TextStyle(
                             color: AppColors.placeholder,
                             fontSize: 16.0,
-                            fontFamily: Fonts.gilroyMedium,
+                            fontFamily: Fonts.montserratMedium,
                           ),
                           focusColor: AppColors.placeholder,
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(0.0),
                             borderSide: const BorderSide(
                               color: AppColors.highlight,
                               width: 2.0,
@@ -809,7 +809,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(0.0),
                             borderSide: const BorderSide(
                               color: AppColors.defaultInputBorders,
                               width: 2.0,
@@ -832,7 +832,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                                   ? AppColors.highlight
                                   : AppColors.placeholder,
                               fontSize: 14.0,
-                              fontFamily: Fonts.gilroySemiBold,
+                              fontFamily: Fonts.montserratSemiBold,
                             ),
                           ),
                         ),
@@ -857,7 +857,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                         style: const TextStyle(
                           color: AppColors.richBlack,
                           fontSize: 16.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                         controller: foodAllergiesController,
                         cursorColor: AppColors.defaultInputBorders,
@@ -878,11 +878,11 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                           hintStyle: const TextStyle(
                             color: AppColors.placeholder,
                             fontSize: 16.0,
-                            fontFamily: Fonts.gilroyMedium,
+                            fontFamily: Fonts.montserratMedium,
                           ),
                           focusColor: AppColors.placeholder,
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(0.0),
                             borderSide: const BorderSide(
                               color: AppColors.highlight,
                               width: 2.0,
@@ -891,7 +891,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(0.0),
                             borderSide: const BorderSide(
                               color: AppColors.defaultInputBorders,
                               width: 2.0,
@@ -914,7 +914,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                                   ? AppColors.highlight
                                   : AppColors.placeholder,
                               fontSize: 14.0,
-                              fontFamily: Fonts.gilroySemiBold,
+                              fontFamily: Fonts.montserratSemiBold,
                             ),
                           ),
                         ),
@@ -939,7 +939,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                         style: const TextStyle(
                           color: AppColors.richBlack,
                           fontSize: 16.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                         controller: goalController,
                         cursorColor: AppColors.defaultInputBorders,
@@ -960,11 +960,11 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                           hintStyle: const TextStyle(
                             color: AppColors.placeholder,
                             fontSize: 16.0,
-                            fontFamily: Fonts.gilroyMedium,
+                            fontFamily: Fonts.montserratMedium,
                           ),
                           focusColor: AppColors.placeholder,
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(0.0),
                             borderSide: const BorderSide(
                               color: AppColors.highlight,
                               width: 2.0,
@@ -973,7 +973,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(0.0),
                             borderSide: const BorderSide(
                               color: AppColors.defaultInputBorders,
                               width: 2.0,
@@ -996,7 +996,7 @@ class _UserHeightWeightState extends State<UserHeightWeight> {
                                   ? AppColors.highlight
                                   : AppColors.placeholder,
                               fontSize: 14.0,
-                              fontFamily: Fonts.gilroySemiBold,
+                              fontFamily: Fonts.montserratSemiBold,
                             ),
                           ),
                         ),

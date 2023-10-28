@@ -26,7 +26,7 @@ class HeadingViewAll extends StatelessWidget {
           style: const TextStyle(
             color: AppColors.richBlack,
             fontSize: 18.0,
-            fontFamily: Fonts.gilroySemiBold,
+            fontFamily: Fonts.montserratSemiBold,
           ),
         ),
         isShowViewAll ?? true
@@ -38,7 +38,7 @@ class HeadingViewAll extends StatelessWidget {
                         style: TextStyle(
                           color: AppColors.subText,
                           fontSize: 16.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                       )
                     : isShowClearAll ?? false
@@ -47,20 +47,20 @@ class HeadingViewAll extends StatelessWidget {
                             style: TextStyle(
                               color: AppColors.subText,
                               fontSize: 16.0,
-                              fontFamily: Fonts.gilroyMedium,
+                              fontFamily: Fonts.montserratMedium,
                             ),
                           )
                         : Row(
-                            children: const [
-                              Text(
+                            children: [
+                              const Text(
                                 'View All',
                                 style: TextStyle(
                                   color: AppColors.subText,
                                   fontSize: 16.0,
-                                  fontFamily: Fonts.gilroyMedium,
+                                  fontFamily: Fonts.montserratMedium,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10.0,
                               ),
                               Icon(

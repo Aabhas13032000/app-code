@@ -9,9 +9,9 @@ class AlertMessages {
       case 2:
         return 'Not able to download';
       case 3:
-        return 'Are you sure ? you want to delete the profile image';
+        return 'Are you sure you want to delete the profile image?';
       case 4:
-        return 'Some error occurred!!';
+        return 'Some error occurred.';
       case 5:
         return 'Please enter a valid phone number';
       case 6:
@@ -23,35 +23,35 @@ class AlertMessages {
       case 9:
         return 'You reached maximum OTP requests, Please try after some time.';
       case 10:
-        return 'Profile created successfully!!';
+        return 'Profile created successfully.';
       case 11:
-        return 'Profile blocked by admin, Login with another phone number or contact us at contact@healfit.in!';
+        return 'Profile blocked by admin, Login with another phone number or contact us at contact@healfit.in';
       case 12:
-        return 'Profile updated successfully!!';
+        return 'Profile updated successfully.';
       case 13:
-        return 'Meeting not started yet!!';
+        return 'Meeting not started yet.';
       case 14:
-        return 'Payment success!!';
+        return 'Payment success.';
       case 15:
-        return 'Payment failed!!';
+        return 'Payment failed.';
       case 16:
-        return 'Item removed successfully from cart!!';
+        return 'Item removed successfully from cart.';
       case 17:
-        return 'Are you sure you want to remove this item from cart!!';
+        return 'Are you sure you want to remove this item from cart?';
       case 18:
-        return 'Are you sure you want to logout from application!!';
+        return 'Are you sure you want to logout from application?';
       case 19:
-        return 'You are successfully logged out!!';
+        return 'You are successfully logged out.';
       case 20:
-        return 'Successfully added to cart!!';
+        return 'Successfully added to cart.';
       case 21:
-        return 'Selected combination is not available , Please try a different one!!';
+        return 'Selected combination is not available , Please try a different one.';
       case 22:
-        return 'Already purchased , some sessions left. Please go to my programs page!! or Please try a different one!!';
+        return 'Already purchased , some sessions left. Please go to my programs page. or Please try a different one.';
       case 23:
-        return 'Already added to cart , check there';
+        return 'Already added to cart.';
       case 24:
-        return 'Removed successfully!!';
+        return 'Removed successfully.';
       case 25:
         return 'Are you sure you want to remove this data?';
       case 26:
@@ -63,7 +63,7 @@ class AlertMessages {
       case 29:
         return 'Enter all the values first';
       case 30:
-        return 'Enjoy seamless experience by updating to our new version!!';
+        return 'Enjoy seamless experience by updating to our new version.';
       case 31:
         return 'Workout log added successfully';
       case 32:
@@ -75,9 +75,9 @@ class AlertMessages {
       case 35:
         return 'Please select a size first';
       case 36:
-        return 'Are you sure you want to remove this address!!';
+        return 'Are you sure you want to remove this address?';
       case 37:
-        return 'Address removed successfully!!';
+        return 'Address removed successfully.';
       case 38:
         return 'Are you sure, you want to cancel the order?';
       case 39:
@@ -103,19 +103,29 @@ class AlertMessages {
       case 49:
         return 'Please selact a state';
       case 50:
-        return 'Address added successfully !!';
+        return 'Address added successfully.';
       case 51:
-        return 'Address edited successfully !!';
+        return 'Address edited successfully.';
       case 52:
-        return 'You reached maximum quantity in stock !!';
+        return 'You reached maximum quantity in stock.';
       case 53:
-        return 'Its already at the lowest value!!';
+        return 'Its already at the lowest value.';
       case 54:
-        return 'Quantity updated successfully!!';
+        return 'Quantity updated successfully.';
       case 55:
         return 'Payment option is not available for your region.';
       case 56:
         return 'Food Calorie edited successfully';
+      case 57:
+        return 'Item removed successfully.';
+      case 58:
+        return 'Already added to favourites.';
+      case 59:
+        return 'Successfully added to favourites.';
+      case 60:
+        return 'Please select a payment method first.';
+      case 61:
+        return 'Are you sure you want to remove this item from favourites?';
 
       default:
         return '';

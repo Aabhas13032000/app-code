@@ -10,7 +10,6 @@ class CircularAvatar extends StatelessWidget {
     this.isShowBorder = true,
   }) : super(key: key);
 
-  @override
   final String url;
   final double borderWidth;
   final Color borderColor;
@@ -23,7 +22,7 @@ class CircularAvatar extends StatelessWidget {
       height: radius,
       width: radius,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(50.0),
+        borderRadius: BorderRadius.circular(0.0),
         border: isShowBorder ?? true
             ? Border.all(
                 width: borderWidth,
@@ -32,7 +31,7 @@ class CircularAvatar extends StatelessWidget {
             : null,
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(50.0),
+        borderRadius: BorderRadius.circular(0.0),
         child: ImagePlaceholder(
           url: url,
           height: radius,

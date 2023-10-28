@@ -18,7 +18,7 @@ class ExpertCard extends StatelessWidget {
       width: width,
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(0.0),
         boxShadow: [
           BoxShadow(
             color: AppColors.richBlack.withOpacity(0.05),
@@ -35,7 +35,7 @@ class ExpertCard extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(0.0),
             child: ImagePlaceholder(
               url: photoUrl,
               height: double.infinity,
@@ -49,7 +49,7 @@ class ExpertCard extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 color: AppColors.defaultInputBorders,
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(0.0),
               ),
               child: Padding(
                 padding: const EdgeInsets.only(
@@ -64,7 +64,7 @@ class ExpertCard extends StatelessWidget {
                     style: const TextStyle(
                       color: AppColors.richBlack,
                       fontSize: 16.0,
-                      fontFamily: Fonts.helixSemiBold,
+                      fontFamily: Fonts.montserratSemiBold,
                     ),
                   ),
                 ),

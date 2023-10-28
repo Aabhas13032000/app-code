@@ -191,7 +191,7 @@ class _ViewAllBlogsState extends State<ViewAllBlogs> {
                             iconColor: AppColors.white,
                             top: 0,
                             right: 0,
-                            borderRadius: 50.0,
+                            borderRadius: 0.0,
                             isShowBorder: false,
                             bgColor: AppColors.highlight,
                           ),
@@ -204,8 +204,8 @@ class _ViewAllBlogsState extends State<ViewAllBlogs> {
                     decoration: const BoxDecoration(
                       color: AppColors.white,
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20.0),
-                        topRight: Radius.circular(20.0),
+                        topLeft: Radius.circular(0.0),
+                        topRight: Radius.circular(0.0),
                       ),
                     ),
                     child: ConstrainedBox(
@@ -225,7 +225,7 @@ class _ViewAllBlogsState extends State<ViewAllBlogs> {
                                 ? const Expanded(
                                     child: Center(
                                       child: NoDataAvailable(
-                                        message: 'No comments available!!',
+                                        message: 'No comments available.',
                                       ),
                                     ),
                                   )
@@ -273,7 +273,7 @@ class _ViewAllBlogsState extends State<ViewAllBlogs> {
                                 style: const TextStyle(
                                   color: AppColors.richBlack,
                                   fontSize: 16.0,
-                                  fontFamily: Fonts.gilroyMedium,
+                                  fontFamily: Fonts.montserratMedium,
                                 ),
                                 controller: commentController,
                                 cursorColor: AppColors.defaultInputBorders,
@@ -300,11 +300,11 @@ class _ViewAllBlogsState extends State<ViewAllBlogs> {
                                       decoration: const BoxDecoration(
                                         color: AppColors.cardBg,
                                         borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(10.0),
-                                          bottomRight: Radius.circular(10.0),
+                                          topRight: Radius.circular(0.0),
+                                          bottomRight: Radius.circular(0.0),
                                         ),
                                       ),
-                                      child: const Center(
+                                      child: Center(
                                         child: Icon(
                                           MdiIcons.send,
                                           size: 24.0,
@@ -322,11 +322,11 @@ class _ViewAllBlogsState extends State<ViewAllBlogs> {
                                   hintStyle: const TextStyle(
                                     color: AppColors.placeholder,
                                     fontSize: 16.0,
-                                    fontFamily: Fonts.gilroyMedium,
+                                    fontFamily: Fonts.montserratMedium,
                                   ),
                                   focusColor: AppColors.placeholder,
                                   focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(0.0),
                                     borderSide: const BorderSide(
                                       color: AppColors.highlight,
                                       width: 2.0,
@@ -335,7 +335,7 @@ class _ViewAllBlogsState extends State<ViewAllBlogs> {
                                   errorBorder: InputBorder.none,
                                   disabledBorder: InputBorder.none,
                                   enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(0.0),
                                     borderSide: const BorderSide(
                                       color: AppColors.defaultInputBorders,
                                       width: 2.0,
@@ -439,7 +439,7 @@ class _ViewAllBlogsState extends State<ViewAllBlogs> {
         decoration: BoxDecoration(
           color: AppColors.white,
           border: Border.all(width: 1.5, color: AppColors.defaultInputBorders),
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(0.0),
         ),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -465,7 +465,7 @@ class _ViewAllBlogsState extends State<ViewAllBlogs> {
                       style: const TextStyle(
                         color: AppColors.richBlack,
                         fontSize: 16.0,
-                        fontFamily: Fonts.gilroyMedium,
+                        fontFamily: Fonts.montserratMedium,
                       ),
                     ),
                     const SizedBox(
@@ -476,7 +476,7 @@ class _ViewAllBlogsState extends State<ViewAllBlogs> {
                       style: const TextStyle(
                         color: AppColors.subText,
                         fontSize: 14.0,
-                        fontFamily: Fonts.gilroyRegular,
+                        fontFamily: Fonts.montserratRegular,
                       ),
                     ),
                     const SizedBox(
@@ -489,7 +489,7 @@ class _ViewAllBlogsState extends State<ViewAllBlogs> {
                       style: const TextStyle(
                         color: AppColors.subText,
                         fontSize: 14.0,
-                        fontFamily: Fonts.gilroyRegular,
+                        fontFamily: Fonts.montserratRegular,
                       ),
                     )
                   ],
@@ -608,7 +608,7 @@ class _ViewAllBlogsState extends State<ViewAllBlogs> {
           style: TextStyle(
             color: AppColors.richBlack,
             fontSize: 18.0,
-            fontFamily: Fonts.helixSemiBold,
+            fontFamily: Fonts.montserratSemiBold,
           ),
         ),
         actions: [
@@ -621,9 +621,10 @@ class _ViewAllBlogsState extends State<ViewAllBlogs> {
               onTap: () {
                 Get.to(
                   () => const CartPage(),
+                  transition: Transition.rightToLeft,
                 );
               },
-              child: const CustomIcon(
+              child: CustomIcon(
                 icon: MdiIcons.cartOutline,
                 borderWidth: 2.0,
                 borderColor: AppColors.defaultInputBorders,
@@ -633,7 +634,7 @@ class _ViewAllBlogsState extends State<ViewAllBlogs> {
                 iconColor: AppColors.richBlack,
                 top: 8.0,
                 right: 8.0,
-                borderRadius: 8.0,
+                borderRadius: 0.0,
               ),
             ),
           ),
@@ -659,7 +660,7 @@ class _ViewAllBlogsState extends State<ViewAllBlogs> {
               iconColor: AppColors.richBlack,
               top: 8.0,
               right: 8.0,
-              borderRadius: 8.0,
+              borderRadius: 0.0,
             ),
           ),
         ),
@@ -699,6 +700,7 @@ class _ViewAllBlogsState extends State<ViewAllBlogs> {
                               onTap: () {
                                 Get.to(
                                   () => EachBlog(id: blogList[index].id),
+                                  transition: Transition.rightToLeft,
                                 );
                               },
                               child: BlogCardTwo(
@@ -714,10 +716,12 @@ class _ViewAllBlogsState extends State<ViewAllBlogs> {
                                 isLiked: blogList[index].isLiked,
                                 onBlogClicked: () {
                                   Get.to(
-                                      () => EachBlog(
-                                            id: blogList[index].id,
-                                          ),
-                                      preventDuplicates: false);
+                                    () => EachBlog(
+                                      id: blogList[index].id,
+                                    ),
+                                    preventDuplicates: false,
+                                    transition: Transition.rightToLeft,
+                                  );
                                 },
                                 onCommentClicked: () {
                                   getComments(blogList[index].id, 0);
@@ -798,7 +802,7 @@ class _ViewAllBlogsState extends State<ViewAllBlogs> {
                                   style: TextStyle(
                                     color: AppColors.richBlack,
                                     fontSize: 16.0,
-                                    fontFamily: Fonts.gilroyMedium,
+                                    fontFamily: Fonts.montserratMedium,
                                   ),
                                 ),
                               ),

@@ -26,7 +26,7 @@ class NotificationCard extends StatelessWidget {
       // height: height,
       margin: const EdgeInsets.only(bottom: 15.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(0.0),
         color: AppColors.white,
         boxShadow: [
           BoxShadow(
@@ -50,14 +50,14 @@ class NotificationCard extends StatelessWidget {
                 CustomIcon(
                   icon: icon,
                   borderWidth: 0.0,
-                  borderColor: AppColors.lightYellow,
+                  borderColor: AppColors.background,
                   isShowDot: false,
                   radius: 45.0,
                   iconSize: 25.0,
                   iconColor: iconColor,
                   top: 0,
                   right: 0,
-                  borderRadius: 50.0,
+                  borderRadius: 0.0,
                   isShowBorder: false,
                   bgColor: bgColor,
                 ),
@@ -75,7 +75,7 @@ class NotificationCard extends StatelessWidget {
                         style: const TextStyle(
                           color: AppColors.richBlack,
                           fontSize: 16.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                       ),
                       const SizedBox(
@@ -86,7 +86,7 @@ class NotificationCard extends StatelessWidget {
                         style: const TextStyle(
                           color: AppColors.richBlack,
                           fontSize: 14.0,
-                          fontFamily: Fonts.gilroyRegular,
+                          fontFamily: Fonts.montserratRegular,
                         ),
                       ),
                       const SizedBox(
@@ -97,7 +97,7 @@ class NotificationCard extends StatelessWidget {
                         style: const TextStyle(
                           color: AppColors.subText,
                           fontSize: 12.0,
-                          fontFamily: Fonts.gilroyMedium,
+                          fontFamily: Fonts.montserratMedium,
                         ),
                       ),
                     ],

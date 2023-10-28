@@ -8,6 +8,7 @@ class ProductCard extends StatelessWidget {
     required this.width,
     required this.price,
     required this.discountPrice,
+    this.leftpadding = 20.0,
     required this.inStock,
   });
 
@@ -16,19 +17,20 @@ class ProductCard extends StatelessWidget {
   final double discountPrice;
   final String photoUrl;
   final double width;
+  final double? leftpadding;
   final bool inStock;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: width,
-      margin: const EdgeInsets.only(left: 20.0),
+      margin: EdgeInsets.only(left: leftpadding ?? 20.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(0.0),
         color: AppColors.white,
         boxShadow: [
           BoxShadow(
-            color: AppColors.richBlack.withOpacity(0.09),
+            color: AppColors.richBlack.withOpacity(0.0),
             blurRadius: 8.0, // soften the shadow
             spreadRadius: 0.0, //extend the shadow
             offset: const Offset(
@@ -47,8 +49,8 @@ class ProductCard extends StatelessWidget {
                 flex: 3,
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(12.0),
-                    topRight: Radius.circular(12.0),
+                    topLeft: Radius.circular(0.0),
+                    topRight: Radius.circular(0.0),
                   ),
                   child: ImagePlaceholder(
                     url: photoUrl,
@@ -72,7 +74,7 @@ class ProductCard extends StatelessWidget {
                         style: const TextStyle(
                           color: AppColors.richBlack,
                           fontSize: 15.0,
-                          fontFamily: Fonts.helixRegular,
+                          fontFamily: Fonts.montserratRegular,
                         ),
                       ),
                       const SizedBox(
@@ -86,7 +88,7 @@ class ProductCard extends StatelessWidget {
                                   style: TextStyle(
                                     color: AppColors.richBlack,
                                     fontSize: 17.0,
-                                    fontFamily: Fonts.gilroySemiBold,
+                                    fontFamily: Fonts.montserratSemiBold,
                                   ),
                                 )
                               : Text(
@@ -95,7 +97,7 @@ class ProductCard extends StatelessWidget {
                                   style: const TextStyle(
                                     color: AppColors.richBlack,
                                     fontSize: 17.0,
-                                    fontFamily: Fonts.gilroySemiBold,
+                                    fontFamily: Fonts.montserratSemiBold,
                                   ),
                                 )
                           : Row(
@@ -108,7 +110,7 @@ class ProductCard extends StatelessWidget {
                                   style: const TextStyle(
                                     color: AppColors.richBlack,
                                     fontSize: 17.0,
-                                    fontFamily: Fonts.gilroySemiBold,
+                                    fontFamily: Fonts.montserratSemiBold,
                                   ),
                                 ),
                                 const SizedBox(
@@ -120,7 +122,7 @@ class ProductCard extends StatelessWidget {
                                   style: const TextStyle(
                                     color: AppColors.richBlack,
                                     fontSize: 17.0,
-                                    fontFamily: Fonts.gilroyRegular,
+                                    fontFamily: Fonts.montserratRegular,
                                     decoration: TextDecoration.lineThrough,
                                   ),
                                 ),
@@ -133,7 +135,7 @@ class ProductCard extends StatelessWidget {
                                   style: const TextStyle(
                                     color: AppColors.congrats,
                                     fontSize: 17.0,
-                                    fontFamily: Fonts.helixSemiBold,
+                                    fontFamily: Fonts.montserratSemiBold,
                                   ),
                                 ),
                               ],
@@ -153,7 +155,7 @@ class ProductCard extends StatelessWidget {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50.0),
+                          borderRadius: BorderRadius.circular(0.0),
                           color: AppColors.warning,
                         ),
                         child: const Padding(
@@ -168,7 +170,7 @@ class ProductCard extends StatelessWidget {
                             style: TextStyle(
                               color: AppColors.white,
                               fontSize: 14.0,
-                              fontFamily: Fonts.gilroyMedium,
+                              fontFamily: Fonts.montserratMedium,
                             ),
                           ),
                         ),

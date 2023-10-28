@@ -15,13 +15,13 @@ class OrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 15.0),
+      margin: const EdgeInsets.only(bottom: 25.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(0.0),
         color: AppColors.white,
         boxShadow: [
           BoxShadow(
-            color: AppColors.richBlack.withOpacity(0.06),
+            color: AppColors.richBlack.withOpacity(0.0),
             blurRadius: 30.0, // soften the shadow
             spreadRadius: 0.0, //extend the shadow
             offset: const Offset(
@@ -32,7 +32,7 @@ class OrderCard extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(0.0),
         child: Column(
           children: [
             GestureDetector(
@@ -44,7 +44,7 @@ class OrderCard extends StatelessWidget {
                     child: SizedBox(
                       height: 115.0,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(0.0),
                         child: ImagePlaceholder(
                           url: Constants.imgFinalUrl +
                               (order.coverPhoto ?? "/images/local/logo.png"),
@@ -69,7 +69,7 @@ class OrderCard extends StatelessWidget {
                           style: const TextStyle(
                             color: AppColors.richBlack,
                             fontSize: 14.0,
-                            fontFamily: Fonts.gilroySemiBold,
+                            fontFamily: Fonts.montserratSemiBold,
                           ),
                         ),
                         const SizedBox(
@@ -81,7 +81,7 @@ class OrderCard extends StatelessWidget {
                           style: const TextStyle(
                             color: AppColors.richBlack,
                             fontSize: 14.0,
-                            fontFamily: Fonts.gilroySemiBold,
+                            fontFamily: Fonts.montserratSemiBold,
                           ),
                         ),
                         const SizedBox(
@@ -93,7 +93,7 @@ class OrderCard extends StatelessWidget {
                           style: const TextStyle(
                             color: AppColors.richBlack,
                             fontSize: 14.0,
-                            fontFamily: Fonts.gilroySemiBold,
+                            fontFamily: Fonts.montserratSemiBold,
                           ),
                         ),
                       ],
@@ -122,7 +122,7 @@ class OrderCard extends StatelessWidget {
                   style: TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroySemiBold,
+                    fontFamily: Fonts.montserratSemiBold,
                   ),
                 ),
                 Text(
@@ -130,7 +130,7 @@ class OrderCard extends StatelessWidget {
                   style: const TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroyMedium,
+                    fontFamily: Fonts.montserratMedium,
                   ),
                 ),
               ],
@@ -147,7 +147,7 @@ class OrderCard extends StatelessWidget {
                   style: TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroySemiBold,
+                    fontFamily: Fonts.montserratSemiBold,
                   ),
                 ),
                 Expanded(
@@ -156,7 +156,7 @@ class OrderCard extends StatelessWidget {
                     style: const TextStyle(
                       color: AppColors.richBlack,
                       fontSize: 14.0,
-                      fontFamily: Fonts.gilroyMedium,
+                      fontFamily: Fonts.montserratMedium,
                     ),
                   ),
                 ),
@@ -174,7 +174,7 @@ class OrderCard extends StatelessWidget {
                   style: TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroySemiBold,
+                    fontFamily: Fonts.montserratSemiBold,
                   ),
                 ),
                 Text(
@@ -182,7 +182,7 @@ class OrderCard extends StatelessWidget {
                   style: const TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroyMedium,
+                    fontFamily: Fonts.montserratMedium,
                   ),
                 ),
               ],
@@ -199,7 +199,7 @@ class OrderCard extends StatelessWidget {
                   style: TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroySemiBold,
+                    fontFamily: Fonts.montserratSemiBold,
                   ),
                 ),
                 Text(
@@ -207,7 +207,7 @@ class OrderCard extends StatelessWidget {
                   style: const TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroyMedium,
+                    fontFamily: Fonts.montserratMedium,
                   ),
                 ),
               ],
@@ -220,11 +220,11 @@ class OrderCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  "Paymnet method : ",
+                  "Payment method : ",
                   style: TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroySemiBold,
+                    fontFamily: Fonts.montserratSemiBold,
                   ),
                 ),
                 Text(
@@ -234,7 +234,7 @@ class OrderCard extends StatelessWidget {
                   style: const TextStyle(
                     color: AppColors.richBlack,
                     fontSize: 14.0,
-                    fontFamily: Fonts.gilroyMedium,
+                    fontFamily: Fonts.montserratMedium,
                   ),
                 ),
               ],
@@ -261,13 +261,13 @@ class OrderCard extends StatelessWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50.0),
+                      borderRadius: BorderRadius.circular(0.0),
                       color: order.status == 'REJECTED' ||
                               order.status == 'CANCELLED'
                           ? AppColors.lightRed
                           : order.status == 'DELIVERED'
                               ? AppColors.lightGreen
-                              : AppColors.lightYellow,
+                              : AppColors.background,
                       border: Border.all(
                         width: 1.0,
                         color: order.status == 'REJECTED' ||
@@ -275,7 +275,7 @@ class OrderCard extends StatelessWidget {
                             ? AppColors.warning
                             : order.status == 'DELIVERED'
                                 ? AppColors.congrats
-                                : AppColors.highlight,
+                                : AppColors.background,
                       )),
                   child: Padding(
                     padding: const EdgeInsets.only(
@@ -294,7 +294,7 @@ class OrderCard extends StatelessWidget {
                                 ? AppColors.congrats
                                 : AppColors.highlight,
                         fontSize: 14.0,
-                        fontFamily: Fonts.gilroyMedium,
+                        fontFamily: Fonts.montserratMedium,
                       ),
                     ),
                   ),
@@ -308,9 +308,9 @@ class OrderCard extends StatelessWidget {
                     ? const SizedBox()
                     : CustomButton(
                         title: 'Cancel Order',
-                        paddingVertical: 10.5,
+                        paddingVertical: 18,
                         paddingHorizontal: 20,
-                        borderRadius: 8.0,
+                        borderRadius: 0.0,
                         onPressed: onCancelOrder,
                       ),
               ],

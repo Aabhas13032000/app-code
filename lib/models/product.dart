@@ -4,6 +4,7 @@ class Product {
   late final String id;
   late final String name;
   String? description;
+  String? longDescription;
   String? gender;
   String? clothCategory;
   String? coverPhoto;
@@ -17,11 +18,13 @@ class Product {
   bool? imp;
   bool? stock;
   String? createdAt;
+  String? cartId;
 
   Product({
     required this.id,
     required this.name,
     this.description,
+    this.longDescription,
     this.coverPhoto,
     this.shareUrl,
     this.status,
@@ -35,6 +38,7 @@ class Product {
     this.discountPrice,
     this.imp,
     this.stock,
+    this.cartId,
   });
 
   Product.fromJson(Map<String, dynamic> jsonData) {
@@ -43,6 +47,9 @@ class Product {
         jsonData[ApiKeys.name] != null ? jsonData[ApiKeys.name].toString() : "";
     description = jsonData[ApiKeys.description] != null
         ? jsonData[ApiKeys.description].toString()
+        : "";
+    longDescription = jsonData[ApiKeys.longDescription] != null
+        ? jsonData[ApiKeys.longDescription].toString()
         : "";
     coverPhoto = jsonData[ApiKeys.coverPhoto] != null
         ? jsonData[ApiKeys.coverPhoto].toString()
@@ -83,5 +90,8 @@ class Product {
             ? false
             : true
         : false;
+    cartId = jsonData[ApiKeys.cartId] != null
+        ? jsonData[ApiKeys.cartId].toString()
+        : "";
   }
 }

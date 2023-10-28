@@ -54,11 +54,7 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
             ),
             itemBuilder: (context, index, realIdx) {
               return GestureDetector(
-                onTap: () {
-                  Get.to(
-                    () => EachProgram(id: widget.slider[index].id),
-                  );
-                },
+                onTap: () {},
                 child: Container(
                   margin: widget.margin,
                   height: widget.height,
@@ -116,7 +112,7 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
                                         maxLines: 2,
                                         style: const TextStyle(
                                           fontSize: 16.0,
-                                          fontFamily: Fonts.gilroySemiBold,
+                                          fontFamily: Fonts.montserratSemiBold,
                                           color: AppColors.richBlack,
                                         ),
                                       ),
@@ -126,7 +122,7 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
                                       Container(
                                         decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(50.0),
+                                              BorderRadius.circular(0.0),
                                           color: AppColors.congrats,
                                         ),
                                         child: Padding(
@@ -137,7 +133,8 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
                                                 "LIVE NOW",
                                             style: const TextStyle(
                                               fontSize: 12.0,
-                                              fontFamily: Fonts.gilroySemiBold,
+                                              fontFamily:
+                                                  Fonts.montserratSemiBold,
                                               color: AppColors.white,
                                             ),
                                           ),
@@ -207,7 +204,7 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
                       width: 10.0,
                       height: 10.0,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50.0),
+                        borderRadius: BorderRadius.circular(0.0),
                         color: selectedIndex == index
                             ? AppColors.subText
                             : AppColors.defaultInputBorders,

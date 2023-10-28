@@ -62,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.white,
       appBar: CustomAppBar(
         preferredSize: const Size.fromHeight(70.0),
         showLeadingIcon: true,
@@ -72,36 +72,10 @@ class _ProfilePageState extends State<ProfilePage> {
           style: TextStyle(
             color: AppColors.richBlack,
             fontSize: 18.0,
-            fontFamily: Fonts.helixSemiBold,
+            fontFamily: Fonts.montserratSemiBold,
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 12.5,
-              horizontal: 20.0,
-            ),
-            child: GestureDetector(
-              onTap: () {
-                Get.to(
-                  () => const CartPage(),
-                );
-              },
-              child: const CustomIcon(
-                icon: MdiIcons.cartOutline,
-                borderWidth: 2.0,
-                borderColor: AppColors.defaultInputBorders,
-                isShowDot: true,
-                radius: 45.0,
-                iconSize: 24.0,
-                iconColor: AppColors.richBlack,
-                top: 8.0,
-                right: 8.0,
-                borderRadius: 8.0,
-              ),
-            ),
-          ),
-        ],
+        actions: const [],
         leadingWidget: Padding(
           padding: const EdgeInsets.only(
             top: 12.5,
@@ -121,9 +95,11 @@ class _ProfilePageState extends State<ProfilePage> {
               radius: 45.0,
               iconSize: 20.0,
               iconColor: AppColors.richBlack,
-              top: 8.0,
-              right: 8.0,
-              borderRadius: 8.0,
+              top: 0,
+              right: 0,
+              borderRadius: 0.0,
+              isShowBorder: false,
+              bgColor: AppColors.background,
             ),
           ),
         ),
@@ -146,25 +122,43 @@ class _ProfilePageState extends State<ProfilePage> {
                 const SizedBox(
                   width: 20.0,
                 ),
-                CircularAvatar(
-                  url: Constants.imgFinalUrl +
-                      ((Application.user?.profileImage ?? "").isEmpty
-                          ? Application.profileImage
-                          : (Application.user?.profileImage ?? "")),
-                  radius: 90.0,
-                  borderColor: AppColors.highlight,
-                  borderWidth: 3.0,
-                ),
+                ((Application.user?.profileImage ?? "").isEmpty)
+                    ? CustomIcon(
+                        icon: Icons.close,
+                        borderWidth: 0.0,
+                        borderColor: AppColors.transparent,
+                        isShowDot: false,
+                        radius: 90.0,
+                        iconSize: 30.0,
+                        iconColor: AppColors.white,
+                        top: 0,
+                        right: 0,
+                        borderRadius: 0.0,
+                        isShowBorder: false,
+                        bgColor: AppColors.background,
+                        isNameInitial: true,
+                        fontSize: 40.0,
+                        name: (Application.user?.name ?? '')[0],
+                      )
+                    : CircularAvatar(
+                        url: Constants.imgFinalUrl +
+                            ((Application.user?.profileImage ?? "").isEmpty
+                                ? Application.profileImage
+                                : (Application.user?.profileImage ?? "")),
+                        radius: 90.0,
+                        borderColor: AppColors.highlight,
+                        borderWidth: 3.0,
+                      ),
                 const SizedBox(
                   width: 24.0,
                 ),
                 Expanded(
                   child: Text(
-                    'Hello\n${Application.user?.name}',
+                    'Hello,\n${Application.user?.name}',
                     style: const TextStyle(
                       color: AppColors.richBlack,
                       fontSize: 20.0,
-                      fontFamily: Fonts.helixSemiBold,
+                      fontFamily: Fonts.montserratSemiBold,
                     ),
                   ),
                 ),
@@ -178,71 +172,47 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             profileCard(
               title: 'Edit profile',
-              icon: Icons.person_outline_rounded,
-              bgColor: AppColors.lightYellow,
+              icon: SvgIcons.profile,
+              bgColor: AppColors.background,
               iconColor: AppColors.highlight,
               onClicked: () {
                 Utility.printLog('Edit profile Clicked');
                 Get.to(
                   () => const EditProfile(),
+                  transition: Transition.rightToLeft,
                 );
               },
             ),
             profileCard(
               title: 'My Orders',
-              icon: MdiIcons.cartOutline,
-              bgColor: AppColors.lightYellow,
+              icon: SvgIcons.profileCart,
+              bgColor: AppColors.background,
               iconColor: AppColors.highlight,
               onClicked: () {
                 Utility.printLog('My orders Clicked');
                 Get.to(
                   () => const MyOrders(),
+                  transition: Transition.rightToLeft,
                 );
               },
             ),
             profileCard(
-              title: 'My programs',
-              icon: Icons.play_circle_outline_rounded,
-              bgColor: AppColors.lightYellow,
+              title: 'My Addresses',
+              icon: SvgIcons.address,
+              bgColor: AppColors.background,
               iconColor: AppColors.highlight,
               onClicked: () {
-                Utility.printLog('My programs Clicked');
+                Utility.printLog('My Addresses Clicked');
                 Get.to(
-                  () => const MyPrograms(),
-                );
-              },
-            ),
-            profileCard(
-              title: 'Purchased books',
-              icon: Icons.book_outlined,
-              bgColor: AppColors.lightYellow,
-              iconColor: AppColors.highlight,
-              onClicked: () {
-                Utility.printLog('Purchased books Clicked');
-                Get.to(
-                  () => const PurchasedBooks(),
-                );
-              },
-            ),
-            profileCard(
-              title: 'About',
-              icon: Icons.info_outline,
-              bgColor: AppColors.lightYellow,
-              iconColor: AppColors.highlight,
-              onClicked: () {
-                Utility.printLog('About Clicked');
-                Get.to(
-                  () => WebviewScreens(
-                    url: Constants.imgFinalUrl + Application.aboutUs,
-                    title: 'About us',
-                  ),
+                  () => const MyAddresses(),
+                  transition: Transition.rightToLeft,
                 );
               },
             ),
             profileCard(
               title: 'Contact us',
-              icon: Icons.local_phone_outlined,
-              bgColor: AppColors.lightYellow,
+              icon: SvgIcons.contact,
+              bgColor: AppColors.background,
               iconColor: AppColors.highlight,
               onClicked: () {
                 Utility.printLog('Contact us Clicked');
@@ -251,75 +221,90 @@ class _ProfilePageState extends State<ProfilePage> {
                     url: Constants.imgFinalUrl + Application.contactUs,
                     title: 'Contact us',
                   ),
+                  transition: Transition.rightToLeft,
                 );
               },
             ),
             profileCard(
               title: 'FAQ',
-              icon: Icons.message_outlined,
-              bgColor: AppColors.lightYellow,
+              icon: SvgIcons.faq,
+              bgColor: AppColors.background,
               iconColor: AppColors.highlight,
               onClicked: () {
                 Utility.printLog('Frequently Asked Questions Clicked');
                 Get.to(
                   () => WebviewScreens(
-                    url: Constants.prodProductBackendUrl + Application.faqUrl,
+                    url: Constants.imgFinalUrl + Application.faqUrl,
                     title: 'Frequently Asked Questions',
                   ),
+                  transition: Transition.rightToLeft,
                 );
               },
             ),
             profileCard(
               title: 'Privacy Policies',
-              icon: Icons.lock_outline_rounded,
-              bgColor: AppColors.lightYellow,
+              icon: SvgIcons.privacy,
+              bgColor: AppColors.background,
               iconColor: AppColors.highlight,
               onClicked: () {
                 Utility.printLog('Privacy policy Clicked');
-                openBottomOptions(
-                    Constants.prodProductBackendUrl +
-                        Application.privacyPolicyUrl,
-                    Constants.imgFinalUrl + Application.privacyPolicyUrl);
+                Get.to(
+                  () => WebviewScreens(
+                    url: Constants.imgFinalUrl + Application.privacyPolicyUrl,
+                    title: 'Privacy Policy',
+                    isShowTab: false,
+                  ),
+                  transition: Transition.rightToLeft,
+                );
               },
             ),
             profileCard(
               title: 'Terms and conditions',
-              icon: Icons.privacy_tip_outlined,
-              bgColor: AppColors.lightYellow,
+              icon: SvgIcons.tandc,
+              bgColor: AppColors.background,
               iconColor: AppColors.highlight,
               onClicked: () {
                 Utility.printLog('Terms and condition Clicked');
-                openBottomOptions(
-                    Constants.prodProductBackendUrl +
+                Get.to(
+                  () => WebviewScreens(
+                    url: Constants.imgFinalUrl +
                         Application.termsAndConditionUrl,
-                    Constants.imgFinalUrl + Application.termsAndConditionUrl);
+                    title: 'Terms and conditions',
+                    isShowTab: false,
+                  ),
+                  transition: Transition.rightToLeft,
+                );
               },
             ),
             profileCard(
               title: 'Refund & Shipping policies',
-              icon: Icons.bookmark_border_rounded,
-              bgColor: AppColors.lightYellow,
+              icon: SvgIcons.shipping,
+              bgColor: AppColors.background,
               iconColor: AppColors.highlight,
               onClicked: () {
                 Utility.printLog('Refund policy Clicked');
-                openBottomOptions(
-                    Constants.prodProductBackendUrl +
-                        Application.refundPolicyUrl,
-                    Constants.imgFinalUrl + Application.refundPolicyUrl);
+                Get.to(
+                  () => WebviewScreens(
+                    url: Constants.imgFinalUrl + Application.refundPolicyUrl,
+                    title: 'Refund & Shipping policies',
+                    isShowTab: false,
+                  ),
+                  transition: Transition.rightToLeft,
+                );
               },
             ),
             profileCard(
               title: 'Logout',
-              icon: Icons.logout,
-              bgColor: AppColors.lightRed,
-              iconColor: AppColors.warning,
+              icon: SvgIcons.logOut,
+              bgColor: AppColors.background,
+              iconColor: AppColors.highlight,
               onClicked: () {
                 Utility.printLog('Logout Clicked');
                 Utility.twoButtonPopup(
                     context,
                     Icons.warning_amber_rounded,
                     40.0,
-                    AppColors.warning,
+                    AppColors.highlight,
                     AlertMessages.getMessage(18),
                     'No',
                     'Yes', onFirstButtonClicked: () {
@@ -336,147 +321,9 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  void openBottomOptions(String productUrl, String programUrl) {
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.black.withOpacity(0.0),
-      enableDrag: true,
-      builder: (BuildContext context) {
-        return Container(
-          color: AppColors.transparent,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
-                child: const CustomIcon(
-                  icon: Icons.close,
-                  borderWidth: 0.0,
-                  borderColor: AppColors.highlight,
-                  isShowDot: false,
-                  radius: 60.0,
-                  iconSize: 30.0,
-                  iconColor: AppColors.white,
-                  top: 0,
-                  right: 0,
-                  borderRadius: 50.0,
-                  isShowBorder: false,
-                  bgColor: AppColors.highlight,
-                ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20.0),
-                    topRight: Radius.circular(20.0),
-                  ),
-                ),
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxHeight: 450.0),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          eachBottomOption(
-                            'Product',
-                            WebviewScreens(
-                              url: productUrl,
-                              title: 'Product - Privacy Policy',
-                              isShowTab: false,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 15.0,
-                          ),
-                          eachBottomOption(
-                            'Program',
-                            WebviewScreens(
-                              url: programUrl,
-                              title: 'Program - Privacy Policy',
-                              isShowTab: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget eachBottomOption(String name, Widget widget) {
-    return GestureDetector(
-      onTap: () {
-        Get.back();
-        Get.to(
-          () => widget,
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: AppColors.cardBg,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 15.0,
-            top: 15.0,
-            bottom: 15.0,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                name,
-                maxLines: 2,
-                style: const TextStyle(
-                  color: AppColors.richBlack,
-                  fontSize: 16.0,
-                  fontFamily: Fonts.helixSemiBold,
-                ),
-              ),
-              const SizedBox(
-                width: 5.0,
-              ),
-              const CustomIcon(
-                icon: Icons.arrow_forward_ios_rounded,
-                borderWidth: 0.0,
-                borderColor: AppColors.highlight,
-                isShowDot: false,
-                radius: 30.0,
-                iconSize: 22.0,
-                iconColor: AppColors.richBlack,
-                top: 0,
-                right: 0,
-                borderRadius: 50.0,
-                isShowBorder: false,
-                bgColor: AppColors.transparent,
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget profileCard({
     required String title,
-    required IconData icon,
+    required Widget icon,
     required Color bgColor,
     required Color iconColor,
     required Function() onClicked,
@@ -489,13 +336,13 @@ class _ProfilePageState extends State<ProfilePage> {
       child: GestureDetector(
         onTap: onClicked,
         child: Container(
-          margin: const EdgeInsets.only(bottom: 15.0),
+          margin: const EdgeInsets.only(bottom: 25.0),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(0.0),
             color: AppColors.white,
             boxShadow: [
               BoxShadow(
-                color: AppColors.richBlack.withOpacity(0.06),
+                color: AppColors.richBlack.withOpacity(0.0),
                 blurRadius: 30.0, // soften the shadow
                 spreadRadius: 0.0, //extend the shadow
                 offset: const Offset(
@@ -506,23 +353,17 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(0.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CustomIcon(
-                  icon: icon,
-                  borderWidth: 0.0,
-                  borderColor: bgColor,
-                  isShowDot: false,
-                  radius: 45.0,
-                  iconSize: 22.0,
-                  iconColor: iconColor,
-                  top: 0,
-                  right: 0,
-                  borderRadius: 50.0,
-                  isShowBorder: false,
-                  bgColor: bgColor,
+                Container(
+                  color: AppColors.background,
+                  height: 44.0,
+                  width: 44.0,
+                  child: Center(
+                    child: icon,
+                  ),
                 ),
                 const SizedBox(
                   width: 15.0,
@@ -533,7 +374,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: const TextStyle(
                       color: AppColors.richBlack,
                       fontSize: 16.0,
-                      fontFamily: Fonts.gilroyMedium,
+                      fontFamily: Fonts.montserratMedium,
                     ),
                   ),
                 ),

@@ -23,13 +23,13 @@ class ProductCartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 15.0),
+      margin: const EdgeInsets.only(bottom: 25.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(0.0),
         color: AppColors.white,
         boxShadow: [
           BoxShadow(
-            color: AppColors.richBlack.withOpacity(0.06),
+            color: AppColors.richBlack.withOpacity(0.0),
             blurRadius: 30.0, // soften the shadow
             spreadRadius: 0.0, //extend the shadow
             offset: const Offset(
@@ -40,7 +40,7 @@ class ProductCartCard extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(0.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -54,7 +54,7 @@ class ProductCartCard extends StatelessWidget {
                     child: SizedBox(
                       height: 115.0,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(0.0),
                         child: ImagePlaceholder(
                           url: Constants.imgFinalUrl +
                               (product.coverPhoto ?? Images.curectLogo),
@@ -83,7 +83,7 @@ class ProductCartCard extends StatelessWidget {
                           style: const TextStyle(
                             color: AppColors.richBlack,
                             fontSize: 14.0,
-                            fontFamily: Fonts.gilroySemiBold,
+                            fontFamily: Fonts.montserratSemiBold,
                           ),
                         ),
                       ),
@@ -96,7 +96,7 @@ class ProductCartCard extends StatelessWidget {
                         style: const TextStyle(
                           color: AppColors.richBlack,
                           fontSize: 14.0,
-                          fontFamily: Fonts.gilroySemiBold,
+                          fontFamily: Fonts.montserratSemiBold,
                         ),
                       ),
                       const SizedBox(
@@ -114,12 +114,12 @@ class ProductCartCard extends StatelessWidget {
                               isShowDot: false,
                               radius: 30.0,
                               iconSize: 20.0,
-                              iconColor: AppColors.white,
+                              iconColor: AppColors.highlight,
                               top: 0,
                               right: 0,
-                              borderRadius: 50.0,
+                              borderRadius: 0.0,
                               isShowBorder: false,
-                              bgColor: AppColors.congrats,
+                              bgColor: AppColors.background,
                             ),
                           ),
                           const SizedBox(
@@ -129,8 +129,8 @@ class ProductCartCard extends StatelessWidget {
                             '$quantity',
                             style: const TextStyle(
                               color: AppColors.richBlack,
-                              fontSize: 16.0,
-                              fontFamily: Fonts.gilroySemiBold,
+                              fontSize: 20.0,
+                              fontFamily: Fonts.montserratSemiBold,
                             ),
                           ),
                           const SizedBox(
@@ -145,12 +145,12 @@ class ProductCartCard extends StatelessWidget {
                               isShowDot: false,
                               radius: 30.0,
                               iconSize: 20.0,
-                              iconColor: AppColors.white,
+                              iconColor: AppColors.highlight,
                               top: 0,
                               right: 0,
-                              borderRadius: 50.0,
+                              borderRadius: 0.0,
                               isShowBorder: false,
-                              bgColor: AppColors.congrats,
+                              bgColor: AppColors.background,
                             ),
                           ),
                         ],
@@ -166,7 +166,7 @@ class ProductCartCard extends StatelessWidget {
             Divider(
               height: 20.0,
               thickness: 1.0,
-              color: AppColors.defaultInputBorders.withOpacity(0.7),
+              color: AppColors.placeholder.withOpacity(0.5),
             ),
             const SizedBox(
               height: 5.0,
@@ -177,8 +177,8 @@ class ProductCartCard extends StatelessWidget {
                   "Total : Rs ${(product.discountPrice ?? 0) * (quantity ?? 0)}",
                   style: const TextStyle(
                     color: AppColors.richBlack,
-                    fontSize: 16.0,
-                    fontFamily: Fonts.gilroySemiBold,
+                    fontSize: 18.0,
+                    fontFamily: Fonts.montserratSemiBold,
                   ),
                 ),
                 const Expanded(
@@ -194,12 +194,12 @@ class ProductCartCard extends StatelessWidget {
                           isShowDot: false,
                           radius: 40.0,
                           iconSize: 24.0,
-                          iconColor: AppColors.white,
+                          iconColor: AppColors.highlight,
                           top: 0,
                           right: 0,
-                          borderRadius: 50.0,
+                          borderRadius: 0.0,
                           isShowBorder: false,
-                          bgColor: AppColors.warning,
+                          bgColor: AppColors.background,
                         ),
                       )
                     : const SizedBox(),

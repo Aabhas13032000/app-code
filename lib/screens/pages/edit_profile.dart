@@ -15,35 +15,11 @@ class _EditProfileState extends State<EditProfile> {
   bool isLoading = false;
   TextEditingController fullNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
-  TextEditingController heightFeetController = TextEditingController();
-  TextEditingController heightInchController = TextEditingController();
-  TextEditingController weightController = TextEditingController();
-  TextEditingController targetWeightController = TextEditingController();
-  TextEditingController medicalConditionsController = TextEditingController();
-  TextEditingController foodAllergiesController = TextEditingController();
-  TextEditingController goalController = TextEditingController();
   String gender = '';
   bool isFullNameFocused = false;
   bool isEmailFocused = false;
-  bool isAgeFocused = false;
-  bool isHeightFeetFocused = false;
-  bool isHeightInchFocused = false;
-  bool isWeightFocused = false;
-  bool isTargetWeightFocused = false;
-  bool isMedicalConditionsFocused = false;
-  bool isFoodAllergiesFocused = false;
-  bool isGoalFocused = false;
   final FocusNode _focus = FocusNode();
   final FocusNode _emailFocus = FocusNode();
-  FocusNode _ageFocus = FocusNode();
-  FocusNode _heightFeetFocus = FocusNode();
-  FocusNode _heightInchFocus = FocusNode();
-  FocusNode _weightFocus = FocusNode();
-  FocusNode _targetWeightFocus = FocusNode();
-  FocusNode _medicalConditionsFocus = FocusNode();
-  FocusNode _foodAllergiesFocus = FocusNode();
-  FocusNode _goalFocus = FocusNode();
 
   void saveData() async {
     Utility.showProgress(true);
@@ -55,11 +31,9 @@ class _EditProfileState extends State<EditProfile> {
           : gender == 'male'
               ? 'MALE'
               : 'OTHERS',
-      'age': ageController.text,
-      'weight': weightController.text,
-      'target_weight': targetWeightController.text.isEmpty
-          ? '0'
-          : targetWeightController.text,
+      'age': '0',
+      'weight': '0',
+      'target_weight': '0',
       'profile_image': image == null
           ? gender == 'female'
               ? '/images/local/female.png'
@@ -67,11 +41,12 @@ class _EditProfileState extends State<EditProfile> {
                   ? '/images/local/male.png'
                   : '/images/local/trans.png'
           : selectedImage,
-      'height': '${heightFeetController.text}.${heightInchController.text}',
+      'height': '0',
       'user_id': Application.user?.id ?? '0',
-      "medical_conditions": medicalConditionsController.text.trim(),
-      "food_allergies": foodAllergiesController.text.trim(),
-      "goal": goalController.text.trim(),
+      "medical_conditions": '0',
+      "food_allergies": '0',
+      "goal": '0',
+      "country_code": Application.user?.countryCode ?? '0',
     };
     String url = '${Constants.finalUrl}/updateData';
     Map<String, dynamic> loginData =
@@ -80,7 +55,7 @@ class _EditProfileState extends State<EditProfile> {
     var data = loginData['data'];
     if (status) {
       if (data[ApiKeys.message].toString() == 'Updated_successfully') {
-        Application.profileImage = selectedImage ?? "";
+        Application.profileImage = selectedImage;
         Application.loggedIn = true;
         Application.user = Users.fromJson(data[ApiKeys.user][0]);
         Application.isPaymentAllowed = data[ApiKeys.isPaymentAllowed] ?? false;
@@ -183,23 +158,7 @@ class _EditProfileState extends State<EditProfile> {
               : 'others';
       selectedImage = (Application.user?.profileImage ?? "").isNotEmpty
           ? Application.user?.profileImage ?? ""
-          : gender == 'female'
-              ? '/images/local/female.png'
-              : gender == 'male'
-                  ? '/images/local/male.png'
-                  : '/images/local/trans.png';
-      ageController.text = (Application.user?.age ?? 0).toString();
-      weightController.text = (Application.user?.weight ?? 0).toString();
-      targetWeightController.text =
-          (Application.user?.targetWeight ?? 0).toString();
-      heightFeetController.text =
-          (Application.user?.height ?? 0).toString().split('.')[0];
-      heightInchController.text =
-          (Application.user?.height ?? 0).toString().split('.')[1];
-      medicalConditionsController.text =
-          (Application.user?.medicalConditions ?? '');
-      foodAllergiesController.text = (Application.user?.foodAllergies ?? '');
-      goalController.text = (Application.user?.goal ?? '');
+          : '';
     });
     await urlToImage(Constants.imgFinalUrl + selectedImage);
   }
@@ -210,94 +169,6 @@ class _EditProfileState extends State<EditProfile> {
     super.initState();
     _focus.addListener(_onFocusChange);
     _emailFocus.addListener(_onEmailFocusChange);
-    _ageFocus.addListener(() {
-      if (isAgeFocused) {
-        setState(() {
-          isAgeFocused = false;
-        });
-      } else {
-        setState(() {
-          isAgeFocused = true;
-        });
-      }
-    });
-    _heightFeetFocus.addListener(() {
-      if (isHeightFeetFocused) {
-        setState(() {
-          isHeightFeetFocused = false;
-        });
-      } else {
-        setState(() {
-          isHeightFeetFocused = true;
-        });
-      }
-    });
-    _heightInchFocus.addListener(() {
-      if (isHeightInchFocused) {
-        setState(() {
-          isHeightInchFocused = false;
-        });
-      } else {
-        setState(() {
-          isHeightInchFocused = true;
-        });
-      }
-    });
-    _weightFocus.addListener(() {
-      if (isWeightFocused) {
-        setState(() {
-          isWeightFocused = false;
-        });
-      } else {
-        setState(() {
-          isWeightFocused = true;
-        });
-      }
-    });
-    _targetWeightFocus.addListener(() {
-      if (isTargetWeightFocused) {
-        setState(() {
-          isTargetWeightFocused = false;
-        });
-      } else {
-        setState(() {
-          isTargetWeightFocused = true;
-        });
-      }
-    });
-    _medicalConditionsFocus.addListener(() {
-      if (isMedicalConditionsFocused) {
-        setState(() {
-          isMedicalConditionsFocused = false;
-        });
-      } else {
-        setState(() {
-          isMedicalConditionsFocused = true;
-        });
-      }
-    });
-    _foodAllergiesFocus.addListener(() {
-      if (isFoodAllergiesFocused) {
-        setState(() {
-          isFoodAllergiesFocused = false;
-        });
-      } else {
-        setState(() {
-          isFoodAllergiesFocused = true;
-        });
-      }
-    });
-    _goalFocus.addListener(() {
-      if (isGoalFocused) {
-        setState(() {
-          isGoalFocused = false;
-        });
-      } else {
-        setState(() {
-          isGoalFocused = true;
-        });
-      }
-    });
     initData();
   }
 
@@ -338,7 +209,7 @@ class _EditProfileState extends State<EditProfile> {
           style: TextStyle(
             color: AppColors.richBlack,
             fontSize: 18.0,
-            fontFamily: Fonts.helixSemiBold,
+            fontFamily: Fonts.montserratSemiBold,
           ),
         ),
         actions: const [],
@@ -361,9 +232,11 @@ class _EditProfileState extends State<EditProfile> {
               radius: 45.0,
               iconSize: 20.0,
               iconColor: AppColors.richBlack,
-              top: 8.0,
-              right: 8.0,
-              borderRadius: 8.0,
+              top: 0,
+              right: 0,
+              borderRadius: 0.0,
+              isShowBorder: false,
+              bgColor: AppColors.background,
             ),
           ),
         ),
@@ -400,7 +273,7 @@ class _EditProfileState extends State<EditProfile> {
                                 },
                                 child: imageSelector(),
                               ),
-                              image == null
+                              image == null || selectedImage.isEmpty
                                   ? const SizedBox()
                                   : Positioned(
                                       bottom: 8,
@@ -411,7 +284,7 @@ class _EditProfileState extends State<EditProfile> {
                                               context,
                                               Icons.warning_amber_rounded,
                                               40.0,
-                                              AppColors.warning,
+                                              AppColors.highlight,
                                               AlertMessages.getMessage(3),
                                               'No',
                                               'Yes', onFirstButtonClicked: () {
@@ -429,7 +302,7 @@ class _EditProfileState extends State<EditProfile> {
                                           height: 40.0,
                                           width: 40.0,
                                           decoration: BoxDecoration(
-                                            color: AppColors.warning,
+                                            color: AppColors.background,
                                             borderRadius:
                                                 BorderRadius.circular(50.0),
                                           ),
@@ -437,7 +310,7 @@ class _EditProfileState extends State<EditProfile> {
                                             child: Icon(
                                               Icons.delete_outline,
                                               size: 20.0,
-                                              color: AppColors.white,
+                                              color: AppColors.highlight,
                                             ),
                                           ),
                                         ),
@@ -464,7 +337,7 @@ class _EditProfileState extends State<EditProfile> {
                               style: const TextStyle(
                                 color: AppColors.richBlack,
                                 fontSize: 16.0,
-                                fontFamily: Fonts.gilroyMedium,
+                                fontFamily: Fonts.montserratMedium,
                               ),
                               controller: fullNameController,
                               cursorColor: AppColors.defaultInputBorders,
@@ -484,11 +357,11 @@ class _EditProfileState extends State<EditProfile> {
                                 hintStyle: const TextStyle(
                                   color: AppColors.placeholder,
                                   fontSize: 16.0,
-                                  fontFamily: Fonts.gilroyMedium,
+                                  fontFamily: Fonts.montserratMedium,
                                 ),
                                 focusColor: AppColors.placeholder,
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(0.0),
                                   borderSide: const BorderSide(
                                     color: AppColors.highlight,
                                     width: 2.0,
@@ -497,7 +370,7 @@ class _EditProfileState extends State<EditProfile> {
                                 errorBorder: InputBorder.none,
                                 disabledBorder: InputBorder.none,
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(0.0),
                                   borderSide: const BorderSide(
                                     color: AppColors.defaultInputBorders,
                                     width: 2.0,
@@ -521,7 +394,7 @@ class _EditProfileState extends State<EditProfile> {
                                         ? AppColors.highlight
                                         : AppColors.placeholder,
                                     fontSize: 14.0,
-                                    fontFamily: Fonts.gilroySemiBold,
+                                    fontFamily: Fonts.montserratSemiBold,
                                   ),
                                 ),
                               ),
@@ -546,7 +419,7 @@ class _EditProfileState extends State<EditProfile> {
                               style: const TextStyle(
                                 color: AppColors.richBlack,
                                 fontSize: 16.0,
-                                fontFamily: Fonts.gilroyMedium,
+                                fontFamily: Fonts.montserratMedium,
                               ),
                               controller: emailController,
                               cursorColor: AppColors.defaultInputBorders,
@@ -566,11 +439,11 @@ class _EditProfileState extends State<EditProfile> {
                                 hintStyle: const TextStyle(
                                   color: AppColors.placeholder,
                                   fontSize: 16.0,
-                                  fontFamily: Fonts.gilroyMedium,
+                                  fontFamily: Fonts.montserratMedium,
                                 ),
                                 focusColor: AppColors.placeholder,
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(0.0),
                                   borderSide: const BorderSide(
                                     color: AppColors.highlight,
                                     width: 2.0,
@@ -579,7 +452,7 @@ class _EditProfileState extends State<EditProfile> {
                                 errorBorder: InputBorder.none,
                                 disabledBorder: InputBorder.none,
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(0.0),
                                   borderSide: const BorderSide(
                                     color: AppColors.defaultInputBorders,
                                     width: 2.0,
@@ -603,7 +476,7 @@ class _EditProfileState extends State<EditProfile> {
                                         ? AppColors.highlight
                                         : AppColors.placeholder,
                                     fontSize: 14.0,
-                                    fontFamily: Fonts.gilroySemiBold,
+                                    fontFamily: Fonts.montserratSemiBold,
                                   ),
                                 ),
                               ),
@@ -619,7 +492,7 @@ class _EditProfileState extends State<EditProfile> {
                       'Select your gender',
                       style: TextStyle(
                         fontSize: 18.0,
-                        fontFamily: Fonts.gilroyMedium,
+                        fontFamily: Fonts.montserratMedium,
                         color: AppColors.richBlack,
                       ),
                     ),
@@ -630,791 +503,10 @@ class _EditProfileState extends State<EditProfile> {
                     const SizedBox(
                       height: 30.0,
                     ),
-                    SizedBox(
-                      height: 55.0,
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          SizedBox(
-                            height: 55.0,
-                            child: TextField(
-                              focusNode: _ageFocus,
-                              textAlignVertical: TextAlignVertical.center,
-                              style: const TextStyle(
-                                color: AppColors.richBlack,
-                                fontSize: 16.0,
-                                fontFamily: Fonts.gilroyMedium,
-                              ),
-                              controller: ageController,
-                              cursorColor: AppColors.defaultInputBorders,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              textInputAction: TextInputAction.done,
-                              maxLength: 3,
-                              cursorWidth: 1.5,
-                              decoration: InputDecoration(
-                                hintMaxLines: 1,
-                                hintText: '0',
-                                counterText: '',
-                                contentPadding: const EdgeInsets.only(
-                                  top: 20.0,
-                                  bottom: 20.0,
-                                  left: 15.0,
-                                  right: 15.0,
-                                ),
-                                hintStyle: const TextStyle(
-                                  color: AppColors.placeholder,
-                                  fontSize: 16.0,
-                                  fontFamily: Fonts.gilroyMedium,
-                                ),
-                                focusColor: AppColors.placeholder,
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: const BorderSide(
-                                    color: AppColors.highlight,
-                                    width: 2.0,
-                                  ),
-                                ),
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: const BorderSide(
-                                    color: AppColors.defaultInputBorders,
-                                    width: 2.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 20.0,
-                            top: -8.0,
-                            child: Container(
-                              color: AppColors.white,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 5.0, right: 5.0),
-                                child: Text(
-                                  'Age',
-                                  style: TextStyle(
-                                    color: isAgeFocused
-                                        ? AppColors.highlight
-                                        : AppColors.placeholder,
-                                    fontSize: 14.0,
-                                    fontFamily: Fonts.gilroySemiBold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30.0,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                            height: 55.0,
-                            child: Stack(
-                              clipBehavior: Clip.none,
-                              children: [
-                                SizedBox(
-                                  height: 55.0,
-                                  child: TextField(
-                                    focusNode: _heightFeetFocus,
-                                    textAlignVertical: TextAlignVertical.center,
-                                    style: const TextStyle(
-                                      color: AppColors.richBlack,
-                                      fontSize: 16.0,
-                                      fontFamily: Fonts.gilroyMedium,
-                                    ),
-                                    controller: heightFeetController,
-                                    cursorColor: AppColors.defaultInputBorders,
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly
-                                    ],
-                                    textInputAction: TextInputAction.done,
-                                    maxLength: 2,
-                                    cursorWidth: 1.5,
-                                    decoration: InputDecoration(
-                                      hintMaxLines: 1,
-                                      hintText: '0',
-                                      counterText: '',
-                                      suffixIcon: const Center(
-                                        child: Text(
-                                          'ft',
-                                          style: TextStyle(
-                                            color: AppColors.subText,
-                                            fontSize: 16.0,
-                                            fontFamily: Fonts.gilroySemiBold,
-                                          ),
-                                        ),
-                                      ),
-                                      suffixIconConstraints:
-                                          const BoxConstraints(
-                                        minHeight: 55.0,
-                                        minWidth: 50.0,
-                                        maxHeight: 55.0,
-                                        maxWidth: 50.0,
-                                      ),
-                                      contentPadding: const EdgeInsets.only(
-                                        top: 20.0,
-                                        bottom: 20.0,
-                                        left: 15.0,
-                                        right: 15.0,
-                                      ),
-                                      hintStyle: const TextStyle(
-                                        color: AppColors.placeholder,
-                                        fontSize: 16.0,
-                                        fontFamily: Fonts.gilroyMedium,
-                                      ),
-                                      focusColor: AppColors.placeholder,
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        borderSide: const BorderSide(
-                                          color: AppColors.highlight,
-                                          width: 2.0,
-                                        ),
-                                      ),
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        borderSide: const BorderSide(
-                                          color: AppColors.defaultInputBorders,
-                                          width: 2.0,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  left: 20.0,
-                                  top: -8.0,
-                                  child: Container(
-                                    color: AppColors.white,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 5.0, right: 5.0),
-                                      child: Text(
-                                        'Height (Feet)',
-                                        style: TextStyle(
-                                          color: isHeightFeetFocused
-                                              ? AppColors.highlight
-                                              : AppColors.placeholder,
-                                          fontSize: 14.0,
-                                          fontFamily: Fonts.gilroySemiBold,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 20.0,
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            height: 55.0,
-                            child: Stack(
-                              clipBehavior: Clip.none,
-                              children: [
-                                SizedBox(
-                                  height: 55.0,
-                                  child: TextField(
-                                    focusNode: _heightInchFocus,
-                                    textAlignVertical: TextAlignVertical.center,
-                                    style: const TextStyle(
-                                      color: AppColors.richBlack,
-                                      fontSize: 16.0,
-                                      fontFamily: Fonts.gilroyMedium,
-                                    ),
-                                    controller: heightInchController,
-                                    cursorColor: AppColors.defaultInputBorders,
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly
-                                    ],
-                                    textInputAction: TextInputAction.done,
-                                    maxLength: 3,
-                                    cursorWidth: 1.5,
-                                    decoration: InputDecoration(
-                                      hintMaxLines: 1,
-                                      hintText: '0',
-                                      counterText: '',
-                                      suffixIcon: const Center(
-                                        child: Text(
-                                          'in',
-                                          style: TextStyle(
-                                            color: AppColors.subText,
-                                            fontSize: 16.0,
-                                            fontFamily: Fonts.gilroySemiBold,
-                                          ),
-                                        ),
-                                      ),
-                                      suffixIconConstraints:
-                                          const BoxConstraints(
-                                        minHeight: 55.0,
-                                        minWidth: 50.0,
-                                        maxHeight: 55.0,
-                                        maxWidth: 50.0,
-                                      ),
-                                      contentPadding: const EdgeInsets.only(
-                                        top: 20.0,
-                                        bottom: 20.0,
-                                        left: 15.0,
-                                        right: 15.0,
-                                      ),
-                                      hintStyle: const TextStyle(
-                                        color: AppColors.placeholder,
-                                        fontSize: 16.0,
-                                        fontFamily: Fonts.gilroyMedium,
-                                      ),
-                                      focusColor: AppColors.placeholder,
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        borderSide: const BorderSide(
-                                          color: AppColors.highlight,
-                                          width: 2.0,
-                                        ),
-                                      ),
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        borderSide: const BorderSide(
-                                          color: AppColors.defaultInputBorders,
-                                          width: 2.0,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  left: 20.0,
-                                  top: -8.0,
-                                  child: Container(
-                                    color: AppColors.white,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 5.0, right: 5.0),
-                                      child: Text(
-                                        'Height (Inch)',
-                                        style: TextStyle(
-                                          color: isHeightInchFocused
-                                              ? AppColors.highlight
-                                              : AppColors.placeholder,
-                                          fontSize: 14.0,
-                                          fontFamily: Fonts.gilroySemiBold,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 30.0,
-                    ),
-                    SizedBox(
-                      height: 55.0,
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          SizedBox(
-                            height: 55.0,
-                            child: TextField(
-                              focusNode: _weightFocus,
-                              textAlignVertical: TextAlignVertical.center,
-                              style: const TextStyle(
-                                color: AppColors.richBlack,
-                                fontSize: 16.0,
-                                fontFamily: Fonts.gilroyMedium,
-                              ),
-                              controller: weightController,
-                              cursorColor: AppColors.defaultInputBorders,
-                              keyboardType:
-                                  const TextInputType.numberWithOptions(
-                                      decimal: true),
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.allow(
-                                    RegExp(r"[0-9.]")),
-                                TextInputFormatter.withFunction(
-                                    (oldValue, newValue) {
-                                  try {
-                                    final text = newValue.text;
-                                    if (text.isNotEmpty) double.parse(text);
-                                    return newValue;
-                                  } catch (e) {}
-                                  return oldValue;
-                                }),
-                              ],
-                              textInputAction: TextInputAction.done,
-                              maxLength: 7,
-                              cursorWidth: 1.5,
-                              decoration: InputDecoration(
-                                hintMaxLines: 1,
-                                hintText: '0.0',
-                                counterText: '',
-                                contentPadding: const EdgeInsets.only(
-                                  top: 20.0,
-                                  bottom: 20.0,
-                                  left: 15.0,
-                                  right: 15.0,
-                                ),
-                                hintStyle: const TextStyle(
-                                  color: AppColors.placeholder,
-                                  fontSize: 16.0,
-                                  fontFamily: Fonts.gilroyMedium,
-                                ),
-                                suffixIcon: const Center(
-                                  child: Text(
-                                    'kg',
-                                    style: TextStyle(
-                                      color: AppColors.subText,
-                                      fontSize: 16.0,
-                                      fontFamily: Fonts.gilroySemiBold,
-                                    ),
-                                  ),
-                                ),
-                                suffixIconConstraints: const BoxConstraints(
-                                  minHeight: 55.0,
-                                  minWidth: 50.0,
-                                  maxHeight: 55.0,
-                                  maxWidth: 50.0,
-                                ),
-                                focusColor: AppColors.placeholder,
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: const BorderSide(
-                                    color: AppColors.highlight,
-                                    width: 2.0,
-                                  ),
-                                ),
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: const BorderSide(
-                                    color: AppColors.defaultInputBorders,
-                                    width: 2.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 20.0,
-                            top: -8.0,
-                            child: Container(
-                              color: AppColors.white,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 5.0, right: 5.0),
-                                child: Text(
-                                  'Weight',
-                                  style: TextStyle(
-                                    color: isWeightFocused
-                                        ? AppColors.highlight
-                                        : AppColors.placeholder,
-                                    fontSize: 14.0,
-                                    fontFamily: Fonts.gilroySemiBold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30.0,
-                    ),
-                    SizedBox(
-                      height: 55.0,
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          SizedBox(
-                            height: 55.0,
-                            child: TextField(
-                              focusNode: _targetWeightFocus,
-                              textAlignVertical: TextAlignVertical.center,
-                              style: const TextStyle(
-                                color: AppColors.richBlack,
-                                fontSize: 16.0,
-                                fontFamily: Fonts.gilroyMedium,
-                              ),
-                              controller: targetWeightController,
-                              cursorColor: AppColors.defaultInputBorders,
-                              keyboardType:
-                                  const TextInputType.numberWithOptions(
-                                      decimal: true),
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.allow(
-                                    RegExp(r"[0-9.]")),
-                                TextInputFormatter.withFunction(
-                                    (oldValue, newValue) {
-                                  try {
-                                    final text = newValue.text;
-                                    if (text.isNotEmpty) double.parse(text);
-                                    return newValue;
-                                  } catch (e) {}
-                                  return oldValue;
-                                }),
-                              ],
-                              textInputAction: TextInputAction.done,
-                              maxLength: 7,
-                              cursorWidth: 1.5,
-                              decoration: InputDecoration(
-                                hintMaxLines: 1,
-                                hintText: '0.0',
-                                counterText: '',
-                                contentPadding: const EdgeInsets.only(
-                                  top: 20.0,
-                                  bottom: 20.0,
-                                  left: 15.0,
-                                  right: 15.0,
-                                ),
-                                hintStyle: const TextStyle(
-                                  color: AppColors.placeholder,
-                                  fontSize: 16.0,
-                                  fontFamily: Fonts.gilroyMedium,
-                                ),
-                                suffixIcon: const Center(
-                                  child: Text(
-                                    'kg',
-                                    style: TextStyle(
-                                      color: AppColors.subText,
-                                      fontSize: 16.0,
-                                      fontFamily: Fonts.gilroySemiBold,
-                                    ),
-                                  ),
-                                ),
-                                suffixIconConstraints: const BoxConstraints(
-                                  minHeight: 55.0,
-                                  minWidth: 50.0,
-                                  maxHeight: 55.0,
-                                  maxWidth: 50.0,
-                                ),
-                                focusColor: AppColors.placeholder,
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: const BorderSide(
-                                    color: AppColors.highlight,
-                                    width: 2.0,
-                                  ),
-                                ),
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: const BorderSide(
-                                    color: AppColors.defaultInputBorders,
-                                    width: 2.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 20.0,
-                            top: -8.0,
-                            child: Container(
-                              color: AppColors.white,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 5.0, right: 5.0),
-                                child: Text(
-                                  'Target weight (optional)',
-                                  style: TextStyle(
-                                    color: isTargetWeightFocused
-                                        ? AppColors.highlight
-                                        : AppColors.placeholder,
-                                    fontSize: 14.0,
-                                    fontFamily: Fonts.gilroySemiBold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30.0,
-                    ),
-                    SizedBox(
-                      height: 90.0,
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          SizedBox(
-                            height: 90.0,
-                            child: TextField(
-                              focusNode: _medicalConditionsFocus,
-                              textAlignVertical: TextAlignVertical.center,
-                              style: const TextStyle(
-                                color: AppColors.richBlack,
-                                fontSize: 16.0,
-                                fontFamily: Fonts.gilroyMedium,
-                              ),
-                              controller: medicalConditionsController,
-                              cursorColor: AppColors.defaultInputBorders,
-                              keyboardType: TextInputType.multiline,
-                              textInputAction: TextInputAction.done,
-                              cursorWidth: 1.5,
-                              maxLines: 3,
-                              decoration: InputDecoration(
-                                hintMaxLines: 1,
-                                hintText:
-                                    'Mention your medical conditions here',
-                                counterText: '',
-                                contentPadding: const EdgeInsets.only(
-                                  top: 20.0,
-                                  bottom: 20.0,
-                                  left: 15.0,
-                                  right: 15.0,
-                                ),
-                                hintStyle: const TextStyle(
-                                  color: AppColors.placeholder,
-                                  fontSize: 16.0,
-                                  fontFamily: Fonts.gilroyMedium,
-                                ),
-                                focusColor: AppColors.placeholder,
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: const BorderSide(
-                                    color: AppColors.highlight,
-                                    width: 2.0,
-                                  ),
-                                ),
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: const BorderSide(
-                                    color: AppColors.defaultInputBorders,
-                                    width: 2.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 20.0,
-                            top: -8.0,
-                            child: Container(
-                              color: AppColors.white,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 5.0, right: 5.0),
-                                child: Text(
-                                  'Medical Conditionals (optional)',
-                                  style: TextStyle(
-                                    color: isMedicalConditionsFocused
-                                        ? AppColors.highlight
-                                        : AppColors.placeholder,
-                                    fontSize: 14.0,
-                                    fontFamily: Fonts.gilroySemiBold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30.0,
-                    ),
-                    SizedBox(
-                      height: 90.0,
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          SizedBox(
-                            height: 90.0,
-                            child: TextField(
-                              focusNode: _foodAllergiesFocus,
-                              textAlignVertical: TextAlignVertical.center,
-                              style: const TextStyle(
-                                color: AppColors.richBlack,
-                                fontSize: 16.0,
-                                fontFamily: Fonts.gilroyMedium,
-                              ),
-                              controller: foodAllergiesController,
-                              cursorColor: AppColors.defaultInputBorders,
-                              keyboardType: TextInputType.multiline,
-                              textInputAction: TextInputAction.done,
-                              cursorWidth: 1.5,
-                              maxLines: 3,
-                              decoration: InputDecoration(
-                                hintMaxLines: 1,
-                                hintText: 'Mention your food allergies here',
-                                counterText: '',
-                                contentPadding: const EdgeInsets.only(
-                                  top: 20.0,
-                                  bottom: 20.0,
-                                  left: 15.0,
-                                  right: 15.0,
-                                ),
-                                hintStyle: const TextStyle(
-                                  color: AppColors.placeholder,
-                                  fontSize: 16.0,
-                                  fontFamily: Fonts.gilroyMedium,
-                                ),
-                                focusColor: AppColors.placeholder,
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: const BorderSide(
-                                    color: AppColors.highlight,
-                                    width: 2.0,
-                                  ),
-                                ),
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: const BorderSide(
-                                    color: AppColors.defaultInputBorders,
-                                    width: 2.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 20.0,
-                            top: -8.0,
-                            child: Container(
-                              color: AppColors.white,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 5.0, right: 5.0),
-                                child: Text(
-                                  'Food Allergies (optional)',
-                                  style: TextStyle(
-                                    color: isFoodAllergiesFocused
-                                        ? AppColors.highlight
-                                        : AppColors.placeholder,
-                                    fontSize: 14.0,
-                                    fontFamily: Fonts.gilroySemiBold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30.0,
-                    ),
-                    SizedBox(
-                      height: 90.0,
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          SizedBox(
-                            height: 90.0,
-                            child: TextField(
-                              focusNode: _goalFocus,
-                              textAlignVertical: TextAlignVertical.center,
-                              style: const TextStyle(
-                                color: AppColors.richBlack,
-                                fontSize: 16.0,
-                                fontFamily: Fonts.gilroyMedium,
-                              ),
-                              controller: goalController,
-                              cursorColor: AppColors.defaultInputBorders,
-                              keyboardType: TextInputType.multiline,
-                              textInputAction: TextInputAction.done,
-                              cursorWidth: 1.5,
-                              maxLines: 3,
-                              decoration: InputDecoration(
-                                hintMaxLines: 1,
-                                hintText: 'Enter your goal here',
-                                counterText: '',
-                                contentPadding: const EdgeInsets.only(
-                                  top: 20.0,
-                                  bottom: 20.0,
-                                  left: 15.0,
-                                  right: 15.0,
-                                ),
-                                hintStyle: const TextStyle(
-                                  color: AppColors.placeholder,
-                                  fontSize: 16.0,
-                                  fontFamily: Fonts.gilroyMedium,
-                                ),
-                                focusColor: AppColors.placeholder,
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: const BorderSide(
-                                    color: AppColors.highlight,
-                                    width: 2.0,
-                                  ),
-                                ),
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: const BorderSide(
-                                    color: AppColors.defaultInputBorders,
-                                    width: 2.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 20.0,
-                            top: -8.0,
-                            child: Container(
-                              color: AppColors.white,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 5.0, right: 5.0),
-                                child: Text(
-                                  'Goal (optional)',
-                                  style: TextStyle(
-                                    color: isGoalFocused
-                                        ? AppColors.highlight
-                                        : AppColors.placeholder,
-                                    fontSize: 14.0,
-                                    fontFamily: Fonts.gilroySemiBold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30.0,
-                    ),
                     CustomButton(
                       title: 'Save',
                       textColor: AppColors.white,
+                      paddingVertical: 18,
                       onPressed: () {
                         if (fullNameController.text.isEmpty) {
                           Utility.showSnacbar(
@@ -1429,34 +521,6 @@ class _EditProfileState extends State<EditProfile> {
                           Utility.showSnacbar(
                             context,
                             'Please select a gender.',
-                            AppColors.lightRed,
-                            AppColors.warning,
-                            duration: 2,
-                            50.0,
-                          );
-                        } else if (ageController.text.isEmpty) {
-                          Utility.showSnacbar(
-                            context,
-                            'Please enter your age.',
-                            AppColors.lightRed,
-                            AppColors.warning,
-                            duration: 2,
-                            50.0,
-                          );
-                        } else if (heightFeetController.text.isEmpty ||
-                            heightInchController.text.isEmpty) {
-                          Utility.showSnacbar(
-                            context,
-                            'Please fill your height properly.',
-                            AppColors.lightRed,
-                            AppColors.warning,
-                            duration: 2,
-                            50.0,
-                          );
-                        } else if (weightController.text.isEmpty) {
-                          Utility.showSnacbar(
-                            context,
-                            'Please enter your weight.',
                             AppColors.lightRed,
                             AppColors.warning,
                             duration: 2,
@@ -1483,10 +547,10 @@ class _EditProfileState extends State<EditProfile> {
       width: 140.0,
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(150.0),
+        borderRadius: BorderRadius.circular(0.0),
         border: Border.all(
           width: 3.0,
-          color: AppColors.highlight,
+          color: AppColors.background,
         ),
       ),
       child: Center(
@@ -1494,13 +558,13 @@ class _EditProfileState extends State<EditProfile> {
           height: 120.0,
           width: 120.0,
           decoration: BoxDecoration(
-            color: AppColors.lightYellow,
-            borderRadius: BorderRadius.circular(150.0),
+            color: AppColors.background,
+            borderRadius: BorderRadius.circular(0.0),
           ),
-          child: image != null
+          child: image != null && selectedImage.isNotEmpty
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(
-                    150.0,
+                    0.0,
                   ),
                   child: Image.file(
                     image!,
@@ -1508,10 +572,10 @@ class _EditProfileState extends State<EditProfile> {
                     height: double.infinity,
                   ),
                 )
-              : Column(
+              : const Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(
                       Icons.photo_outlined,
                       size: 32,
@@ -1525,7 +589,7 @@ class _EditProfileState extends State<EditProfile> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16.0,
-                        fontFamily: Fonts.gilroyMedium,
+                        fontFamily: Fonts.montserratMedium,
                         color: AppColors.highlight,
                       ),
                     ),
@@ -1548,41 +612,39 @@ class _EditProfileState extends State<EditProfile> {
             },
             child: Container(
               decoration: BoxDecoration(
-                color: gender == 'female'
-                    ? AppColors.lightYellow
-                    : AppColors.white,
+                color:
+                    gender == 'female' ? AppColors.background : AppColors.white,
                 borderRadius: BorderRadius.circular(
-                  10.0,
+                  0.0,
                 ),
                 border: Border.all(
                   width: 2.0,
                   color: gender == 'female'
-                      ? AppColors.highlight
+                      ? AppColors.background
                       : AppColors.defaultInputBorders,
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 18.0, horizontal: 20.0),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 12.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      Images.female,
-                      height: 40.0,
-                      width: 40.0,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
-                    const Text(
+                    // Image.asset(
+                    //   Images.female,
+                    //   height: 40.0,
+                    //   width: 40.0,
+                    //   fit: BoxFit.cover,
+                    // ),
+                    // const SizedBox(
+                    //   height: 15.0,
+                    // ),
+                    Text(
                       'Women',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 16.0,
-                        fontFamily: Fonts.gilroySemiBold,
+                        fontSize: 14.0,
+                        fontFamily: Fonts.montserratSemiBold,
                         color: AppColors.richBlack,
                       ),
                     ),
@@ -1593,7 +655,7 @@ class _EditProfileState extends State<EditProfile> {
           ),
         ),
         const SizedBox(
-          width: 15.0,
+          width: 10.0,
         ),
         Expanded(
           child: GestureDetector(
@@ -1605,39 +667,38 @@ class _EditProfileState extends State<EditProfile> {
             child: Container(
               decoration: BoxDecoration(
                 color:
-                    gender == 'male' ? AppColors.lightYellow : AppColors.white,
+                    gender == 'male' ? AppColors.background : AppColors.white,
                 borderRadius: BorderRadius.circular(
-                  10.0,
+                  0.0,
                 ),
                 border: Border.all(
                   width: 2.0,
                   color: gender == 'male'
-                      ? AppColors.highlight
+                      ? AppColors.background
                       : AppColors.defaultInputBorders,
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 18.0, horizontal: 20.0),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 12.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      Images.male,
-                      height: 40.0,
-                      width: 40.0,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
-                    const Text(
+                    // Image.asset(
+                    //   Images.male,
+                    //   height: 40.0,
+                    //   width: 40.0,
+                    //   fit: BoxFit.cover,
+                    // ),
+                    // const SizedBox(
+                    //   height: 15.0,
+                    // ),
+                    Text(
                       'Men',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 16.0,
-                        fontFamily: Fonts.gilroySemiBold,
+                        fontSize: 14.0,
+                        fontFamily: Fonts.montserratSemiBold,
                         color: AppColors.richBlack,
                       ),
                     ),
@@ -1648,7 +709,7 @@ class _EditProfileState extends State<EditProfile> {
           ),
         ),
         const SizedBox(
-          width: 15.0,
+          width: 10.0,
         ),
         Expanded(
           child: GestureDetector(
@@ -1659,41 +720,39 @@ class _EditProfileState extends State<EditProfile> {
             },
             child: Container(
               decoration: BoxDecoration(
-                color: gender == 'others'
-                    ? AppColors.lightYellow
-                    : AppColors.white,
+                color:
+                    gender == 'others' ? AppColors.background : AppColors.white,
                 borderRadius: BorderRadius.circular(
-                  10.0,
+                  0.0,
                 ),
                 border: Border.all(
                   width: 2.0,
                   color: gender == 'others'
-                      ? AppColors.highlight
+                      ? AppColors.background
                       : AppColors.defaultInputBorders,
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 18.0, horizontal: 20.0),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 12.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      Images.trans,
-                      height: 40.0,
-                      width: 40.0,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
-                    const Text(
+                    // Image.asset(
+                    //   Images.trans,
+                    //   height: 40.0,
+                    //   width: 40.0,
+                    //   fit: BoxFit.cover,
+                    // ),
+                    // const SizedBox(
+                    //   height: 15.0,
+                    // ),
+                    Text(
                       'Others',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 16.0,
-                        fontFamily: Fonts.gilroySemiBold,
+                        fontSize: 14.0,
+                        fontFamily: Fonts.montserratSemiBold,
                         color: AppColors.richBlack,
                       ),
                     ),

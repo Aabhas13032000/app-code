@@ -201,7 +201,7 @@ class _EachBlogState extends State<EachBlog> {
                             iconColor: AppColors.white,
                             top: 0,
                             right: 0,
-                            borderRadius: 50.0,
+                            borderRadius: 0.0,
                             isShowBorder: false,
                             bgColor: AppColors.highlight,
                           ),
@@ -214,8 +214,8 @@ class _EachBlogState extends State<EachBlog> {
                     decoration: const BoxDecoration(
                       color: AppColors.white,
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20.0),
-                        topRight: Radius.circular(20.0),
+                        topLeft: Radius.circular(0.0),
+                        topRight: Radius.circular(0.0),
                       ),
                     ),
                     child: ConstrainedBox(
@@ -235,7 +235,7 @@ class _EachBlogState extends State<EachBlog> {
                                 ? const Expanded(
                                     child: Center(
                                       child: NoDataAvailable(
-                                        message: 'No comments available!!',
+                                        message: 'No comments available.',
                                       ),
                                     ),
                                   )
@@ -283,7 +283,7 @@ class _EachBlogState extends State<EachBlog> {
                                 style: const TextStyle(
                                   color: AppColors.richBlack,
                                   fontSize: 16.0,
-                                  fontFamily: Fonts.gilroyMedium,
+                                  fontFamily: Fonts.montserratMedium,
                                 ),
                                 controller: commentController,
                                 cursorColor: AppColors.defaultInputBorders,
@@ -310,11 +310,11 @@ class _EachBlogState extends State<EachBlog> {
                                       decoration: const BoxDecoration(
                                         color: AppColors.cardBg,
                                         borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(10.0),
-                                          bottomRight: Radius.circular(10.0),
+                                          topRight: Radius.circular(0.0),
+                                          bottomRight: Radius.circular(0.0),
                                         ),
                                       ),
-                                      child: const Center(
+                                      child: Center(
                                         child: Icon(
                                           MdiIcons.send,
                                           size: 24.0,
@@ -332,11 +332,11 @@ class _EachBlogState extends State<EachBlog> {
                                   hintStyle: const TextStyle(
                                     color: AppColors.placeholder,
                                     fontSize: 16.0,
-                                    fontFamily: Fonts.gilroyMedium,
+                                    fontFamily: Fonts.montserratMedium,
                                   ),
                                   focusColor: AppColors.placeholder,
                                   focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(0.0),
                                     borderSide: const BorderSide(
                                       color: AppColors.highlight,
                                       width: 2.0,
@@ -345,7 +345,7 @@ class _EachBlogState extends State<EachBlog> {
                                   errorBorder: InputBorder.none,
                                   disabledBorder: InputBorder.none,
                                   enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(0.0),
                                     borderSide: const BorderSide(
                                       color: AppColors.defaultInputBorders,
                                       width: 2.0,
@@ -449,7 +449,7 @@ class _EachBlogState extends State<EachBlog> {
         decoration: BoxDecoration(
           color: AppColors.white,
           border: Border.all(width: 1.5, color: AppColors.defaultInputBorders),
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(0.0),
         ),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -475,7 +475,7 @@ class _EachBlogState extends State<EachBlog> {
                       style: const TextStyle(
                         color: AppColors.richBlack,
                         fontSize: 16.0,
-                        fontFamily: Fonts.gilroyMedium,
+                        fontFamily: Fonts.montserratMedium,
                       ),
                     ),
                     const SizedBox(
@@ -486,7 +486,7 @@ class _EachBlogState extends State<EachBlog> {
                       style: const TextStyle(
                         color: AppColors.subText,
                         fontSize: 14.0,
-                        fontFamily: Fonts.gilroyRegular,
+                        fontFamily: Fonts.montserratRegular,
                       ),
                     ),
                     const SizedBox(
@@ -499,7 +499,7 @@ class _EachBlogState extends State<EachBlog> {
                       style: const TextStyle(
                         color: AppColors.subText,
                         fontSize: 14.0,
-                        fontFamily: Fonts.gilroyRegular,
+                        fontFamily: Fonts.montserratRegular,
                       ),
                     )
                   ],
@@ -606,6 +606,7 @@ class _EachBlogState extends State<EachBlog> {
         return false;
       },
       child: Scaffold(
+        backgroundColor: AppColors.white,
         appBar: CustomAppBar(
           preferredSize: const Size.fromHeight(70.0),
           showLeadingIcon: true,
@@ -615,35 +616,37 @@ class _EachBlogState extends State<EachBlog> {
             style: TextStyle(
               color: AppColors.richBlack,
               fontSize: 20.0,
-              fontFamily: Fonts.helixSemiBold,
+              fontFamily: Fonts.montserratSemiBold,
             ),
           ),
           actions: [
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 12.5,
-                bottom: 12.5,
-                right: 10.0,
-                left: 0.0,
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  getComments(widget.id, 0);
-                },
-                child: const CustomIcon(
-                  icon: Icons.mode_comment_outlined,
-                  borderWidth: 2.0,
-                  borderColor: AppColors.defaultInputBorders,
-                  isShowDot: false,
-                  radius: 45.0,
-                  iconSize: 20.0,
-                  iconColor: AppColors.richBlack,
-                  top: 8.0,
-                  right: 8.0,
-                  borderRadius: 8.0,
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(
+            //     top: 12.5,
+            //     bottom: 12.5,
+            //     right: 10.0,
+            //     left: 0.0,
+            //   ),
+            //   child: GestureDetector(
+            //     onTap: () {
+            //       getComments(widget.id, 0);
+            //     },
+            //     child: const CustomIcon(
+            //       icon: Icons.mode_comment_outlined,
+            //       borderWidth: 2.0,
+            //       borderColor: AppColors.defaultInputBorders,
+            //       isShowDot: false,
+            //       radius: 45.0,
+            //       iconSize: 20.0,
+            //       iconColor: AppColors.richBlack,
+            //       top: 0,
+            //       right: 0,
+            //       borderRadius: 0.0,
+            //       isShowBorder: false,
+            //       bgColor: AppColors.background,
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.only(
                 top: 12.5,
@@ -656,7 +659,7 @@ class _EachBlogState extends State<EachBlog> {
                     ? null
                     : () {
                         Utility.showProgress(true);
-                        String shareUrl = blog.shareUrl ?? '';
+                        String shareUrl = blog.shareUrl;
                         Utility.printLog(shareUrl);
                         if (shareUrl.isEmpty) {
                           Application.generateShareLink(
@@ -667,27 +670,25 @@ class _EachBlogState extends State<EachBlog> {
                             if (value != 'error') {
                               Blogs newBlog = Blogs(
                                 id: widget.id,
-                                title: blog.title ?? "",
-                                description: blog.description ?? "",
-                                coverPhoto: blog.coverPhoto ?? "",
+                                title: blog.title,
+                                description: blog.description,
+                                coverPhoto: blog.coverPhoto,
                                 shareUrl: value,
-                                status: blog.status ?? 1,
-                                views: blog.views ?? 0,
-                                totalLikes: blog.totalLikes ?? 0,
-                                createdAt: blog.createdAt ?? "",
-                                isLiked: blog.isLiked ?? false,
+                                status: blog.status,
+                                views: blog.views,
+                                totalLikes: blog.totalLikes,
+                                createdAt: blog.createdAt,
+                                isLiked: blog.isLiked,
                               );
                               setState(() {
                                 blog = newBlog;
                               });
                               Application.createFileOfPdfUrl(
-                                      Constants.imgFinalUrl +
-                                          (blog.coverPhoto ??
-                                              '/images/local/logo.png'))
+                                      Constants.imgFinalUrl + (blog.coverPhoto))
                                   .then((f) {
                                 Utility.showProgress(false);
                                 _onShare(f.path,
-                                    '${blog.title ?? ""}\nto explore more blogs click on the link given below\n👇\n$value\nDownload our application and enjoy more features\nFor Android:\nhttps://play.google.com/store/apps/details?id=com.healfit.heal_fit\n\nFor IOS:\nhttps://apps.apple.com/in/app/healfit/id1645721639\nOr visit our website:\nhttps://healfit.in');
+                                    '${blog.title}\nto explore more blogs click on the link given below\n👇\n$value\nDownload our application and enjoy more features\nFor Android:\nhttps://play.google.com/store/apps/details?id=com.healfit.heal_fit\n\nFor IOS:\nhttps://apps.apple.com/in/app/healfit/id1645721639\nOr visit our website:\nhttps://curect.in');
                               });
                             } else {
                               showSnackBar(AlertMessages.getMessage(4),
@@ -695,13 +696,12 @@ class _EachBlogState extends State<EachBlog> {
                             }
                           });
                         } else {
-                          Application.createFileOfPdfUrl(Constants.imgFinalUrl +
-                                  (blog?.coverPhoto ??
-                                      '/images/local/logo.png'))
+                          Application.createFileOfPdfUrl(
+                                  Constants.imgFinalUrl + (blog.coverPhoto))
                               .then((f) {
                             Utility.showProgress(false);
                             _onShare(f.path,
-                                '${blog?.title}\nto explore more blogs click on the link given below\n👇\n${blog?.shareUrl != 'null' ? blog?.shareUrl : ''}\nDownload our application and enjoy more features\nFor Android:\nhttps://play.google.com/store/apps/details?id=com.healfit.heal_fit\nFor IOS:\nhttps://apps.apple.com/in/app/healfit/id1645721639\nOr visit our website:\nhttps://healfit.in');
+                                '${blog.title}\nto explore more blogs click on the link given below\n👇\n${blog.shareUrl != 'null' ? blog.shareUrl : ''}\nDownload our application and enjoy more features\nFor Android:\nhttps://play.google.com/store/apps/details?id=com.healfit.heal_fit\nFor IOS:\nhttps://apps.apple.com/in/app/healfit/id1645721639\nOr visit our website:\nhttps://curect.in');
                           });
                         }
                       },
@@ -713,9 +713,11 @@ class _EachBlogState extends State<EachBlog> {
                   radius: 45.0,
                   iconSize: 20.0,
                   iconColor: AppColors.richBlack,
-                  top: 8.0,
-                  right: 8.0,
-                  borderRadius: 8.0,
+                  top: 0,
+                  right: 0,
+                  borderRadius: 0.0,
+                  isShowBorder: false,
+                  bgColor: AppColors.background,
                 ),
               ),
             ),
@@ -729,7 +731,7 @@ class _EachBlogState extends State<EachBlog> {
             ),
             child: GestureDetector(
               onTap: () {
-                goBack();
+                Get.back();
               },
               child: const CustomIcon(
                 icon: Icons.arrow_back_ios_rounded,
@@ -739,9 +741,11 @@ class _EachBlogState extends State<EachBlog> {
                 radius: 45.0,
                 iconSize: 20.0,
                 iconColor: AppColors.richBlack,
-                top: 8.0,
-                right: 8.0,
-                borderRadius: 8.0,
+                top: 0,
+                right: 0,
+                borderRadius: 0.0,
+                isShowBorder: false,
+                bgColor: AppColors.background,
               ),
             ),
           ),
@@ -785,10 +789,10 @@ class _EachBlogState extends State<EachBlog> {
                               height: 20.0,
                               width: double.infinity,
                               decoration: const BoxDecoration(
-                                color: AppColors.background,
+                                color: AppColors.white,
                                 borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(20.0),
-                                  topLeft: Radius.circular(20.0),
+                                  topRight: Radius.circular(0.0),
+                                  topLeft: Radius.circular(0.0),
                                 ),
                               ),
                             ),
@@ -800,13 +804,14 @@ class _EachBlogState extends State<EachBlog> {
                       padding: const EdgeInsets.only(
                         left: 20.0,
                         right: 20.0,
+                        top: 20.0,
                       ),
                       child: Text(
-                        (blog.title ?? ''),
+                        blog.title,
                         style: const TextStyle(
                           color: AppColors.richBlack,
                           fontSize: 20.0,
-                          fontFamily: Fonts.helixSemiBold,
+                          fontFamily: Fonts.montserratSemiBold,
                         ),
                       ),
                     ),
@@ -847,7 +852,7 @@ class _EachBlogState extends State<EachBlog> {
                                           ? AppColors.highlight
                                           : AppColors.subText,
                                       fontSize: 18.0,
-                                      fontFamily: Fonts.helixMedium,
+                                      fontFamily: Fonts.montserratMedium,
                                     ),
                                   ),
                                 ],
@@ -858,11 +863,11 @@ class _EachBlogState extends State<EachBlog> {
                             width: 5.0,
                           ),
                           Text(
-                            blog.createdAt.substring(0, 10) ?? '',
+                            blog.createdAt.substring(0, 10),
                             style: const TextStyle(
                               color: AppColors.subText,
                               fontSize: 18.0,
-                              fontFamily: Fonts.gilroyMedium,
+                              fontFamily: Fonts.montserratMedium,
                             ),
                           ),
                         ],
@@ -877,10 +882,10 @@ class _EachBlogState extends State<EachBlog> {
                         right: 20.0,
                       ),
                       child: TextToHtmlTwo(
-                        description: blog.description ?? '',
+                        description: blog.description,
                         textColor: AppColors.richBlack,
                         fontSize: 16.0,
-                        font: Fonts.gilroyRegular,
+                        font: Fonts.montserratRegular,
                       ),
                     ),
                     SizedBox(
@@ -912,7 +917,7 @@ class _EachBlogState extends State<EachBlog> {
           ),
         ),
         SizedBox(
-          height: 412.0,
+          height: 510.0,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: popularBlogs.length,
@@ -926,6 +931,7 @@ class _EachBlogState extends State<EachBlog> {
                 ),
                 child: BlogCardThree(
                   description: popularBlogs[index].description,
+                  title: popularBlogs[index].title,
                   likes: popularBlogs[index].totalLikes,
                   width: 280,
                   height: 350.0,
@@ -937,10 +943,12 @@ class _EachBlogState extends State<EachBlog> {
                       Constants.imgFinalUrl + popularBlogs[index].coverPhoto,
                   onBlogClicked: () {
                     Get.to(
-                        () => EachBlog(
-                              id: popularBlogs[index].id,
-                            ),
-                        preventDuplicates: false);
+                      () => EachBlog(
+                        id: popularBlogs[index].id,
+                      ),
+                      preventDuplicates: false,
+                      transition: Transition.rightToLeft,
+                    );
                   },
                   onCommentClicked: () {
                     getComments(popularBlogs[index].id, 0);
